@@ -5,18 +5,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Footer from '../componentes/Footer';
 import Sidebar from '../componentes/Sidebar';
+import HeaderDinamico from '../componentes/HeaderDinamico';
+
 
 function Home() {
   return (
     <>
-        <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand to="/">257982 - 198596</Navbar.Brand>
-          <Nav className="me-auto">
-          <NavLink to="/clientes" className='menuprincipal'>CLIENTES</NavLink>
-          </Nav>
-        </Container>
-      </Navbar>
+        
+        <HeaderDinamico></HeaderDinamico>
 
       <div style={{ display: 'flex' }}>
         <Sidebar style={{ minWidth: '200px' }} />

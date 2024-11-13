@@ -74,3 +74,7 @@ ul.menu li {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+::marker {
+    display: none !important;
+}
