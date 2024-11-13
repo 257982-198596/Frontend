@@ -59,3 +59,18 @@
   .espacio {
     margin-bottom: 32px;
   }
+
+  /* Sidebar */
+  .sidebar {
+    width: 16em;
+    background-color: #212529;
+    padding: 30px;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+}
+
+/* Estilo para el menú */
+ul.menu li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
