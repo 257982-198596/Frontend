@@ -1,0 +1,61 @@
+
+
+
+.footer-obligatorio{
+    color: white ;
+  }
+  
+  .footerobl{
+    margin-top: 100px;
+  }
+  
+  .menuprincipal {
+    color: white !important;
+    text-decoration: none !important;
+    padding: 0px 15px !important;
+  }
+  
+  .active {
+    background-color: #713972;
+  }
+  
+  .oblcolor {
+    background-color: #713972;
+    border-color: #713972;
+  }
+  
+  .oblerror {
+    background-color: #713972;
+    color: white;
+  }
+  
+  .fondo {
+    min-height: 150px;
+  }
+  
+  .oblIconos {
+    font-size: 35px;
+    color: #713972;
+  }
+  
+  .montoOBL {
+    margin-left: 20px;
+    font-weight: 400;
+    font-size: 23px;
+    
+  }
+  
+  .oblIconosBIG{
+    font-size: 50px;
+    color: #713972;
+    margin-bottom: 14px;
+  }
+  
+  .iconofooter{
+    font-size: 25px;
+    
+  }
+  
+  .espacio {
+    margin-bottom: 32px;
+  }
