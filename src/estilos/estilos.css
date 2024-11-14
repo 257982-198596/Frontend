@@ -89,6 +89,12 @@ li#menuprincipal {
     color: white;
     text-decoration: none;
     padding-left: 30px;
+    font-family: Montserrat;
+    font-weight: 100;
+}
+
+svg.icono-sidebar {
+    margin-right: 8px;
 }
 
 .active {
