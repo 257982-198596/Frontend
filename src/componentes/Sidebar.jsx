@@ -26,7 +26,10 @@ function Sidebar() {
                         className={location.pathname === item.path ? 'active' : ''}
                         id="menuprincipal"
                     >
-                        <Link to={item.path}><FiBell className='icono-sidebar' />{item.label}</Link>
+                        <Link to={item.path}>
+                        <FiBell className='icono-sidebar' />
+                        <span className="link-text">{item.label}</span>
+                        </Link>
                     </li>
                 ))}
             </ul>
