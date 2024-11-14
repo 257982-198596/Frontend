@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { BsPersonPlusFill } from "react-icons/bs";
+
 
 function Sidebar() {
     const location = useLocation();
@@ -21,8 +23,9 @@ function Sidebar() {
                     <li
                         key={item.path}
                         className={location.pathname === item.path ? 'active' : ''}
+                        id="menuprincipal"
                     >
-                        <Link to={item.path}>{item.label}</Link>
+                        <Link to={item.path}><BsPersonPlusFill className='icono-sidebar' />{item.label}</Link>
                     </li>
                 ))}
             </ul>

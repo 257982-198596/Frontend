@@ -1,5 +1,7 @@
 
-
+body {
+    font-family: Montserrat;
+}
 
 .footer-obligatorio{
     color: white ;
@@ -77,4 +79,23 @@ ul.menu li {
 
 ::marker {
     display: none !important;
+}
+
+li#menuprincipal {
+    margin-top: 20px;
+}
+
+#menuprincipal a {
+    color: white;
+    text-decoration: none;
+    padding-left: 30px;
+}
+
+.active {
+    background-color: #713972;
+    border-radius: 9px;
+}
+
+.menu {
+    padding-left: 0rem;
 }
