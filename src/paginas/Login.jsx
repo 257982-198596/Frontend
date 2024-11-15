@@ -15,17 +15,20 @@ function Login() {
 
   const iniciarSesion = async () => {
     //falta validar
-    const respuesta = await iniciarSesionApi(
+    try{
+    const usuarioLogueado = await iniciarSesionApi(
       usuarioRef.current.value,
       passwordRef.current.value
     );
-    if (respuesta.codigo == 200) {
-      localStorage.setItem("apiKey", respuesta.apiKey);
-      localStorage.setItem("idUsuario", respuesta.id);
-      navigate(`/`);
-    }else{
-      setErrorLogin(true);
+    console.log(usuarioLogueado);
+    localStorage.setItem("idUsuario", usuarioLogueado.id);
+    localStorage.setItem("idRol", usuarioLogueado.rolId);
+    navigate(`/`);
+      //localStorage.setItem("apiKey", respuesta.apiKey);
+    }catch(error){
+        setErrorLogin(true);
     }
+    
   };
 
   const habilitarBoton = (event) => {

@@ -8,6 +8,7 @@ import Notificaciones from "../paginas/Notificaciones";
 import Cobros from "../paginas/Cobros";
 import Reportes from "../paginas/Reportes";
 import Categorias from "../paginas/Categorias";
+import Servicios from "../paginas/Servicios";
 
 
 function Rutas() {
@@ -20,6 +21,7 @@ function Rutas() {
 
         <Route path="/" element={<Home />}>
           <Route path="/clientes" element={<Clientes />} />
+          <Route path="/servicios" element={<Servicios />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/cobros" element={<Cobros />} />
           <Route path="/reportes" element={<Reportes />} />

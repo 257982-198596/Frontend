@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import HeaderHome from './HeaderHome';
+import HeaderClientes from './HeaderClientes';
 
 function DynamicHeader() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function DynamicHeader() {
       break;
     case '/clientes':
       headerText = 'Clientes';
+      header = <HeaderClientes />;
       break;
     case '/notificaciones':
       headerText = 'Notificaciones';
