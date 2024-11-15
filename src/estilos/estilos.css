@@ -1,0 +1,117 @@
+
+body {
+    font-family: Montserrat;
+}
+
+.footer-obligatorio{
+    color: white ;
+  }
+  
+  .footerobl{
+    margin-top: 100px;
+  }
+  
+  .menuprincipal {
+    color: white !important;
+    text-decoration: none !important;
+    padding: 0px 15px !important;
+  }
+  
+  .active {
+    background-color: #713972;
+  }
+  
+  .oblcolor {
+    background-color: #713972;
+    border-color: #713972;
+  }
+  
+  .oblerror {
+    background-color: #713972;
+    color: white;
+  }
+  
+  .fondo {
+    min-height: 150px;
+  }
+  
+  .oblIconos {
+    font-size: 35px;
+    color: #713972;
+  }
+  
+  .montoOBL {
+    margin-left: 20px;
+    font-weight: 400;
+    font-size: 23px;
+    
+  }
+  
+  .oblIconosBIG{
+    font-size: 50px;
+    color: #713972;
+    margin-bottom: 14px;
+  }
+  
+  .iconofooter{
+    font-size: 25px;
+    
+  }
+  
+  .espacio {
+    margin-bottom: 32px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 16em;
+    background-color: #191c1f;
+    padding: 30px;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+}
+
+/* Estilo para el menú */
+ul.menu li {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+::marker {
+    display: none !important;
+}
+
+li#menuprincipal {
+    margin-top: 20px;
+}
+
+#menuprincipal a {
+    color: white;
+    text-decoration: none;
+    padding-left: 15px;
+    font-family: Montserrat;
+    font-weight: 100;
+}
+
+svg.icono-sidebar {
+    margin-right: 12px;
+    position: absolute;
+    color: #ffffff17;
+    font-size: 40px;
+    margin-top: -6px;
+    margin-left: -7px;
+}
+
+span.link-text {
+    padding-left: 19px;
+    font-weight: 400;
+}
+
+.active {
+    background-color: #713972;
+    border-radius: 9px;
+}
+
+.menu {
+    padding-left: 0rem;
+}
