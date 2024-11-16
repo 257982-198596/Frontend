@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getClientesApi } from "../api/servicioClientes";
 import { cargarClientes } from "../slices/sliceClientes";
+import { getTiposDocumentosApi } from "../api/servicioTiposDocumentos";
+import { cargarTiposDocumentos } from "../slices/sliceTiposDocumentos";
 
 function Home() {
   const dispatch = useDispatch();
@@ -33,11 +35,26 @@ function Home() {
         console.log("Error API CLIENTES", error);
       }
     };
-    GetClientes();
+    const GetTiposDocumentos = async () => {
+      try {
+        const tiposDocs = await getTiposDocumentosApi();
+        const payload = {
+          tiposDocumentosStore: tiposDocs
+        };
+        console.log('tiposDocs', tiposDocs)
+        //carga de todos los clientes al store
+        dispatch(cargarTiposDocumentos(payload));
 
     
+      } catch (error) {
+        console.log("Error API CLIENTES", error);
+      }
+    };
+    GetTiposDocumentos();
+    GetClientes();
   }, []);
 
+  
   return (
     <>
       <HeaderDinamico></HeaderDinamico>

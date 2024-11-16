@@ -1,7 +1,14 @@
-import React from "react";
+
 import { Link, useLocation } from "react-router-dom";
-import { BsPersonPlusFill } from "react-icons/bs";
-import { FiBell } from "react-icons/fi";
+import { FiCalendar } from "react-icons/fi";
+import { FiAirplay } from "react-icons/fi";
+
+import { FiUserCheck } from "react-icons/fi";
+import { LuBarChart3 } from "react-icons/lu";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { FiSliders } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi";
+
 
 function Sidebar() {
   const location = useLocation();
@@ -16,8 +23,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/">
-            <FiBell className="icono-sidebar" />
             
+            <FiAirplay className="icono-sidebar" />
             <span className="link-text">Home</span>
           </Link>
         </li>
@@ -26,7 +33,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/clientes">
-            <FiBell className="icono-sidebar" />
+            
+            <FiUserCheck className="icono-sidebar" />
             <span className="link-text">Clientes</span>
           </Link>
         </li>
@@ -35,7 +43,9 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/servicios">
-            <FiBell className="icono-sidebar" />
+            
+            <FiShoppingCart className="icono-sidebar" />
+
             <span className="link-text">Servicios</span>
           </Link>
         </li>
@@ -44,7 +54,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/notificaciones">
-            <FiBell className="icono-sidebar" />
+          <FiCalendar className="icono-sidebar"/>
+            
             <span className="link-text">Notificaciones</span>
           </Link>
         </li>
@@ -53,7 +64,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/cobros">
-            <FiBell className="icono-sidebar" />
+           
+            <FaRegMoneyBillAlt className="icono-sidebar"  />
             <span className="link-text">Cobros</span>
           </Link>
         </li>
@@ -62,7 +74,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/reportes">
-            <FiBell className="icono-sidebar" />
+           
+            <LuBarChart3 className="icono-sidebar" />
             <span className="link-text">Reportes</span>
           </Link>
         </li>
@@ -71,7 +84,8 @@ function Sidebar() {
           id="menuprincipal"
         >
           <Link to="/categorias">
-            <FiBell className="icono-sidebar" />
+            
+            <FiSliders className="icono-sidebar" />
             <span className="link-text">Categorías</span>
           </Link>
         </li>

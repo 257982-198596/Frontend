@@ -9,7 +9,7 @@ import Cobros from "../paginas/Cobros";
 import Reportes from "../paginas/Reportes";
 import Categorias from "../paginas/Categorias";
 import Servicios from "../paginas/Servicios";
-
+import AltaClientes from "../paginas/clientes/AltaClientes";
 
 function Rutas() {
   return (
@@ -20,7 +20,8 @@ function Rutas() {
         <Route path="/registro" element={<Registro />} />
 
         <Route path="/" element={<Home />}>
-          <Route path="/clientes" element={<Clientes />} />
+          <Route path="/clientes" element={<Clientes />}/>
+          <Route path="/clientes/alta" element={<AltaClientes />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/cobros" element={<Cobros />} />
