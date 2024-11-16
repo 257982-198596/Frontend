@@ -12,6 +12,8 @@ import { getClientesApi } from "../api/servicioClientes";
 import { cargarClientes } from "../slices/sliceClientes";
 import { getTiposDocumentosApi } from "../api/servicioTiposDocumentos";
 import { cargarTiposDocumentos } from "../slices/sliceTiposDocumentos";
+import { getPaisesApi } from "../api/servicioPaises";
+import { cargarPaises } from "../slices/slicePaises";
 
 function Home() {
   const dispatch = useDispatch();
@@ -26,8 +28,7 @@ function Home() {
         const payload = {
           clientesStore: clientes
         };
-        //console.log('clientes', clientes)
-        //carga de todos los clientes al store
+        
         dispatch(cargarClientes(payload));
 
     
@@ -41,17 +42,32 @@ function Home() {
         const payload = {
           tiposDocumentosStore: tiposDocs
         };
-        console.log('tiposDocs', tiposDocs)
+        
         //carga de todos los clientes al store
         dispatch(cargarTiposDocumentos(payload));
 
     
       } catch (error) {
-        console.log("Error API CLIENTES", error);
+        console.log("Error API Tipos Documentos", error);
+      }
+    };
+    const GetPaises = async () => {
+      try {
+        const paises = await getPaisesApi();
+        const payload = {
+          paisesStore: paises
+        };
+        
+        dispatch(cargarPaises(payload));
+
+    
+      } catch (error) {
+        console.log("Error API Paises", error);
       }
     };
     GetTiposDocumentos();
     GetClientes();
+    GetPaises();
   }, []);
 
   

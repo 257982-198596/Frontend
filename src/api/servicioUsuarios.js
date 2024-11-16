@@ -14,7 +14,7 @@ export const iniciarSesionApi = async (email, password) => {
     });
     if(response.status == 200){
         const jsonLogin = await response.json();
-        console.log(jsonLogin);
+        
         return jsonLogin;
     }else{
         throw "Error al iniciar sesion";    
