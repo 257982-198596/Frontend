@@ -21,25 +21,25 @@ export const getClientesApi = async () => {
 };
 
 //ALTA CLIENTE
-
+const jsonCliente = {
+  "idUsuarioSuscriptor": "1",
+  "nombre": "OSE Uruguay",
+  "DocumentoId": "2",
+  "numDocumento": "3848348348",
+  "telefono": "09748758",
+  "direccion": "Test 23423",
+  "PersonaContacto": "Pedro Al",
+  "PaisId": "9",
+  "UsuarioLogin":{
+      "Email":"pedro@ose.com.uy",
+      "Password":"123"
+  }
+};
 export const postNuevoClienteAPI = async (objCliente) => {
   try {
     const response = await axios.post(
       `${urlAPI}clientes`,
-      {
-        idUsuarioSuscriptor: objCliente.idUsuarioSuscriptor,
-        nombre: objCliente.nombre,
-        DocumentoId: objCliente.idDocumento,
-        numDocumento: objCliente.numeroDocumento,
-        telefono: objCliente.telefono,
-        direccion: objCliente.direccion,
-        PersonaContacto: objCliente.persona,
-        PaisId: objCliente.idPais,
-        UsuarioLogin: {
-          Email: objCliente.email,
-          Password: objCliente.password,
-        },
-      },
+      armarJson(objCliente),
       {
         headers: {
           "Content-Type": "application/json",
@@ -75,3 +75,23 @@ export const borrarClienteEnAPI = async () => {
     throw "Error al obtener clientes";
   }
 };
+
+function armarJson(obj) {
+  console.log('obj', obj)
+  const json = {
+    idUsuarioSuscriptor: obj.idUsuarioSuscriptor,
+    nombre: obj.nombre,
+    DocumentoId: obj.idDocumento,
+    numDocumento: obj.numDocumento,
+    telefono: obj.telefono,
+    direccion: obj.direccion,
+    PersonaContacto: obj.persona,
+    PaisId: obj.idPais,
+    UsuarioLogin: {
+      Email: obj.email,
+      Password: obj.password,
+    },
+  }
+  console.log("json", json);
+  return json;
+}
