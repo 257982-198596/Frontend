@@ -62,9 +62,9 @@ function EditarCliente() {
     };
 
     const respuestaAPI = await putActualizarClienteAPI(objCliente);
-    
+    console.log(respuestaAPI.data);
     if (respuestaAPI.status === 200) {
-      dispatch(actualizarClientes(objCliente));
+      dispatch(actualizarClientes(respuestaAPI.data));
       navigate("/clientes"); // Navegar de vuelta a la lista de clientes
     }
   };

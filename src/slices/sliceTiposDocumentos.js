@@ -10,7 +10,7 @@ export const sliceTiposDocumentos = createSlice({
     cargarTiposDocumentos: (state, action) => {
       const listaTiposDocumentos = action.payload.tiposDocumentosStore;
       state.tiposDocumentos = listaTiposDocumentos;
-      console.log('state',state.tiposDocumentos);
+      
     }
     
     
