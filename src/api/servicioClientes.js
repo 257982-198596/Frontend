@@ -40,9 +40,11 @@ export const postNuevoClienteAPI = async (objCliente) => {
       throw new Error("Error al crear cliente");
     }
   } catch (error) {
-    console.error("Error al realizar el POST:", error.message || error);
-    throw new Error("Error al crear cliente");
+    console.error("Error al realizar el POST:", error.response?.data || error.message);
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(error.response?.data?.message || "Error al crear cliente");
   }
+  
 };
 
 // PUT - ACTUALIZAR CLIENTE

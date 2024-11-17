@@ -183,7 +183,7 @@ function AltaClientes() {
               </Form.Group>
               <br></br>
               <Button variant="dark" type="submit" onClick={submitNuevoCliente}>
-                Ingresar Gasto
+                Crear Cliente
               </Button>
               <br></br>
             </Form>
