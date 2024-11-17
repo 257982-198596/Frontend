@@ -79,7 +79,7 @@ export const borrarClienteEnAPI = async () => {
 function armarJson(obj) {
   console.log('obj', obj)
   const json = {
-    idUsuarioSuscriptor: obj.idUsuarioSuscriptor,
+    SuscriptorId: obj.idUsuarioSuscriptor,
     nombre: obj.nombre,
     DocumentoId: obj.idDocumento,
     numDocumento: obj.numDocumento,
