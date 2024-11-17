@@ -3,9 +3,10 @@ body {
     font-family: Montserrat;
 }
 
-.footer-obligatorio{
-    color: white ;
-  }
+.footer-proyecto {
+    color: white;
+    font-family: Montserrat;
+}
   
   .footerobl{
     margin-top: 100px;
@@ -22,8 +23,9 @@ body {
   }
   
   .oblcolor {
-    background-color: #713972;
-    border-color: #713972;
+    background-color: #713972 !important;
+    border-color: #713972 !important;
+    color: white !important;
   }
   
   .oblerror {
@@ -114,4 +116,11 @@ span.link-text {
 
 .menu {
     padding-left: 0rem;
+}
+
+
+/* SECCION CLIENTES */
+svg.icono-seccion {
+  font-size: 40px;
+  margin-left: 7px;
 }
