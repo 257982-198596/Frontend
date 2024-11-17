@@ -20,26 +20,12 @@ export const getClientesApi = async () => {
   }
 };
 
-//ALTA CLIENTE
-const jsonCliente = {
-  "idUsuarioSuscriptor": "1",
-  "nombre": "OSE Uruguay",
-  "DocumentoId": "2",
-  "numDocumento": "3848348348",
-  "telefono": "09748758",
-  "direccion": "Test 23423",
-  "PersonaContacto": "Pedro Al",
-  "PaisId": "9",
-  "UsuarioLogin":{
-      "Email":"pedro@ose.com.uy",
-      "Password":"123"
-  }
-};
+// POST - NUEVO CLIENTE
 export const postNuevoClienteAPI = async (objCliente) => {
   try {
     const response = await axios.post(
       `${urlAPI}clientes`,
-      armarJson(objCliente),
+      armarJsonCliente(objCliente),
       {
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +33,7 @@ export const postNuevoClienteAPI = async (objCliente) => {
       }
     );
 
+  
     if (response.status === 201 || response.status === 200) {
       return response.data;
     } else {
@@ -57,6 +44,31 @@ export const postNuevoClienteAPI = async (objCliente) => {
     throw new Error("Error al crear cliente");
   }
 };
+
+// PUT - ACTUALIZAR CLIENTE
+export const putActualizarClienteAPI = async (objCliente) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}clientes/${objCliente.id}`, 
+      armarJsonCliente(objCliente), 
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response; // Devuelve los datos actualizados
+    } else {
+      throw new Error("Error al actualizar cliente");
+    }
+  } catch (error) {
+    console.error("Error al realizar el PUT:", error.message || error);
+    throw new Error("Error al actualizar cliente");
+  }
+};
+
 
 //ELIMINAR CLIENTE
 export const borrarClienteEnAPI = async () => {
@@ -76,7 +88,7 @@ export const borrarClienteEnAPI = async () => {
   }
 };
 
-function armarJson(obj) {
+function armarJsonCliente(obj) {
   console.log('obj', obj)
   const json = {
     SuscriptorId: obj.idUsuarioSuscriptor,

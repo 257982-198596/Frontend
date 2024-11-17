@@ -16,16 +16,27 @@ export const sliceClientes = createSlice({
       const filtrarClientes = state.clientes.filter(
         (cliente) => cliente.id != action.payload.id
       );
-      state.cliente = filtrarClientes;
+      state.clientes = filtrarClientes;
+    },
+    crearClientes: (state, action) => {
+      const clienteEditado = action.payload;
+      const nuevaListaClientes = [...state.clientes, clienteEditado];
+      //const filtrarClientes = state.clientes.filter(        (cliente) => cliente.id != action.payload.id      );
+      //const nuevosClientes = [...filtrarClientes, clienteEditado];
+      console.log('nuevaListaClientes', nuevaListaClientes)
+      state.clientes = nuevaListaClientes;
     },
     actualizarClientes: (state, action) => {
-      const filtrarClientes = state.clientes.filter(
-        (cliente) => cliente.id != action.payload.id
-      );
-      state.cliente = filtrarClientes;
+      const clienteEditado = action.payload;
+      const nuevaListaClientes = [...state.clientes, clienteEditado];
+      //const filtrarClientes = state.clientes.filter(        (cliente) => cliente.id != action.payload.id      );
+      //const nuevosClientes = [...filtrarClientes, clienteEditado];
+      console.log('nuevaListaClientes', nuevaListaClientes)
+      state.clientes = nuevaListaClientes;
     },
   },
 });
 
-export const { cargarClientes, eliminarCliente, actualizarClientes } = sliceClientes.actions;
+export const { cargarClientes, eliminarCliente, crearClientes, actualizarClientes } =
+  sliceClientes.actions;
 export default sliceClientes.reducer;

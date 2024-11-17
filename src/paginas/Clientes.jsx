@@ -4,10 +4,17 @@ import { useDispatch } from "react-redux";
 import { borrarClienteEnAPI } from "../api/servicioClientes";
 import { eliminarCliente } from "../slices/sliceClientes";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const editarCliente = (idCliente) => {
+    // Navegar a la ruta de edición del cliente
+    navigate(`/clientes/editar/${idCliente}`);
+  };
 
   const borrarCliente = async (idCliente) => {
     try {
@@ -72,7 +79,7 @@ function Clientes() {
                 <td>
                   <button
                     className="btn btn-danger oblcolor"
-                    onClick={() => borrarCliente(cliente.id)}
+                    onClick={() => editarCliente(cliente.id)}
                   >
                     Editar
                   </button>

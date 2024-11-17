@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { postNuevoClienteAPI } from "../../api/servicioClientes";
-import { actualizarClientes } from "../../slices/sliceClientes";
+import { crearClientes } from "../../slices/sliceClientes";
 
 function AltaClientes() {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ function AltaClientes() {
         password: objCliente.password
       };
 
-      dispatch(actualizarClientes(payload));
+      dispatch(crearClientes(payload));
 
       //conceptoRef.current.value = "";
       
