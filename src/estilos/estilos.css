@@ -80,7 +80,8 @@ ul.menu li {
 }
 
 ::marker {
-    display: none !important;
+  display: none !important;
+  color: #191c1f;
 }
 
 li#menuprincipal {
