@@ -15,7 +15,6 @@ function Clientes() {
     navigate(`/clientes/detalle/${idCliente}`);
   };
   const editarCliente = (idCliente) => {
-    // Navegar a la ruta de edición del cliente
     navigate(`/clientes/editar/${idCliente}`);
   };
 

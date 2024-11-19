@@ -23,6 +23,7 @@ export const getClientesApi = async () => {
 // POST - NUEVO CLIENTE
 export const postNuevoClienteAPI = async (objCliente) => {
   try {
+    console.log('objCliente', objCliente);
     const response = await axios.post(
       `${urlAPI}clientes`,
       armarJsonCliente(objCliente),
@@ -35,7 +36,7 @@ export const postNuevoClienteAPI = async (objCliente) => {
 
   
     if (response.status === 201 || response.status === 200) {
-      return response.data;
+      return response;
     } else {
       throw new Error("Error al crear cliente");
     }
@@ -87,8 +88,9 @@ export const borrarClienteEnAPI = async (idCliente) => {
       throw new Error("Error al eliminar cliente");
     }
   } catch (error) {
-    console.error("Error en borrarClienteEnAPI:", error.message || error);
-    throw new Error("Error al eliminar cliente");
+    console.error("Error al realizar el POST:", error.response?.data || error.message);
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(error.response?.data?.message || "Error al crear cliente");
   }
 };
 

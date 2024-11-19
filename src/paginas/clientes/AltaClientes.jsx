@@ -25,17 +25,23 @@ function AltaClientes() {
   });
 
   const handleChange = (event) => {
+    
     const { name, value } = event.target;
+    console.log("Cambio detectado:", { name, value });
     setFormData({ ...formData, [name]: value });
   };
 
   const submitNuevoCliente = async (event) => {
+    console.log('formData', formData)
     event.preventDefault();
+    
     const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
     const objCliente = { idUsuarioSuscriptor, ...formData };
+    
     const respuestaAPI = await postNuevoClienteAPI(objCliente);
-    if (respuestaAPI.codigo === 200) {
-      dispatch(crearClientes(respuestaAPI));
+    console.log(respuestaAPI)
+    if (respuestaAPI.status === 201 || respuestaAPI.status === 200) {
+      dispatch(crearClientes(respuestaAPI.data));
       navigate("/clientes");
     }
   };

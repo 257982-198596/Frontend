@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -35,6 +36,7 @@ function FormularioCliente({
           onChange={handleChange}
           disabled={isReadOnly}
         >
+            <option value="">Seleccione un tipo</option>
           {losDocumentos.map((tipodoc) => (
             <option key={tipodoc.id} value={tipodoc.id}>
               {tipodoc.nombre}
@@ -95,6 +97,7 @@ function FormularioCliente({
           onChange={handleChange}
           disabled={isReadOnly}
         >
+            <option value="">Seleccione un pais</option>
           {losPaises.map((pais) => (
             <option key={pais.id} value={pais.id}>
               {pais.nombre}
