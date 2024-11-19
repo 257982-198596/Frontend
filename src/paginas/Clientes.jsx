@@ -11,6 +11,9 @@ function Clientes() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const verDetallesCliente = (idCliente) => {
+    navigate(`/clientes/detalle/${idCliente}`);
+  };
   const editarCliente = (idCliente) => {
     // Navegar a la ruta de edición del cliente
     navigate(`/clientes/editar/${idCliente}`);
@@ -71,7 +74,7 @@ function Clientes() {
                 <td>
                   <button
                     className="btn btn-danger oblcolor"
-                    onClick={() => borrarCliente(cliente.id)}
+                    onClick={() => verDetallesCliente(cliente.id)}
                   >
                     Ver Más
                   </button>

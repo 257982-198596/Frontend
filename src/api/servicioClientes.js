@@ -73,20 +73,22 @@ export const putActualizarClienteAPI = async (objCliente) => {
 
 
 //ELIMINAR CLIENTE
-export const borrarClienteEnAPI = async () => {
-  const response = await fetch(`${urlAPI}clientes`, {
-    method: "GET",
+export const borrarClienteEnAPI = async (idCliente) => {
+  try {
+    const response = await axios.delete(`${urlAPI}clientes/${idCliente}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  });
-  if (response.status == 200) {
-    const jsonLogin = await response.json();
-
-    return jsonLogin;
-  } else {
-    throw "Error al obtener clientes";
+    if (response.status === 200) {
+      return { idCliente }; 
+    } else {
+      throw new Error("Error al eliminar cliente");
+    }
+  } catch (error) {
+    console.error("Error en borrarClienteEnAPI:", error.message || error);
+    throw new Error("Error al eliminar cliente");
   }
 };
 

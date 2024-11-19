@@ -7,17 +7,20 @@ export const sliceClientes = createSlice({
   name: "sliceClientes",
   initialState,
   reducers: {
+    //cargar clientes a store
     cargarClientes: (state, action) => {
       const listaClientes = action.payload.clientesStore;
       state.clientes = listaClientes;
       
     },
+    //eliminar cliente de store
     eliminarCliente: (state, action) => {
       const filtrarClientes = state.clientes.filter(
         (cliente) => cliente.id != action.payload.id
       );
       state.clientes = filtrarClientes;
     },
+    //alta cliente en store
     crearClientes: (state, action) => {
       const clienteEditado = action.payload;
       const nuevaListaClientes = [...state.clientes, clienteEditado];
@@ -26,6 +29,7 @@ export const sliceClientes = createSlice({
       console.log('nuevaListaClientes', nuevaListaClientes)
       state.clientes = nuevaListaClientes;
     },
+    //update cliente en store
     actualizarClientes: (state, action) => {
       const clienteEditado = action.payload;
       
@@ -35,6 +39,7 @@ export const sliceClientes = createSlice({
       console.log('nuevaListaClientes', nuevaListaClientes)
       state.clientes = nuevaListaClientes;
     },
+    
   },
 });
 
