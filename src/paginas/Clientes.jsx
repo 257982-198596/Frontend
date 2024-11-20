@@ -39,9 +39,9 @@ function Clientes() {
     try {
       console.log("Cliente seleccionado para eliminar:", clienteSeleccionado);
 
-      const responseCliente = await borrarClienteEnAPI(clienteSeleccionado);
-      console.log("Cliente eliminado:", responseCliente);
-      dispatch(eliminarCliente(responseCliente));
+      const idCliente = await borrarClienteEnAPI(clienteSeleccionado);
+      const payload = { id: idCliente };
+      dispatch(eliminarCliente(payload));
       handleCerrarModal();
     } catch (error) {
       console.log("error", error);

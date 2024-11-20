@@ -30,8 +30,7 @@ export const sliceClientes = createSlice({
     },
     //update cliente en store
     actualizarClientes: (state, action) => {
-      const clienteEditado = action.payload;
-
+      const clienteEditado = action.payload
       const filtrarClientes = state.clientes.filter(
         (cliente) => cliente.id != action.payload.id
       );

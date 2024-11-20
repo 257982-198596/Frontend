@@ -90,8 +90,8 @@ export const borrarClienteEnAPI = async (idCliente) => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
-    return { idCliente };
+    }); 
+    return idCliente;
   } catch (error) {
     console.error(
       "Error al realizar el DELETE:",
