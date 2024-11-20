@@ -1,4 +1,4 @@
-const urlAPI = "http://localhost:18190/api/";
+import { urlAPI } from "../api/api";
 
 //Get - Tipos Documentos (Find All)
 export const getTiposDocumentosApi = async () => {

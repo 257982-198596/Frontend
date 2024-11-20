@@ -1,4 +1,4 @@
-const urlAPI = "http://localhost:18190/api/";
+import { urlAPI } from "./api";
 
 //Login - 
 export const iniciarSesionApi = async (email, password) => {

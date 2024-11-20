@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const urlAPI = "http://localhost:18190/api/";
+import { urlAPI } from "../api/api";
 
 //Get - Clientes (Find All)
 export const getClientesApi = async () => {

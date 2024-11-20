@@ -1,4 +1,5 @@
-const urlAPI = "http://localhost:18190/api/";
+import axios from "axios";
+import { urlAPI } from "../api/api";
 
 //Get - Paises (Find All)
 export const getPaisesApi = async () => {
