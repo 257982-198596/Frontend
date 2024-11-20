@@ -5,11 +5,18 @@ import { borrarClienteEnAPI } from "../api/servicioClientes";
 import { eliminarCliente } from "../slices/sliceClientes";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import  EliminarCliente from "../paginas/clientes/EliminarCliente";
+
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //Modal Eliminar Cliente
+  const [showModal, setShowModal] = useState(false);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
 
   const verDetallesCliente = (idCliente) => {
     navigate(`/clientes/detalle/${idCliente}`);
@@ -18,14 +25,24 @@ function Clientes() {
     navigate(`/clientes/editar/${idCliente}`);
   };
 
-  const borrarCliente = async (idCliente) => {
-    try {
-      const respBorrarCliente = await borrarClienteEnAPI(idCliente);
+  const handleAbrirModal = (idCliente) => {
+    setClienteSeleccionado(idCliente);
+    setShowModal(true);
+  };
 
-      const payload = {
-        id: respBorrarCliente.idCliente,
-      };
-      dispatch(eliminarCliente(payload));
+  const handleCerrarModal = () => {
+    setShowModal(false);
+    setClienteSeleccionado(null);
+  };
+
+  const borrarCliente = async () => {
+    try {
+      console.log("Cliente seleccionado para eliminar:", clienteSeleccionado);
+
+      const responseCliente = await borrarClienteEnAPI(clienteSeleccionado);
+      console.log("Cliente eliminado:", responseCliente);
+      dispatch(eliminarCliente(responseCliente));
+      handleCerrarModal();
     } catch (error) {
       console.log("error", error);
     }
@@ -35,12 +52,7 @@ function Clientes() {
       <FiUserCheck className="icono-seccion" />
       <h2>Clientes</h2>
       <Link to="/clientes/alta">
-        <button
-          className="btn oblcolor"
-          
-        >
-          Nuevo Cliente
-        </button>
+        <button className="btn oblcolor">Nuevo Cliente</button>
       </Link>
 
       <br></br>
@@ -89,7 +101,7 @@ function Clientes() {
                 <td>
                   <button
                     className="btn btn-danger oblcolor"
-                    onClick={() => borrarCliente(cliente.id)}
+                    onClick={() => handleAbrirModal(cliente.id)}
                   >
                     Eliminar
                   </button>
@@ -99,6 +111,13 @@ function Clientes() {
           })}
         </tbody>
       </table>
+
+      {/* Modal para Confirmar Eliminación */}
+      <EliminarCliente
+        show={showModal}
+        handleClose={handleCerrarModal}
+        handleEliminar={borrarCliente}
+      />
     </div>
   );
 }

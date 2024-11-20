@@ -11,7 +11,6 @@ export const sliceClientes = createSlice({
     cargarClientes: (state, action) => {
       const listaClientes = action.payload.clientesStore;
       state.clientes = listaClientes;
-      
     },
     //eliminar cliente de store
     eliminarCliente: (state, action) => {
@@ -26,23 +25,26 @@ export const sliceClientes = createSlice({
       const nuevaListaClientes = [...state.clientes, clienteEditado];
       //const filtrarClientes = state.clientes.filter(        (cliente) => cliente.id != action.payload.id      );
       //const nuevosClientes = [...filtrarClientes, clienteEditado];
-      console.log('nuevaListaClientes', nuevaListaClientes)
+      console.log("nuevaListaClientes", nuevaListaClientes);
       state.clientes = nuevaListaClientes;
     },
     //update cliente en store
     actualizarClientes: (state, action) => {
       const clienteEditado = action.payload;
-      
-      const filtrarClientes = state.clientes.filter(        (cliente) => cliente.id != action.payload.id      );
-      console.log('filtrarClientes', filtrarClientes)
+
+      const filtrarClientes = state.clientes.filter(
+        (cliente) => cliente.id != action.payload.id
+      );
       const nuevaListaClientes = [...filtrarClientes, clienteEditado];
-      console.log('nuevaListaClientes', nuevaListaClientes)
-      state.clientes = nuevaListaClientes;
+      state.clientes = nuevaListaClientes.sort((a, b) => a.id - b.id);
     },
-    
   },
 });
 
-export const { cargarClientes, eliminarCliente, crearClientes, actualizarClientes } =
-  sliceClientes.actions;
+export const {
+  cargarClientes,
+  eliminarCliente,
+  crearClientes,
+  actualizarClientes,
+} = sliceClientes.actions;
 export default sliceClientes.reducer;
