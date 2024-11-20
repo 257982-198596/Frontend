@@ -17,7 +17,7 @@ function Rutas() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="/registro" element={<Registro />} />
 
