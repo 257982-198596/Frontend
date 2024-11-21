@@ -10,18 +10,22 @@ import Reportes from "../paginas/Reportes";
 import Categorias from "../paginas/Categorias";
 import Servicios from "../paginas/Servicios";
 import AltaClientes from "../paginas/clientes/AltaClientes";
+import EditarCliente from "../paginas/clientes/EditarCliente";
+import DetalleCliente from "../paginas/clientes/DetalleCliente";
 
 function Rutas() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="/registro" element={<Registro />} />
 
         <Route path="/" element={<Home />}>
           <Route path="/clientes" element={<Clientes />}/>
           <Route path="/clientes/alta" element={<AltaClientes />} />
+          <Route path="/clientes/detalle/:id" element={<DetalleCliente />} />
+          <Route path="/clientes/editar/:id" element={<EditarCliente />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/cobros" element={<Cobros />} />

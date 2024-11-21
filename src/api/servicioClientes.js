@@ -1,45 +1,63 @@
 import axios from "axios";
-
-const urlAPI = "http://localhost:18190/api/";
+import { urlAPI } from "../api/api";
 
 //Get - Clientes (Find All)
 export const getClientesApi = async () => {
-  const response = await fetch(`${urlAPI}clientes`, {
-    method: "GET",
+  try {
+    const response = await axios.get(`${urlAPI}clientes`, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
 
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  });
-  if (response.status == 200) {
-    const jsonLogin = await response.json();
-
-    return jsonLogin;
-  } else {
-    throw "Error al obtener clientes";
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener clientes");
+    }
+  } catch (error) {
+    console.error(
+      "Error al realizar el GET CLIENTES:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(error.response?.data?.message || "Error GET CLIENTES");
   }
 };
 
-//ALTA CLIENTE
-const jsonCliente = {
-  "idUsuarioSuscriptor": "1",
-  "nombre": "OSE Uruguay",
-  "DocumentoId": "2",
-  "numDocumento": "3848348348",
-  "telefono": "09748758",
-  "direccion": "Test 23423",
-  "PersonaContacto": "Pedro Al",
-  "PaisId": "9",
-  "UsuarioLogin":{
-      "Email":"pedro@ose.com.uy",
-      "Password":"123"
-  }
-};
+// POST - NUEVO CLIENTE
 export const postNuevoClienteAPI = async (objCliente) => {
   try {
     const response = await axios.post(
       `${urlAPI}clientes`,
-      armarJson(objCliente),
+      armarJsonCliente(objCliente),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al crear cliente");
+    }
+  } catch (error) {
+    console.error(
+      "Error al realizar el POST:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(error.response?.data?.message || "Error al crear cliente");
+  }
+};
+
+// PUT - ACTUALIZAR CLIENTE
+export const putActualizarClienteAPI = async (objCliente) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}clientes/${objCliente.id}`,
+      armarJsonCliente(objCliente),
       {
         headers: {
           "Content-Type": "application/json",
@@ -47,37 +65,46 @@ export const postNuevoClienteAPI = async (objCliente) => {
       }
     );
 
-    if (response.status === 201 || response.status === 200) {
-      return response.data;
+    if (response.status === 200) {
+      return response;
     } else {
-      throw new Error("Error al crear cliente");
+      throw new Error("Error al actualizar cliente");
     }
   } catch (error) {
-    console.error("Error al realizar el POST:", error.message || error);
-    throw new Error("Error al crear cliente");
+    console.error(
+      "Error al realizar el PUT CLIENTES:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(
+      error.response?.data?.message || "Error al actualizar cliente"
+    );
   }
 };
 
 //ELIMINAR CLIENTE
-export const borrarClienteEnAPI = async () => {
-  const response = await fetch(`${urlAPI}clientes`, {
-    method: "GET",
-
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  });
-  if (response.status == 200) {
-    const jsonLogin = await response.json();
-
-    return jsonLogin;
-  } else {
-    throw "Error al obtener clientes";
+export const borrarClienteEnAPI = async (idCliente) => {
+  try {
+    console.log("id", idCliente);
+    const response = await axios.delete(`${urlAPI}clientes/${idCliente}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }); 
+    return idCliente;
+  } catch (error) {
+    console.error(
+      "Error al realizar el DELETE:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors);
+    throw new Error(
+      error.response?.data?.message || "Error al eliminar cliente"
+    );
   }
 };
 
-function armarJson(obj) {
-  console.log('obj', obj)
+function armarJsonCliente(obj) {
   const json = {
     SuscriptorId: obj.idUsuarioSuscriptor,
     nombre: obj.nombre,
@@ -91,7 +118,6 @@ function armarJson(obj) {
       Email: obj.email,
       Password: obj.password,
     },
-  }
-  console.log("json", json);
+  };
   return json;
 }

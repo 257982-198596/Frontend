@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router-dom';
-import HeaderHome from './HeaderHome';
-import HeaderClientes from './HeaderClientes';
+import { useLocation } from "react-router-dom";
+import HeaderHome from "./HeaderHome";
+import HeaderClientes from "./HeaderClientes";
 
 function DynamicHeader() {
   const location = useLocation();
@@ -8,35 +8,33 @@ function DynamicHeader() {
   let headerText;
   let header;
   switch (location.pathname) {
-    case '/':
-      headerText = 'Home';
+    case "/":
+      headerText = "Home";
       header = <HeaderHome />;
       break;
-    case '/clientes':
-      headerText = 'Clientes';
+    case "/clientes":
+    case "/clientes/alta":
+    case "/clientes/editar/:id":
+      headerText = "Clientes";
       header = <HeaderClientes />;
       break;
-    case '/notificaciones':
-      headerText = 'Notificaciones';
+    case "/notificaciones":
+      headerText = "Notificaciones";
       break;
-    case '/cobros':
-      headerText = 'Cobros';
+    case "/cobros":
+      headerText = "Cobros";
       break;
-    case '/reportes':
-      headerText = 'Reportes';
+    case "/reportes":
+      headerText = "Reportes";
       break;
-    case '/categorias':
-      headerText = 'Categorías';
+    case "/categorias":
+      headerText = "Categorías";
       break;
     default:
-      headerText = 'Inicio';
+      headerText = "Inicio";
   }
 
-  return (
-    <>
-      {header}
-    </>
-  );
+  return <>{header}</>;
 }
 
 export default DynamicHeader;

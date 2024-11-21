@@ -24,43 +24,49 @@ function Home() {
 
     const GetClientes = async () => {
       try {
-        const clientes = await getClientesApi();
-        const payload = {
-          clientesStore: clientes
-        };
-        
-        dispatch(cargarClientes(payload));
-
-    
+        const response = await getClientesApi();
+        if (response.status == 200) {
+          const payload = {
+            clientesStore: response.data
+          };
+          
+          dispatch(cargarClientes(payload));
+        }else {
+          throw "Error al obtener clientes";
+        }
       } catch (error) {
         console.log("Error API CLIENTES", error);
       }
     };
     const GetTiposDocumentos = async () => {
       try {
-        const tiposDocs = await getTiposDocumentosApi();
-        const payload = {
-          tiposDocumentosStore: tiposDocs
-        };
-        
-        //carga de todos los clientes al store
-        dispatch(cargarTiposDocumentos(payload));
+        const response = await getTiposDocumentosApi();
 
-    
+        if (response.status == 200) {
+          const payload = {
+            tiposDocumentosStore: response.data
+          };
+          dispatch(cargarTiposDocumentos(payload));
+        }else {
+          throw "Error al obtener tipos de documentos";
+        }
+            
       } catch (error) {
         console.log("Error API Tipos Documentos", error);
       }
     };
     const GetPaises = async () => {
       try {
-        const paises = await getPaisesApi();
-        const payload = {
-          paisesStore: paises
-        };
-        
-        dispatch(cargarPaises(payload));
-
-    
+        const response = await getPaisesApi();
+        if (response.status == 200) {
+          const payload = {
+            paisesStore: response.data
+            
+          };
+          dispatch(cargarPaises(payload));
+        }else {
+          throw "Error al obtener clientes";
+        }    
       } catch (error) {
         console.log("Error API Paises", error);
       }

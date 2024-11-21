@@ -10,7 +10,7 @@ export const slicePaises = createSlice({
     cargarPaises: (state, action) => {
       const listaPaises = action.payload.paisesStore;
       state.paises = listaPaises;
-      console.log('state',state.paises);
+      
     }
     
     

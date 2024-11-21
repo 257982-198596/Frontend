@@ -1,6 +1,6 @@
 
 body {
-    font-family: Montserrat;
+    font-family: Montserrat !important;
 }
 
 .footer-proyecto {
@@ -80,7 +80,8 @@ ul.menu li {
 }
 
 ::marker {
-    display: none !important;
+  display: none !important;
+  color: #191c1f;
 }
 
 li#menuprincipal {
@@ -123,4 +124,10 @@ span.link-text {
 svg.icono-seccion {
   font-size: 40px;
   margin-left: 7px;
+}
+
+/* FORMULARIOS*/
+.botones-formularios{
+  margin-top: 20px;
+  margin-right: 10px !important;
 }

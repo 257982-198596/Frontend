@@ -3,8 +3,8 @@ import React from 'react'
 function Servicios() {
     return (
         <div>
-            <h2>Clientes</h2>
-            <p>Contenido relacionado con clientes.</p>
+            <h2>Servicios</h2>
+            <p>Contenido relacionado con servicios.</p>
         </div>
     );
 }
