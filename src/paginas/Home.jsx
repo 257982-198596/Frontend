@@ -14,6 +14,10 @@ import { getTiposDocumentosApi } from "../api/servicioTiposDocumentos";
 import { cargarTiposDocumentos } from "../slices/sliceTiposDocumentos";
 import { getPaisesApi } from "../api/servicioPaises";
 import { cargarPaises } from "../slices/slicePaises";
+import { getServiciosApi } from "../api/servicioServicios";
+import { cargarServicios } from "../slices/sliceServicios";
+import { getCategoriasApi } from "../api/servicioCategorias";
+import { cargarCategorias } from "../slices/sliceCategorias";
 
 function Home() {
   const dispatch = useDispatch();
@@ -36,6 +40,22 @@ function Home() {
         }
       } catch (error) {
         console.log("Error API CLIENTES", error);
+      }
+    };
+    const GetServicios = async () => {
+      try {
+        const response = await getServiciosApi();
+        if (response.status == 200) {
+          const payload = {
+            serviciosStore: response.data
+          };
+          
+          dispatch(cargarServicios(payload));
+        }else {
+          throw "Error al obtener servicios";
+        }
+      } catch (error) {
+        console.log("Error API SERVICIOS", error);
       }
     };
     const GetTiposDocumentos = async () => {
@@ -65,15 +85,33 @@ function Home() {
           };
           dispatch(cargarPaises(payload));
         }else {
-          throw "Error al obtener clientes";
+          throw "Error al obtener paises";
         }    
       } catch (error) {
         console.log("Error API Paises", error);
       }
     };
+    const GetCategorias = async () => {
+      try {
+        const response = await getCategoriasApi();
+        if (response.status == 200) {
+          const payload = {
+            categoriasStore: response.data
+            
+          };
+          dispatch(cargarCategorias(payload));
+        }else {
+          throw "Error al obtener categorias";
+        }    
+      } catch (error) {
+        console.log("Error API Categorias", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
+    GetServicios();
     GetPaises();
+    GetCategorias();
   }, []);
 
   

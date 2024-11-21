@@ -18,6 +18,10 @@ function DynamicHeader() {
       headerText = "Clientes";
       header = <HeaderClientes />;
       break;
+    case "/servicios":
+      headerText = "Servicios";
+
+      break;
     case "/notificaciones":
       headerText = "Notificaciones";
       break;
