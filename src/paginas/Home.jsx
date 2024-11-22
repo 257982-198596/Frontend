@@ -18,6 +18,10 @@ import { getServiciosApi } from "../api/servicioServicios";
 import { cargarServicios } from "../slices/sliceServicios";
 import { getCategoriasApi } from "../api/servicioCategorias";
 import { cargarCategorias } from "../slices/sliceCategorias";
+import { getMonedasApi } from "../api/servicioMonedas";
+import { cargarMonedas } from "../slices/sliceMonedas";
+import { getFrecuenciasApi } from "../api/servicioFrecuencias";
+import { cargarFrecuencias } from "../slices/sliceFrecuencias";
 
 function Home() {
   const dispatch = useDispatch();
@@ -107,11 +111,45 @@ function Home() {
         console.log("Error API Categorias", error);
       }
     };
+    const GetMonedas = async () => {
+      try {
+        const response = await getMonedasApi();
+        if (response.status == 200) {
+          const payload = {
+            monedasStore: response.data
+            
+          };
+          dispatch(cargarMonedas(payload));
+        }else {
+          throw "Error al obtener monedas del sistema";
+        }    
+      } catch (error) {
+        console.log("Error API Monedas", error);
+      }
+    };
+    const GetFrecuencias = async () => {
+      try {
+        const response = await getFrecuenciasApi();
+        if (response.status == 200) {
+          const payload = {
+            frecuenciasStore: response.data
+            
+          };
+          dispatch(cargarFrecuencias(payload));
+        }else {
+          throw "Error al obtener frecuencias del sistema";
+        }    
+      } catch (error) {
+        console.log("Error API Frecuencias", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
     GetServicios();
     GetPaises();
     GetCategorias();
+    GetMonedas();
+    GetFrecuencias();
   }, []);
 
   

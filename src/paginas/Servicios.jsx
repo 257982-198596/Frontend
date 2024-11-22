@@ -56,7 +56,7 @@ function Servicios() {
 
       <br></br>
       <div className="espacio"></div>
-      <table className="table table-dark">
+      <table className="table table-striped table-dark">
         <thead>
           <tr>
             <th scope="col">#ID</th>
