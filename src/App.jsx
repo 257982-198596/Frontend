@@ -6,12 +6,16 @@ import "./estilos/estilos.css"
 import { sliceClientes } from './slices/sliceClientes'
 import { sliceTiposDocumentos } from './slices/sliceTiposDocumentos'
 import { slicePaises } from './slices/slicePaises'
+import { sliceServicios } from './slices/sliceServicios'
+import { sliceCategorias } from './slices/sliceCategorias'
 
 export const store = configureStore({
   reducer: {
     sliceClientes: sliceClientes.reducer,
     sliceTiposDocumentos: sliceTiposDocumentos.reducer,
-    slicePaises: slicePaises.reducer
+    slicePaises: slicePaises.reducer,
+    sliceServicios: sliceServicios.reducer,
+    sliceCategorias: sliceCategorias.reducer,
   },
 });
 function App() {

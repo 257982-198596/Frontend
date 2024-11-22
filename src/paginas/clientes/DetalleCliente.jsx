@@ -48,8 +48,8 @@ function DetalleCliente() {
       <h3>Detalles del Cliente</h3>
       <FormularioCliente
         formData={formData}
-        handleChange={() => {}} // No se requiere manejar cambios
-        onSubmit={(e) => e.preventDefault()} // Desactiva el envío del formulario
+        handleChange={() => {}} 
+        onSubmit={(e) => e.preventDefault()} 
         modo="detalle"
         losDocumentos={losDocumentos}
         losPaises={losPaises}

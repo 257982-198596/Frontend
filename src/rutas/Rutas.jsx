@@ -12,6 +12,9 @@ import Servicios from "../paginas/Servicios";
 import AltaClientes from "../paginas/clientes/AltaClientes";
 import EditarCliente from "../paginas/clientes/EditarCliente";
 import DetalleCliente from "../paginas/clientes/DetalleCliente";
+import AltaServicios from "../paginas/servicios/AltaServicios";
+import EditarServicio from "../paginas/servicios/EditarServicio";
+import DetalleServicio from "../paginas/servicios/DetalleServicio"; 
 
 function Rutas() {
   return (
@@ -27,6 +30,9 @@ function Rutas() {
           <Route path="/clientes/detalle/:id" element={<DetalleCliente />} />
           <Route path="/clientes/editar/:id" element={<EditarCliente />} />
           <Route path="/servicios" element={<Servicios />} />
+          <Route path="/servicios/alta" element={<AltaServicios />} />
+          <Route path="/servicios/detalle/:id" element={<DetalleServicio />} />
+          <Route path="/servicios/editar/:id" element={<EditarServicio />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/cobros" element={<Cobros />} />
           <Route path="/reportes" element={<Reportes />} />
