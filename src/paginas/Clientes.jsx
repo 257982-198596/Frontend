@@ -6,7 +6,7 @@ import { eliminarCliente } from "../slices/sliceClientes";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import  EliminarCliente from "../paginas/clientes/EliminarCliente";
+import  ModalEliminar from "../componentes/ModalEliminar";
 
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
@@ -23,6 +23,10 @@ function Clientes() {
   };
   const editarCliente = (idCliente) => {
     navigate(`/clientes/editar/${idCliente}`);
+  };
+
+  const serviciosDelCliente = (idCliente) => {
+    navigate(`/clientes/servicios-del-cliente/${idCliente}`);
   };
 
   const handleAbrirModal = (idCliente) => {
@@ -57,7 +61,7 @@ function Clientes() {
 
       <br></br>
       <div className="espacio"></div>
-      <table className="table table-dark">
+      <table className="table table-striped table-dark">
         <thead>
           <tr>
             <th scope="col">#ID</th>
@@ -69,6 +73,7 @@ function Clientes() {
             <th scope="col">Detalles</th>
             <th scope="col">Editar</th>
             <th scope="col">Eliminar</th>
+            <th scope="col">Servicios Contratados</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +89,7 @@ function Clientes() {
 
                 <td>
                   <button
-                    className="btn btn-danger oblcolor"
+                    className="btn btn-danger oblcolor btn-sm me-2"
                     onClick={() => verDetallesCliente(cliente.id)}
                   >
                     Ver Más
@@ -92,7 +97,7 @@ function Clientes() {
                 </td>
                 <td>
                   <button
-                    className="btn btn-danger oblcolor"
+                    className="btn btn-danger oblcolor btn-sm me-2"
                     onClick={() => editarCliente(cliente.id)}
                   >
                     Editar
@@ -100,10 +105,18 @@ function Clientes() {
                 </td>
                 <td>
                   <button
-                    className="btn btn-danger oblcolor"
+                    className="btn btn-danger oblcolor btn-sm me-2"
                     onClick={() => handleAbrirModal(cliente.id)}
                   >
                     Eliminar
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger oblcolor btn-sm me-2"
+                    onClick={() => serviciosDelCliente(cliente.id)}
+                  >
+                    Ver Servicios
                   </button>
                 </td>
               </tr>
@@ -113,10 +126,11 @@ function Clientes() {
       </table>
 
       {/* Modal para Confirmar Eliminación */}
-      <EliminarCliente
+      <ModalEliminar
         show={showModal}
         handleClose={handleCerrarModal}
         handleEliminar={borrarCliente}
+        objAEliminar={"cliente"}
       />
     </div>
   );

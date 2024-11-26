@@ -8,6 +8,8 @@ import { sliceTiposDocumentos } from './slices/sliceTiposDocumentos'
 import { slicePaises } from './slices/slicePaises'
 import { sliceServicios } from './slices/sliceServicios'
 import { sliceCategorias } from './slices/sliceCategorias'
+import { sliceMonedas } from './slices/sliceMonedas'
+import { sliceFrecuencias } from './slices/sliceFrecuencias'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
     slicePaises: slicePaises.reducer,
     sliceServicios: sliceServicios.reducer,
     sliceCategorias: sliceCategorias.reducer,
+    sliceMonedas: sliceMonedas.reducer,
+    sliceFrecuencias: sliceFrecuencias.reducer,
   },
 });
 function App() {
