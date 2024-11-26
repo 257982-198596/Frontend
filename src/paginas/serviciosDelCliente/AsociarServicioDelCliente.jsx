@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import FormularioServiciosDelCliente from "../../componentes/formularios/FormularioServiciosDelCliente";
-import { asociarServicioAPI } from "../../api/servicioServiciosDelCliente";
+import { postServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
+import { useNavigate } from "react-router-dom";
 
 
 function AsociarServicioDelCliente() {
@@ -15,16 +16,16 @@ function AsociarServicioDelCliente() {
     frecuenciaDelServicioId: "",
   });
 
-  
-
+  const navigate = useNavigate();
 
   const cliente = useSelector((state) =>
     state.sliceClientes.clientes.find((cliente) => cliente.id === parseInt(id))
   );
-  const lasFrecuencias = useSelector((state) => state.sliceFrecuencias.frecuencias);
+  const lasFrecuencias = useSelector(
+    (state) => state.sliceFrecuencias.frecuencias
+  );
   const lasMonedas = useSelector((state) => state.sliceMonedas.monedas);
   const losServicios = useSelector((state) => state.sliceServicios.servicios);
- 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,9 +35,12 @@ function AsociarServicioDelCliente() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const nuevoServicio = { ...formData, clienteId: id };
-      await asociarServicioAPI(nuevoServicio);
-      alert("Servicio asociado correctamente");
+      const nuevoServicio = { ...formData, ClienteId: id };
+      const response = await postServicioDelClienteAPI(nuevoServicio);
+      if (response.status === 201 || response.status === 200) {
+        //dispatch(crearServicioDelCliente(respuestaAPI.data));
+        navigate("/clientes/servicios-del-cliente/" + id);
+      }
     } catch (error) {
       console.error("Error al asociar el servicio:", error);
     }
@@ -49,6 +53,7 @@ function AsociarServicioDelCliente() {
         formData={formData}
         handleChange={handleChange}
         onSubmit={handleSubmit}
+        modo="alta"
         serviciosDisponibles={losServicios}
         monedasDisponibles={lasMonedas}
         frecuenciasDisponibles={lasFrecuencias}

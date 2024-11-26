@@ -6,7 +6,7 @@ import { eliminarCliente } from "../slices/sliceClientes";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import  EliminarCliente from "../paginas/clientes/EliminarCliente";
+import  ModalEliminar from "../componentes/ModalEliminar";
 
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
@@ -126,10 +126,11 @@ function Clientes() {
       </table>
 
       {/* Modal para Confirmar Eliminación */}
-      <EliminarCliente
+      <ModalEliminar
         show={showModal}
         handleClose={handleCerrarModal}
         handleEliminar={borrarCliente}
+        objAEliminar={"cliente"}
       />
     </div>
   );

@@ -1,14 +1,14 @@
 
 import { Modal, Button } from "react-bootstrap";
 
-function EliminarCliente({ show, handleClose, handleEliminar }) {
+function ModalEliminar({ show, handleClose, handleEliminar, objAEliminar }) {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Confirmar Eliminación</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        ¿Estás seguro que deseas eliminar este cliente? Esta acción no se puede deshacer.
+        ¿Estás seguro que deseas eliminar este {objAEliminar}? Esta acción no se puede deshacer.
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -22,4 +22,4 @@ function EliminarCliente({ show, handleClose, handleEliminar }) {
   );
 }
 
-export default EliminarCliente;
+export default ModalEliminar;

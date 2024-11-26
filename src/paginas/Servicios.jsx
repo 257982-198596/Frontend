@@ -112,6 +112,7 @@ function Servicios() {
         show={showModal}
         handleClose={handleCerrarModal}
         handleEliminar={borrarServicio}
+        objAEliminar={"servicio"}
       />
     </div>
   );

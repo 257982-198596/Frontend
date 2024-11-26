@@ -1,14 +1,16 @@
 import { Form, Button } from "react-bootstrap";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function FormularioServiciosDelCliente({
   formData,
   handleChange,
   onSubmit,
+  modo,
   serviciosDisponibles,
   monedasDisponibles,
   frecuenciasDisponibles,
 }) {
+  const isReadOnly = modo === "detalle";
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3">
@@ -90,41 +92,20 @@ function FormularioServiciosDelCliente({
         </Form.Select>
       </Form.Group>
 
-      <Button variant="primary" type="submit" className="mt-3">
-        Asociar Servicio
-      </Button>
+      <div className="d-flex justify-content-center">
+      {!isReadOnly && (
+          <Button variant="dark" type="submit" className="botones-formularios">
+            {modo === "alta" ? "Crear Cliente" : "Guardar Cambios"}
+          </Button>
+        )}
+        <Link to="/clientes">
+          <Button variant="secondary" className="botones-formularios">Volver al Listado</Button>
+        </Link>
+        </div>
     </Form>
   );
 }
 
-FormularioServiciosDelCliente.propTypes = {
-  formData: PropTypes.shape({
-    servicioContratadoId: PropTypes.string.isRequired,
-    precio: PropTypes.string.isRequired,
-    monedaDelServicioId: PropTypes.string.isRequired,
-    fechaInicio: PropTypes.string.isRequired,
-    frecuenciaDelServicioId: PropTypes.string.isRequired,
-  }).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  serviciosDisponibles: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      nombre: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  monedasDisponibles: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      nombre: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  frecuenciasDisponibles: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      nombre: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
+
 
 export default FormularioServiciosDelCliente;

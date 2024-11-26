@@ -17,6 +17,7 @@ import EditarServicio from "../paginas/servicios/EditarServicio";
 import DetalleServicio from "../paginas/servicios/DetalleServicio"; 
 import ServiciosDelCliente from "../paginas/serviciosDelCliente/ServiciosDelCliente";
 import AsociarServicioDelCliente from "../paginas/serviciosDelCliente/AsociarServicioDelCliente";
+import EditarServicioDelCliente from "../paginas/serviciosDelCliente/EditarServicioDelCliente";
 
 
 function Rutas() {
@@ -33,6 +34,7 @@ function Rutas() {
           <Route path="/clientes/detalle/:id" element={<DetalleCliente />} />
           <Route path="/clientes/editar/:id" element={<EditarCliente />} />
           <Route path="/clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
+          <Route path="/clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
           <Route path="/clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/servicios/alta" element={<AltaServicios />} />
