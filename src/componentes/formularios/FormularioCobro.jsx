@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getServiciosActivosEnApi, getServiciosPagosEnApi } from "../../api/servicioServiciosDelCliente";
 
 
-function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, losClientes, losS, clienteId  }) {
+function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, losClientes, losMediosDePago, clienteId  }) {
     const isReadOnly = modo === "detalle";
     const [losServicios, setLosServicios] = useState([]);
 
@@ -55,7 +55,9 @@ function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, l
             </Form.Group>
 
             <Form.Group className="mb-3">
-            <Form.Label htmlFor="servicio">Servicio</Form.Label>
+            <Form.Label htmlFor="servicio">
+            {modo === "detalle" ? "Servicio Pago" : "Servicio Activo (a pagar) *Seleccione primero el cliente"}
+            </Form.Label>
                 <Form.Select
                     id="servicio"
                     name="servicio"
@@ -64,9 +66,8 @@ function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, l
                     disabled={isReadOnly}
                 >
                     <option value="">Seleccione un servicio</option>
-                    {console.log("losServicios", losServicios)}
                     {losServicios.map((servicio) => (
-                        <option key={servicio.servicioContratado.id} value={servicio.servicioContratado.id}>
+                        <option key={servicio.id} value={servicio.id}>
                             {servicio.descripcion}
                         </option>
                     ))}
@@ -104,6 +105,25 @@ function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, l
                 </Form.Select>
             </Form.Group>
 
+            <Form.Group className="mb-3">
+                <Form.Label htmlFor="medioDePago">Medio de Pago</Form.Label>
+                <Form.Select
+                    id="medioDePago"
+                    name="medioDePago"
+                    value={formData.medioDePago}
+                    onChange={handleChange}
+                    disabled={isReadOnly}
+                >
+                    <option value="">Seleccione una medios de pago</option>
+                    {losMediosDePago.map((mediosDePago) => (
+                        
+                        <option key={mediosDePago.id} value={mediosDePago.id}>
+                            {mediosDePago.nombre}
+                        </option>
+                        
+                    ))}
+                </Form.Select>
+            </Form.Group>
             <div className="d-flex justify-content-center">
                 {!isReadOnly && (
                     <Button variant="dark" type="submit" className="botones-formularios">

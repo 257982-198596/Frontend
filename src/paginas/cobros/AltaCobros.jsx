@@ -10,21 +10,22 @@ function AltaCobros() {
   const navigate = useNavigate();
   const monedas = useSelector((state) => state.sliceMonedas.monedas);
   const clientes = useSelector((state) => state.sliceClientes.clientes);
+  const mediosDePago = useSelector((state) => state.sliceMediosDePago.mediosDePago);
 
   const [clienteId, setClienteId] = useState("");
   const [formData, setFormData] = useState({
     cliente: "",
     servicio: "",
-    descripcion: "",
     monto: "",
-    moneda: ""
+    moneda: "",
+    medioDePago: "",
   });
 
   // Actualizar cliente seleccionado
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-
+    console.log("Cambio detectado:", { name, value });
     // Actualizar clienteId para cargar los servicios activos
     if (name === "cliente") {
       setClienteId(value);
@@ -55,6 +56,7 @@ function AltaCobros() {
         modo="alta"
         lasMonedas={monedas}
         losClientes={clientes}
+        losMediosDePago={mediosDePago}
         clienteId={clienteId} 
       />
     </div>

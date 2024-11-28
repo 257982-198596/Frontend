@@ -48,8 +48,9 @@ export const borrarCobroEnAPI = async (idCobro) => {
 //POST NUEVO COBRO
 export const postNuevoCobroAPI = async (objCobro) => {
   try {
+    console.log('objCobro', objCobro)
     const response = await axios.post(
-      `${urlAPI}cobros`,
+      `${urlAPI}cobrosrecibidos`,
       armarJsonCobro(objCobro),
       {
         headers: {
@@ -75,11 +76,12 @@ export const postNuevoCobroAPI = async (objCobro) => {
 
 function armarJsonCobro(obj) {
   const json = {
-    SuscriptorId: obj.idUsuarioSuscriptor,
-    Nombre: obj.nombre,
-    Descripcion: obj.descripcion,
-    CategoriaId: obj.categoriaId
-
+    ClienteId: obj.cliente,
+    ServicioDelClienteId: obj.servicio,
+    Monto: obj.monto,
+    MonedaDelCobroId: obj.moneda,
+    MedioPagoId: obj.medioDePago
   };
+  console.log('json', json)
   return json;
 }

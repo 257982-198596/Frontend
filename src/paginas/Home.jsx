@@ -24,6 +24,8 @@ import { getFrecuenciasApi } from "../api/servicioFrecuencias";
 import { cargarFrecuencias } from "../slices/sliceFrecuencias";
 import { getCobrosApi } from "../api/servicioCobros";
 import { cargarCobros } from "../slices/sliceCobros";
+import { getMediosDePagoApi } from "../api/servicioMediosDePago";
+import { cargarMediosDePago } from "../slices/sliceMediosDePago";
 
 function Home() {
   const dispatch = useDispatch();
@@ -161,6 +163,22 @@ function Home() {
         console.log("Error API Cobros", error);
       }
     };
+    const GetMediosDePago = async () => {
+      try {
+        const response = await getMediosDePagoApi();
+        if (response.status == 200) {
+          const payload = {
+            mediosDePagoStore: response.data
+            
+          };
+          dispatch(cargarMediosDePago(payload));
+        }else {
+          throw "Error al obtener medios de pago del sistema";
+        }    
+      } catch (error) {
+        console.log("Error API Medios de Pago", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
     GetServicios();
@@ -169,6 +187,7 @@ function Home() {
     GetMonedas();
     GetFrecuencias();
     GetCobros();
+    GetMediosDePago();
   }, []);
 
   

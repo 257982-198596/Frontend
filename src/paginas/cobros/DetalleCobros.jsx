@@ -10,6 +10,7 @@ function DetalleCobros() {
  
   const monedas = useSelector((state) => state.sliceMonedas.monedas);
   const clientes = useSelector((state) => state.sliceClientes.clientes);
+  const mediosDePago = useSelector((state) => state.sliceMediosDePago.mediosDePago);
   //id del cliente seleccionado
   const location = useLocation();
   const clienteId = location.state?.clienteId;
@@ -21,18 +22,19 @@ function DetalleCobros() {
     servicio: "",
     descripcion: "",
     monto: "",
-    moneda: ""
-
+    moneda: "",
+    medioDePago: ""
   });
 
   useEffect(() => {
     if (cobro) {
       setFormData({
         cliente: cobro.servicioDelCliente.clienteId || "",
-        servicio: cobro.servicioDelCliente.servicioContratado.id || "",
+        servicio: cobro.servicioDelCliente.id || "",
         descripcion: cobro.servicioDelCliente.descripcion || "",
         monto: cobro.monto || "",
-        moneda: cobro.monedaDelCobro.id || ""
+        moneda: cobro.monedaDelCobro.id || "",
+        medioDePago: cobro.medioPago.id || ""
       });
     }
   }, [cobro]);
@@ -51,6 +53,7 @@ function DetalleCobros() {
         modo="detalle"
         lasMonedas={monedas}
         losClientes={clientes}
+        losMediosDePago={mediosDePago}
         clienteId={clienteId}
       />
     </div>
