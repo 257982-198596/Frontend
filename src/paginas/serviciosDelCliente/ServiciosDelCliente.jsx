@@ -73,7 +73,7 @@ function ServiciosDelCliente() {
         <table className="table table-striped table-dark">
           <thead>
             <tr>
-
+              <th>Descripcion</th>
               <th>Servicio</th>
               <th>Precio</th>
               <th>Moneda</th>
@@ -87,7 +87,7 @@ function ServiciosDelCliente() {
           <tbody>
             {serviciosContratados.map((servicio) => (
               <tr key={servicio.id}>
-
+                <td>{servicio.descripcion}</td>
                 <td>{servicio.servicioContratado.nombre}</td>
                 <td>{servicio.precio}</td>
                 <td>{servicio.monedaDelServicio.nombre}</td>

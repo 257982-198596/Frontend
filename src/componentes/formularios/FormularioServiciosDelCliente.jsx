@@ -14,6 +14,18 @@ function FormularioServiciosDelCliente({
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3">
+        <Form.Label htmlFor="descripcion">Descripcion</Form.Label>
+        <Form.Control
+          type="text"
+          id="descripcion"
+          name="descripcion"
+          value={formData.descripcion}
+          onChange={handleChange}
+          placeholder="Ingrese la descripcion"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
         <Form.Label htmlFor="servicioContratadoId">Servicio</Form.Label>
         <Form.Select
           id="servicioContratadoId"
@@ -95,7 +107,7 @@ function FormularioServiciosDelCliente({
       <div className="d-flex justify-content-center">
       {!isReadOnly && (
           <Button variant="dark" type="submit" className="botones-formularios">
-            {modo === "alta" ? "Crear Cliente" : "Guardar Cambios"}
+            {modo === "alta" ? "Asociar Servicio" : "Guardar Cambios"}
           </Button>
         )}
         <Link to="/clientes">

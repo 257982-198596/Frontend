@@ -10,6 +10,7 @@ import { sliceServicios } from './slices/sliceServicios'
 import { sliceCategorias } from './slices/sliceCategorias'
 import { sliceMonedas } from './slices/sliceMonedas'
 import { sliceFrecuencias } from './slices/sliceFrecuencias'
+import { sliceCobros } from './slices/sliceCobros'
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     sliceCategorias: sliceCategorias.reducer,
     sliceMonedas: sliceMonedas.reducer,
     sliceFrecuencias: sliceFrecuencias.reducer,
+    sliceCobros: sliceCobros.reducer,
   },
 });
 function App() {
