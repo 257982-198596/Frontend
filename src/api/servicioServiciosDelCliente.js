@@ -30,6 +30,64 @@ export const obtenerServiciosClienteAPI = async (idCliente) => {
   }
 };
 
+//Get - Servicios ACTIVOS de un Cliente 
+export const getServiciosActivosEnApi = async (idCliente) => {
+  try {
+    const response = await axios.get(
+      `${urlAPI}serviciosdelcliente/activos/${idCliente}`,
+      {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener servicios ACTIVOS del cliente");
+    }
+  } catch (error) {
+    console.error(
+      "Error al realizar el GET SERVICIOS ACTIVOS DEL CLIENTE:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(
+      error.response?.data?.message || "Error GET SERVICIOS ACTIVOS DEL CLIENTE"
+    );
+  }
+};
+
+//Get - Servicios PAGOS de un Cliente 
+export const getServiciosPagosEnApi = async (idCliente) => {
+  try {
+    const response = await axios.get(
+      `${urlAPI}serviciosdelcliente/pagos/${idCliente}`,
+      {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener servicios PAGOS del cliente");
+    }
+  } catch (error) {
+    console.error(
+      "Error al realizar el GET SERVICIOS PAGOS DEL CLIENTE:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(
+      error.response?.data?.message || "Error GET SERVICIOS PAGOS DEL CLIENTE"
+    );
+  }
+};
+
 //Get by ID - Servicios de un Cliente 
 export const obtenerServicioDelClienteAPI = async (idServicioDelCliente) => {
   try {

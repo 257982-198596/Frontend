@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 function AsociarServicioDelCliente() {
   const { id } = useParams();
   const [formData, setFormData] = useState({
+    descripcion: "",
     servicioContratadoId: "",
     precio: "",
     monedaDelServicioId: "",

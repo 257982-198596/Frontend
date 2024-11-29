@@ -12,6 +12,7 @@ function EditarServicioDelCliente() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    descripcion: "",
     servicioContratadoId: "",
     precio: "",
     monedaDelServicioId: "",
@@ -34,7 +35,7 @@ function EditarServicioDelCliente() {
           const servicio = response.data;
 
           setFormData({
-
+            descripcion: servicio.descripcion,
             servicioContratadoId: servicio.servicioContratadoId, 
             precio: servicio.precio, 
             monedaDelServicioId: servicio.monedaDelServicioId, 
