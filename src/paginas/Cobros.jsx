@@ -55,6 +55,7 @@ function Cobros() {
       </Link>
 
       <br></br>
+      
       <div className="espacio"></div>
       <table className="table table-striped table-dark">
         <thead>
@@ -115,7 +116,7 @@ function Cobros() {
         show={showModal}
         handleClose={handleCerrarModal}
         handleEliminar={borrarCobro}
-        objAEliminar={"cliente"}
+        objAEliminar={"cobro"}
       />
     </div>
   );
