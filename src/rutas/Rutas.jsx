@@ -20,7 +20,7 @@ import AsociarServicioDelCliente from "../paginas/serviciosDelCliente/AsociarSer
 import EditarServicioDelCliente from "../paginas/serviciosDelCliente/EditarServicioDelCliente";
 import DetalleCobros from "../paginas/cobros/DetalleCobros";
 import AltaCobros from "../paginas/cobros/AltaCobros";
-
+import EditarCobros from "../paginas/cobros/EditarCobros";
 
 function Rutas() {
   return (
@@ -45,6 +45,7 @@ function Rutas() {
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/cobros" element={<Cobros />} />
           <Route path="/cobros/alta" element={<AltaCobros />} />
+          <Route path="/cobros/editar/:id" element={<EditarCobros />} />
           <Route path="/cobros/detalle/:id" element={<DetalleCobros />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/categorias" element={<Categorias />} />

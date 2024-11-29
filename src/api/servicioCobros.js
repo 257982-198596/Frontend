@@ -74,6 +74,36 @@ export const postNuevoCobroAPI = async (objCobro) => {
 };
   
 
+// PUT - ACTUALIZAR COBRO
+export const putActualizarCobroAPI = async (objcobro) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}cobrosrecibidos/${objcobro.id}`,
+      armarJsonCobro(objcobro),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al actualizar cliente");
+    }
+  } catch (error) {
+    console.error(
+      "Error al realizar el PUT CLIENTES:",
+      error.response?.data || error.message
+    );
+    console.log(error.response.data.errors.Nombre);
+    throw new Error(
+      error.response?.data?.message || "Error al actualizar cliente"
+    );
+  }
+};
+
 function armarJsonCobro(obj) {
   const json = {
     ClienteId: obj.cliente,

@@ -25,11 +25,16 @@ export const sliceCobros = createSlice({
       console.log("nuevaListaCobros", nuevaListaCobros);
       state.cobros = nuevaListaCobros;
     },
-    
+    actualizarCobros: (state, action) => {
+      const index = state.cobros.findIndex(cobro => cobro.id === action.payload.id);
+      if (index !== -1) {
+        state.cobros[index] = action.payload;
+      }
+    }
     
   },
 });
 
-export const { cargarCobros, eliminarCobro, crearCobro } =
+export const { cargarCobros, eliminarCobro, crearCobro, actualizarCobros } =
 sliceCobros.actions;
 export default sliceCobros.reducer;
