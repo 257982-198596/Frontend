@@ -4,8 +4,10 @@ import { useState } from "react";
 import { postNuevoClienteAPI } from "../../api/servicioClientes";
 import { crearClientes } from "../../slices/sliceClientes";
 import FormularioCliente from "../../componentes/formularios/FormularioCliente";
+import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
+import { ToastContainer } from 'react-toastify';
 
-function AltaClientes() {
+export default function AltaClientes() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,13 +35,19 @@ function AltaClientes() {
 
   const submitNuevoCliente = async (event) => {
     event.preventDefault();
-    
-    const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
+    try{
+      const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
     const objCliente = { idUsuarioSuscriptor, ...formData };
     const respuestaAPI = await postNuevoClienteAPI(objCliente);
     if (respuestaAPI.status === 201 || respuestaAPI.status === 200) {
       dispatch(crearClientes(respuestaAPI.data));
-      navigate("/clientes");
+      //navigate("/clientes");
+      mostrarSuccess("Cliente creado con éxito");
+    }
+    } catch (error) {
+      console.log(error)
+      
+      mostrarError(error.message);
     }
   };
 
@@ -54,8 +62,8 @@ function AltaClientes() {
         losDocumentos={losDocumentos}
         losPaises={losPaises}
       />
+      <ToastContainer />
     </div>
+    
   );
 }
-
-export default AltaClientes;
