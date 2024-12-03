@@ -6,6 +6,7 @@ import { obtenerServiciosClienteAPI } from "../../api/servicioServiciosDelClient
 import { useNavigate } from "react-router-dom";
 import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import ModalEliminar from "../../componentes/ModalEliminar";
+import { useRef } from "react";
 
 function ServiciosDelCliente() {
   const { id } = useParams();
@@ -13,7 +14,8 @@ function ServiciosDelCliente() {
   const navigate = useNavigate();
 
   const [serviciosContratados, setServiciosContratados] = useState([]);
-  
+  const [serviciosFiltrados, setServiciosFiltrados] = useState([]);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
   
@@ -36,6 +38,22 @@ function ServiciosDelCliente() {
     setModalVisible(false);
   };
 
+  //filtrado del select
+  const busSelectorFiltro = useRef("");
+
+  const handleFiltrar = () => {
+    const estadoSeleccionado = busSelectorFiltro.current.value;
+    if (estadoSeleccionado === "" || estadoSeleccionado === "todos") {
+      console.log('serviciosContratados', serviciosContratados)
+      setServiciosFiltrados(serviciosContratados);
+    } else {
+      const serviciosFiltrados = serviciosContratados.filter(
+        (servicio) => servicio.estadoDelServicioDelCliente.nombre === estadoSeleccionado
+      );
+      setServiciosFiltrados(serviciosFiltrados);
+    }
+  };
+
   const eliminarServicio = async () => {
     try {
       
@@ -52,6 +70,7 @@ function ServiciosDelCliente() {
   const cargarServicios = async () => {
     const response = await obtenerServiciosClienteAPI(id);
     setServiciosContratados(response.data);
+    setServiciosFiltrados(response.data); 
   };
 
   useEffect(() => {
@@ -69,7 +88,20 @@ function ServiciosDelCliente() {
         <button className="btn oblcolor">Asociar Servicio</button>
       </Link>
       <div className="espacio"></div>
-      {Array.isArray(serviciosContratados) && serviciosContratados.length > 0 ? (
+      <label htmlFor="slc-buscador">Filtrar por tipo:</label>
+          <select id="slc-buscador" className="form-select" name="slc-buscador" ref={busSelectorFiltro}>
+            <option value="">Seleccione Estado del Servicio</option>
+            <option value="Activo">Activo</option>
+            <option value="Pago">Pago</option>
+            <option value="Vencido">Vencido</option>
+            <option value="todos">Ver Todos</option>
+          </select>
+          <button className="btn btn-danger oblcolor" onClick={handleFiltrar}>
+            Filtrar
+          </button>
+          <br></br>
+      <div className="espacio"></div>
+      {Array.isArray(serviciosFiltrados) && serviciosFiltrados.length > 0 ? (
         <table className="table table-striped table-dark">
           <thead>
             <tr>
@@ -85,7 +117,7 @@ function ServiciosDelCliente() {
             </tr>
           </thead>
           <tbody>
-            {serviciosContratados.map((servicio) => (
+            {serviciosFiltrados.map((servicio) => (
               <tr key={servicio.id}>
                 <td>{servicio.descripcion}</td>
                 <td>{servicio.servicioContratado.nombre}</td>
