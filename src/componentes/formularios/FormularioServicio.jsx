@@ -1,6 +1,7 @@
 
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function FormularioServicio({ formData, handleChange, onSubmit, modo, lasCategorias }) {
     const isReadOnly = modo === "detalle";
@@ -62,6 +63,7 @@ function FormularioServicio({ formData, handleChange, onSubmit, modo, lasCategor
             <Button variant="secondary" className="botones-formularios">Volver al Listado</Button>
           </Link>
         </div>
+        <ToastContainer />
       </Form>
     );
   }

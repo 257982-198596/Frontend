@@ -1,5 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function FormularioServiciosDelCliente({
   formData,
@@ -114,6 +115,7 @@ function FormularioServiciosDelCliente({
           <Button variant="secondary" className="botones-formularios">Volver al Listado</Button>
         </Link>
         </div>
+        <ToastContainer />
     </Form>
   );
 }

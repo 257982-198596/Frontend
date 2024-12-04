@@ -2,7 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getServiciosActivosEnApi, getServiciosPagosEnApi } from "../../api/servicioServiciosDelCliente";
-
+import { ToastContainer } from "react-toastify";
 
 function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, losClientes, losMediosDePago, clienteId  }) {
     const isReadOnly = modo === "detalle";
@@ -136,6 +136,7 @@ function FormularioCobro({ formData, handleChange, onSubmit, modo, lasMonedas, l
                     </Button>
                 </Link>
             </div>
+            <ToastContainer />
         </Form>
     );
 }

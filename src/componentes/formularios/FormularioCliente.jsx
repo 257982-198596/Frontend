@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function FormularioCliente({
   formData,
@@ -14,7 +15,7 @@ function FormularioCliente({
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="nombre">Nombre del cliente</Form.Label>
+        <Form.Label htmlFor="nombre">Nombre del cliente *</Form.Label>
         <Form.Control
           type="text"
           id="nombre"
@@ -27,7 +28,7 @@ function FormularioCliente({
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label htmlFor="idDocumento">
-          Seleccione Tipo de Documento
+          Seleccione Tipo de Documento *
         </Form.Label>
         <Form.Select
           id="idDocumento"
@@ -45,7 +46,7 @@ function FormularioCliente({
         </Form.Select>
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="numDocumento">Número de Documento</Form.Label>
+        <Form.Label htmlFor="numDocumento">Número de Documento *</Form.Label>
         <Form.Control
           type="number"
           id="numDocumento"
@@ -56,7 +57,7 @@ function FormularioCliente({
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="telefono">Número de Teléfono</Form.Label>
+        <Form.Label htmlFor="telefono">Número de Teléfono *</Form.Label>
         <Form.Control
           type="number"
           id="telefono"
@@ -67,7 +68,7 @@ function FormularioCliente({
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="direccion">Dirección</Form.Label>
+        <Form.Label htmlFor="direccion">Dirección *</Form.Label>
         <Form.Control
           type="text"
           id="direccion"
@@ -78,7 +79,7 @@ function FormularioCliente({
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="persona">Persona de Contacto</Form.Label>
+        <Form.Label htmlFor="persona">Persona de Contacto *</Form.Label>
         <Form.Control
           type="text"
           id="persona"
@@ -89,7 +90,7 @@ function FormularioCliente({
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="idPais">País de Origen</Form.Label>
+        <Form.Label htmlFor="idPais">País de Origen *</Form.Label>
         <Form.Select
           id="idPais"
           name="idPais"
@@ -106,7 +107,7 @@ function FormularioCliente({
         </Form.Select>
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="email">Correo Electrónico</Form.Label>
+        <Form.Label htmlFor="email">Correo Electrónico *</Form.Label>
         <Form.Control
           type="text"
           id="email"
@@ -117,7 +118,7 @@ function FormularioCliente({
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="password">Contraseña</Form.Label>
+        <Form.Label htmlFor="password">Contraseña *</Form.Label>
         <Form.Control
           type="text"
           id="password"
@@ -139,6 +140,7 @@ function FormularioCliente({
         </Link>
         
       </div>
+      <ToastContainer />
     </Form>
   );
 }

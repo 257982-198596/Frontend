@@ -65,14 +65,8 @@ export const putActualizarClienteAPI = async (objCliente) => {
       throw new Error("Error al actualizar cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el PUT CLIENTES:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error al actualizar cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
