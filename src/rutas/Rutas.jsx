@@ -21,35 +21,22 @@ import EditarServicioDelCliente from "../paginas/serviciosDelCliente/EditarServi
 import DetalleCobros from "../paginas/cobros/DetalleCobros";
 import AltaCobros from "../paginas/cobros/AltaCobros";
 import EditarCobros from "../paginas/cobros/EditarCobros";
-
+import ControlAutenticacion from "../componentes/ControlAutenticacion";
+import RutasProtegidas from "./RutasProtegidas";
 function Rutas() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-
         <Route path="/registro" element={<Registro />} />
-
-        <Route path="/" element={<Home />}>
-          <Route path="/clientes" element={<Clientes />}/>
-          <Route path="/clientes/alta" element={<AltaClientes />} />
-          <Route path="/clientes/detalle/:id" element={<DetalleCliente />} />
-          <Route path="/clientes/editar/:id" element={<EditarCliente />} />
-          <Route path="/clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
-          <Route path="/clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
-          <Route path="/clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
-          <Route path="/servicios" element={<Servicios />} />
-          <Route path="/servicios/alta" element={<AltaServicios />} />
-          <Route path="/servicios/detalle/:id" element={<DetalleServicio />} />
-          <Route path="/servicios/editar/:id" element={<EditarServicio />} />
-          <Route path="/notificaciones" element={<Notificaciones />} />
-          <Route path="/cobros" element={<Cobros />} />
-          <Route path="/cobros/alta" element={<AltaCobros />} />
-          <Route path="/cobros/editar/:id" element={<EditarCobros />} />
-          <Route path="/cobros/detalle/:id" element={<DetalleCobros />} />
-          <Route path="/reportes" element={<Reportes />} />
-          <Route path="/categorias" element={<Categorias />} />
-        </Route>
+        <Route
+          path="/*"
+          element={
+            <ControlAutenticacion>
+              <RutasProtegidas />
+            </ControlAutenticacion>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

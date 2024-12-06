@@ -16,12 +16,8 @@ export const getServiciosApi = async () => {
       throw new Error("Error al obtener servicios");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET SERVICIOS:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error GET SERVICIOS");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -39,16 +35,10 @@ export const postNuevoServicioAPI = async (objServicio) => {
     );
     if (response.status === 201 || response.status === 200) {
       return response;
-    } else {
-      throw new Error("Error al crear servicio");
-    }
+    } 
   } catch (error) {
-    console.error(
-      "Error al realizar el POST:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error al crear servicio");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -71,14 +61,8 @@ export const putActualizarServicioAPI = async (objServicio) => {
       throw new Error("Error al actualizar servicio");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el PUT SERVICIO",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error al actualizar servicio"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -93,14 +77,8 @@ export const borrarServicioEnAPI = async (idServicio) => {
     }); 
     return idServicio;
   } catch (error) {
-    console.error(
-      "Error al realizar el DELETE de SERVICIO",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors);
-    throw new Error(
-      error.response?.data?.message || "Error al eliminar servicio"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 

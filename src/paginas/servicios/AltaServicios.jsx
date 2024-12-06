@@ -4,6 +4,8 @@ import { useState } from "react";
 import { postNuevoServicioAPI } from "../../api/servicioServicios";
 import { crearServicios } from "../../slices/sliceServicios";
 import FormularioServicio from "../../componentes/formularios/FormularioServicio";
+import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
+
 
 function AltaServicios() {
   const dispatch = useDispatch();
@@ -23,15 +25,50 @@ function AltaServicios() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const limpiarFormulario = () => {
+    setFormData({
+      nombre: "",
+      descripcion: "",
+      categoriaId: "",
+    });
+  };
+
+  const validarFormulario = (formData) => {
+    if (!formData.nombre) {
+      mostrarError("El nombre es obligatorio");
+      return false;
+    }
+    if (!formData.descripcion) {
+      mostrarError("La descripción es obligatoria");
+      return false;
+    }
+    if (!formData.categoriaId) {
+      mostrarError("Debe seleccionar una categoría");
+      return false;
+    }
+    return true;
+  };
+
   const submitNuevoServicio = async (event) => {
     event.preventDefault();
-    const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
-    const objServicio = { idUsuarioSuscriptor, ...formData };
-    const respuestaAPI = await postNuevoServicioAPI(objServicio);
-    if (respuestaAPI.status === 201 || respuestaAPI.status === 200) {
-      dispatch(crearServicios(respuestaAPI.data));
-      navigate("/servicios");
+    if (!validarFormulario(formData)) {
+      return;
     }
+
+    try {
+      const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
+      const objServicio = { idUsuarioSuscriptor, ...formData };
+      const respuestaAPI = await postNuevoServicioAPI(objServicio);
+      if (respuestaAPI.status === 201 || respuestaAPI.status === 200) {
+        dispatch(crearServicios(respuestaAPI.data));
+        //navigate("/servicios");
+        mostrarSuccess("Servicio creado con éxito");
+        limpiarFormulario();
+      }
+    }catch(error){
+      mostrarError(error.message);
+    }
+    
   };
 
   return (

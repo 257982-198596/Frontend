@@ -12,6 +12,7 @@ import { sliceMonedas } from './slices/sliceMonedas'
 import { sliceFrecuencias } from './slices/sliceFrecuencias'
 import { sliceCobros } from './slices/sliceCobros'
 import { sliceMediosDePago } from './slices/sliceMediosDePago'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const store = configureStore({
   reducer: {

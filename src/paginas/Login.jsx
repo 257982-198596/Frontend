@@ -2,7 +2,8 @@ import  { useRef, useState } from "react";
 import { iniciarSesionApi } from "../api/servicioUsuarios";
 import { Link,useNavigate } from "react-router-dom";
 import Footer from "../componentes/Footer";
-
+import { mostrarError,mostrarSuccess } from "../componentes/Toasts";
+import { ToastContainer } from 'react-toastify';
 
 function Login() {
   const usuarioRef = useRef();
@@ -11,7 +12,7 @@ function Login() {
   const navigate = useNavigate();
   const [deshabilitado, setDeshabilitado] = useState(true);
 
-  const [errorLogin, setErrorLogin] = useState(false);
+
 
   const iniciarSesion = async () => {
     //falta validar
@@ -22,15 +23,17 @@ function Login() {
     );
     if (response.status === 200) {
       const usuarioLogueado = response.data;  
+      console.log("Usuario logueado", usuarioLogueado);
       localStorage.setItem("idUsuario", usuarioLogueado.id);
       localStorage.setItem("idRol", usuarioLogueado.rolId);
       //localStorage.setItem("apiKey", respuesta.apiKey);
+      mostrarSuccess("Usuario logueado con éxito");
       navigate(`/`);
-    }else{
-      	console.error("Error al iniciar sesion");
+      
     }
     }catch(error){
-      console.error(error.response?.data || error.message);
+
+      mostrarError(error.message);
     }
     
   };
@@ -86,9 +89,9 @@ function Login() {
                 Iniciar Sesion
               </button>
               <br />
-              {errorLogin && <p className="oblerror">Error de usuario o contraseña</p>}
               <Link to="/registro">Registrar Usuario</Link>
             </form>
+            <ToastContainer />
           </div>
         </div>
       </div>

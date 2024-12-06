@@ -23,8 +23,7 @@ export const iniciarSesionApi = async (email, password) => {
       throw new Error("Error al iniciar sesión");
     }
   } catch (error) {
-    console.error("Error al iniciar sesion", error.response?.data || error.message);
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error al iniciar sesion");
+    //console.log(error.response?.data);
+    throw new Error(error.response?.data.message);
   }
 };

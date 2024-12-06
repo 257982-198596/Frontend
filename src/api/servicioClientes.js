@@ -16,12 +16,8 @@ export const getClientesApi = async () => {
       throw new Error("Error al obtener clientes");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET CLIENTES:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error GET CLIENTES");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -39,16 +35,10 @@ export const postNuevoClienteAPI = async (objCliente) => {
     );
     if (response.status === 201 || response.status === 200) {
       return response;
-    } else {
-      throw new Error("Error al crear cliente");
-    }
+    } 
   } catch (error) {
-    console.error(
-      "Error al realizar el POST:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error al crear cliente");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -71,14 +61,8 @@ export const putActualizarClienteAPI = async (objCliente) => {
       throw new Error("Error al actualizar cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el PUT CLIENTES:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error al actualizar cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -93,14 +77,8 @@ export const borrarClienteEnAPI = async (idCliente) => {
     }); 
     return idCliente;
   } catch (error) {
-    console.error(
-      "Error al realizar el DELETE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors);
-    throw new Error(
-      error.response?.data?.message || "Error al eliminar cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 

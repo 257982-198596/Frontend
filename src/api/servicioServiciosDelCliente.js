@@ -19,14 +19,8 @@ export const obtenerServiciosClienteAPI = async (idCliente) => {
       throw new Error("Error al obtener servicios del cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET SERVICIOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error GET SERVICIOS DEL CLIENTE"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -48,14 +42,8 @@ export const getServiciosActivosEnApi = async (idCliente) => {
       throw new Error("Error al obtener servicios ACTIVOS del cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET SERVICIOS ACTIVOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error GET SERVICIOS ACTIVOS DEL CLIENTE"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -77,14 +65,8 @@ export const getServiciosPagosEnApi = async (idCliente) => {
       throw new Error("Error al obtener servicios PAGOS del cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET SERVICIOS PAGOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error GET SERVICIOS PAGOS DEL CLIENTE"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -106,16 +88,34 @@ export const obtenerServicioDelClienteAPI = async (idServicioDelCliente) => {
       throw new Error("Error al obtener servicio del cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el POST SERVICIOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error POST SERVICIOS DEL CLIENTE"
-    );
-}
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
 }  
+
+// Get - Servicio del Cliente por ID
+export const getServicioDelClientePorIdAPI = async (idServicio) => {
+  try {
+    const response = await axios.get(
+      `${urlAPI}serviciosdelcliente/servicio/${idServicio}`,
+      {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener el servicio del cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
 //POST - Nuevo Servicios de un Cliente 
 export const postServicioDelClienteAPI = async (objServicioCliente) => {
   try {
@@ -134,15 +134,9 @@ export const postServicioDelClienteAPI = async (objServicioCliente) => {
         throw new Error("Error al crear cliente");
       }
   } catch (error) {
-    console.error(
-      "Error al realizar el POST SERVICIOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error POST SERVICIOS DEL CLIENTE"
-    );
-}
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
 };
 
 //PUT - Actualizar Servicios de un Cliente 
@@ -164,15 +158,10 @@ export const putServicioDelClienteAPI = async (idServicioCliente, objServicioCli
         throw new Error("Error al actualizar servicio del cliente");
       }
   } catch (error) {
-    console.error(
-      "Error al realizar el POST SERVICIOS DEL CLIENTE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error POST SERVICIOS DEL CLIENTE"
-    );
-}
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+
 };
 
 // DELETE - Eliminar Servicio de un Cliente
@@ -189,13 +178,7 @@ export const eliminarServicioDelClienteAPI = async (idServicioCliente) => {
 
     return idServicioCliente;
   } catch (error) {
-    console.error(
-      "Error al realizar el DELETE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors);
-    throw new Error(
-      error.response?.data?.message || "Error al eliminar servicio del cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
