@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalEliminar from "../componentes/ModalEliminar";
 import { borrarCobroEnAPI } from "../api/servicioCobros";
 import { eliminarCobro } from "../slices/sliceCobros";
-import { useEffect } from "react";
 
 function Cobros() {
   const cobros = useSelector((state) => state.sliceCobros.cobros);
@@ -34,6 +33,9 @@ function Cobros() {
   const [cobrosFiltrados, setCobrosFiltrados] = useState(cobros);
   //para filtrado de servicios
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
+  //para filtrado de fechas
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
 
   //para filtrado de clientes
   const handleFiltrarPorCliente = (event) => {
@@ -42,6 +44,14 @@ function Cobros() {
   //para filtrado de servicios
   const handleFiltrarPorServicio = (event) => {
     setServicioSeleccionado(event.target.value);
+  };
+  //para filtrado de fechas
+  const handleFiltrarPorFechaInicio = (event) => {
+    setFechaInicio(event.target.value);
+  };
+
+  const handleFiltrarPorFechaFin = (event) => {
+    setFechaFin(event.target.value);
   };
 
   //Para eliminacion de cobros
@@ -68,6 +78,18 @@ function Cobros() {
       console.log("error", error);
     }
   };
+
+  const limpiarFiltros = () => {
+    setClienteSeleccionado("");
+    setServicioSeleccionado("");
+    setFechaInicio("");
+    setFechaFin("");
+    document.getElementById("fecha-inicio").value = "";
+    document.getElementById("fecha-fin").value = "";
+    document.getElementById("slc-cliente").value = "";
+    document.getElementById("slc-servicio").value = "";
+  };
+
   useEffect(() => {
     let filtrados = cobros;
     //FILTRADO CLIENTES
@@ -85,9 +107,18 @@ function Cobros() {
           parseInt(servicioSeleccionado)
       );
     }
+    //FILTRADO FECHAS
+    if (fechaInicio !== "" && fechaFin !== "") {
+      filtrados = filtrados.filter((cobro) => {
+        const fechaPago = new Date(cobro.fechaDePago);
+        return (
+          fechaPago >= new Date(fechaInicio) && fechaPago <= new Date(fechaFin)
+        );
+      });
+    }
     //SIN FILTROS POR DEFECTO
     setCobrosFiltrados(filtrados);
-  }, [clienteSeleccionado, servicioSeleccionado, cobros]);
+  }, [clienteSeleccionado, servicioSeleccionado, fechaInicio, fechaFin, cobros]);
 
   return (
     <div>
@@ -100,9 +131,9 @@ function Cobros() {
       <br></br>
 
       <div className="espacio"></div>
-      <div className="d-flex align-items-center">
-        <div className="me-3">
-          <label htmlFor="slc-cliente">Filtrar por cliente:</label>
+      <div className="row mb-3">
+        <div className="col-md-3">
+          <label htmlFor="slc-cliente" className="form-label">Filtrar por cliente:</label>
           <select 
             id="slc-cliente"
             name="slc-cliente"
@@ -118,8 +149,8 @@ function Cobros() {
             ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="slc-servicio">Filtrar por servicio:</label>
+        <div className="col-md-3">
+          <label htmlFor="slc-servicio" className="form-label">Filtrar por servicio:</label>
           <select
             id="slc-servicio"
             name="slc-servicio"
@@ -135,8 +166,30 @@ function Cobros() {
             ))}
           </select>
         </div>
+        <div className="col-md-3">
+          <label htmlFor="fecha-inicio" className="form-label">Fecha Inicio:</label>
+          <input
+            type="date"
+            id="fecha-inicio"
+            name="fecha-inicio"
+            className="form-control"
+            onChange={handleFiltrarPorFechaInicio}
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="fecha-fin" className="form-label">Fecha Fin:</label>
+          <input
+            type="date"
+            id="fecha-fin"
+            name="fecha-fin"
+            className="form-control"
+            onChange={handleFiltrarPorFechaFin}
+          />
+        </div>
       </div>
-      <br></br>
+      <button className="btn btn-secondary mb-3" onClick={limpiarFiltros}>
+        Limpiar Filtros
+      </button>
       <div className="espacio"></div>
       
       {cobrosFiltrados.length > 0 ? (

@@ -31,8 +31,7 @@ function EditarCobros() {
   });
 
   useEffect(() => {
-    if (cobro) {
- 
+    if (cobro && cobro.servicioDelCliente) {
       setFormData({
         cliente: cobro.servicioDelCliente.clienteId || "",
         servicio: cobro.servicioDelCliente.id || "",
@@ -89,11 +88,9 @@ function EditarCobros() {
     }
     try {
       const objCobro = { id, ...formData };
-      
       const respuestaAPI = await putActualizarCobroAPI(objCobro);
       if (respuestaAPI.status === 200) {
         dispatch(actualizarCobros(respuestaAPI.data));
-        console.log("Cobro actualizado:", respuestaAPI.data)
         navigate("/cobros");
       }
     } catch (error) {

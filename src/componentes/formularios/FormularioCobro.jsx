@@ -30,7 +30,7 @@ function FormularioCobro({
         let response;
         if (modo === "detalle") {
           // Obtener servicios pagados
-          response = await getServiciosPagosEnApi(clienteId);
+          response = await getServiciosPagosEnApi(clienteId);///PARA VER
         } else {
           // Obtener servicios activos
           response = await getServiciosActivosEnApi(clienteId);
