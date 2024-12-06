@@ -101,6 +101,20 @@ export default function AltaClientes() {
     return true;
   };
 
+  const limpiarFormulario = () => {
+    setFormData({
+      nombre: "",
+      idDocumento: "",
+      numDocumento: "",
+      telefono: "",
+      direccion: "",
+      persona: "",
+      idPais: "",
+      email: "",
+      password: "",
+    });
+  };
+
   const submitNuevoCliente = async (event) => {
     event.preventDefault();
     if (!validarFormulario(formData)) {
@@ -115,6 +129,7 @@ export default function AltaClientes() {
       dispatch(crearClientes(respuestaAPI.data));
       //navigate("/clientes");
       mostrarSuccess("Cliente creado con éxito");
+      limpiarFormulario();
     }
     } catch (error) {
       console.log(error)

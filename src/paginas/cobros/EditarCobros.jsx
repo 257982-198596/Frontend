@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { putActualizarCobroAPI } from "../../api/servicioCobros";
 import { actualizarCobros } from "../../slices/sliceCobros";
 import FormularioCobro from "../../componentes/formularios/FormularioCobro";
+import { mostrarError } from "../../componentes/Toasts";
 
 function EditarCobros() {
   const dispatch = useDispatch();
@@ -12,7 +13,9 @@ function EditarCobros() {
 
   const monedas = useSelector((state) => state.sliceMonedas.monedas);
   const clientes = useSelector((state) => state.sliceClientes.clientes);
-  const mediosDePago = useSelector((state) => state.sliceMediosDePago.mediosDePago);
+  const mediosDePago = useSelector(
+    (state) => state.sliceMediosDePago.mediosDePago
+  );
   const cobros = useSelector((state) => state.sliceCobros.cobros);
 
   const cobro = cobros.find((c) => c.id === parseInt(id));
@@ -23,7 +26,7 @@ function EditarCobros() {
     descripcion: "",
     monto: "",
     moneda: "",
-    medioDePago: ""
+    medioDePago: "",
   });
 
   useEffect(() => {
@@ -34,7 +37,7 @@ function EditarCobros() {
         descripcion: cobro.servicioDelCliente.descripcion || "",
         monto: cobro.monto || "",
         moneda: cobro.monedaDelCobro.id || "",
-        medioDePago: cobro.medioPago.id || ""
+        medioDePago: cobro.medioPago.id || "",
       });
     }
   }, [cobro]);
@@ -44,14 +47,52 @@ function EditarCobros() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const validarFormulario = (formData) => {
+    if (!formData.cliente) {
+      mostrarError("Debe seleccionar un cliente");
+      return false;
+    }
+    if (!formData.servicio) {
+      mostrarError("Debe seleccionar un servicio");
+      return false;
+    }
+    if (!formData.monto) {
+      mostrarError("Debe ingresar un monto");
+      return false;
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(formData.monto)) {
+      mostrarError("El monto debe ser un número válido");
+      return false;
+    }
+    if (parseFloat(formData.monto) < 0) {
+      mostrarError("El monto no puede ser negativo");
+      return false;
+    }
+    if (!formData.moneda) {
+      mostrarError("Debe seleccionar una moneda");
+      return false;
+    }
+    if (!formData.medioDePago) {
+      mostrarError("Debe seleccionar un medio de pago");
+      return false;
+    }
+    return true;
+  };
+
   const submitEditarCobro = async (event) => {
     event.preventDefault();
-    const objCobro = { id, ...formData };
-
-    const respuestaAPI = await putActualizarCobroAPI(objCobro);
-    if (respuestaAPI.status === 200) {
-      dispatch(actualizarCobros(respuestaAPI.data));
-      navigate("/cobros");
+    if (!validarFormulario(formData)) {
+      return;
+    }
+    try {
+      const objCobro = { id, ...formData };
+      const respuestaAPI = await putActualizarCobroAPI(objCobro);
+      if (respuestaAPI.status === 200) {
+        dispatch(actualizarCobros(respuestaAPI.data));
+        navigate("/cobros");
+      }
+    } catch (error) {
+      mostrarError(error.message);
     }
   };
 

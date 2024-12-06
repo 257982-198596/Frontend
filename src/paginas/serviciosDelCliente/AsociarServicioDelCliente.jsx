@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import FormularioServiciosDelCliente from "../../componentes/formularios/FormularioServiciosDelCliente";
 import { postServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import { useNavigate } from "react-router-dom";
-
+import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
 
 function AsociarServicioDelCliente() {
   const { id } = useParams();
@@ -33,17 +33,80 @@ function AsociarServicioDelCliente() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const limpiarFormulario = () => {
+    setFormData({
+      descripcion: "",
+      servicioContratadoId: "",
+      precio: "",
+      monedaDelServicioId: "",
+      fechaInicio: "",
+      frecuenciaDelServicioId: "",
+    });
+  };
+
+  const validarFormulario = (formData) => {
+    if (!formData.descripcion) {
+      mostrarError("La descripción es obligatoria");
+      return false;
+    }
+    if (formData.descripcion.length < 5) {
+      mostrarError("La descripción debe tener al menos 5 caracteres");
+      return false;
+    }
+    if (!formData.servicioContratadoId) {
+      mostrarError("Debe seleccionar un servicio");
+      return false;
+    }
+    if (!formData.precio) {
+      mostrarError("El precio es obligatorio");
+      return false;
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(formData.precio)) {
+      mostrarError("El precio debe ser un número válido");
+      return false;
+    }
+    if (parseFloat(formData.precio) < 0) {
+      mostrarError("El precio no puede ser negativo");
+      return false;
+    }
+    if (!formData.monedaDelServicioId) {
+      mostrarError("Debe seleccionar una moneda");
+      return false;
+    }
+    if (!formData.fechaInicio) {
+      mostrarError("La fecha de inicio es obligatoria");
+      return false;
+    }
+    const fechaInicio = new Date(formData.fechaInicio);
+    const fechaLimite = new Date();
+    fechaLimite.setFullYear(fechaLimite.getFullYear() - 1);
+    if (fechaInicio < fechaLimite) {
+      mostrarError("La fecha de inicio no puede ser de más de un año atrás");
+      return false;
+    }
+    if (!formData.frecuenciaDelServicioId) {
+      mostrarError("Debe seleccionar una frecuencia");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!validarFormulario(formData)) {
+      return;
+    }
+
     try {
       const nuevoServicio = { ...formData, ClienteId: id };
       const response = await postServicioDelClienteAPI(nuevoServicio);
       if (response.status === 201 || response.status === 200) {
-        //dispatch(crearServicioDelCliente(respuestaAPI.data));
-        navigate("/clientes/servicios-del-cliente/" + id);
+        mostrarSuccess("Servicio asociado con éxito");
+        limpiarFormulario();
+        //navigate("/clientes/servicios-del-cliente/" + id);
       }
     } catch (error) {
-      console.error("Error al asociar el servicio:", error);
+      mostrarError("Error al asociar el servicio: " + error.message);
     }
   };
 

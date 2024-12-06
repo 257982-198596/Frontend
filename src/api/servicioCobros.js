@@ -16,9 +16,8 @@ export const getCobrosApi = async () => {
       throw new Error("Error al obtener cobros");
     }
   } catch (error) {
-    console.error("Error al realizar el GET Cobros:", error.response?.data || error.message);
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error GET COBROS");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -34,14 +33,8 @@ export const borrarCobroEnAPI = async (idCobro) => {
     }); 
     return idCobro;
   } catch (error) {
-    console.error(
-      "Error al realizar el DELETE de COBRO",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors);
-    throw new Error(
-      error.response?.data?.message || "Error al eliminar cobro"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
   
@@ -64,12 +57,8 @@ export const postNuevoCobroAPI = async (objCobro) => {
       throw new Error("Error al crear cobro");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el POST de cobro:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error al crear cobro");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
   
@@ -93,14 +82,8 @@ export const putActualizarCobroAPI = async (objcobro) => {
       throw new Error("Error al actualizar cliente");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el PUT CLIENTES:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(
-      error.response?.data?.message || "Error al actualizar cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 

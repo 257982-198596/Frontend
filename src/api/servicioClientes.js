@@ -16,12 +16,8 @@ export const getClientesApi = async () => {
       throw new Error("Error al obtener clientes");
     }
   } catch (error) {
-    console.error(
-      "Error al realizar el GET CLIENTES:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors.Nombre);
-    throw new Error(error.response?.data?.message || "Error GET CLIENTES");
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
@@ -81,14 +77,8 @@ export const borrarClienteEnAPI = async (idCliente) => {
     }); 
     return idCliente;
   } catch (error) {
-    console.error(
-      "Error al realizar el DELETE:",
-      error.response?.data || error.message
-    );
-    console.log(error.response.data.errors);
-    throw new Error(
-      error.response?.data?.message || "Error al eliminar cliente"
-    );
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
   }
 };
 
