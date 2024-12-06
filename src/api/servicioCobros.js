@@ -93,6 +93,7 @@ function armarJsonCobro(obj) {
     ServicioDelClienteId: obj.servicio,
     Monto: obj.monto,
     MonedaDelCobroId: obj.moneda,
+    fechaDePago: obj.fechaDePago,
     MedioPagoId: obj.medioDePago
   };
   console.log('json', json)

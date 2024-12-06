@@ -92,6 +92,30 @@ export const obtenerServicioDelClienteAPI = async (idServicioDelCliente) => {
     throw new Error(error.response.data.message);
   }
 }  
+
+// Get - Servicio del Cliente por ID
+export const getServicioDelClientePorIdAPI = async (idServicio) => {
+  try {
+    const response = await axios.get(
+      `${urlAPI}serviciosdelcliente/servicio/${idServicio}`,
+      {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener el servicio del cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
 //POST - Nuevo Servicios de un Cliente 
 export const postServicioDelClienteAPI = async (objServicioCliente) => {
   try {

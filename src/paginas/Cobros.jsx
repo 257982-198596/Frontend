@@ -149,6 +149,7 @@ function Cobros() {
             <th scope="col">Cliente</th>
             <th scope="col">Servicio</th>
             <th scope="col">Descripcion</th>
+            <th scope="col">Fecha de Pago</th>
             <th scope="col">Detalles</th>
             <th scope="col">Editar</th>
             <th scope="col">Eliminar</th>
@@ -164,6 +165,8 @@ function Cobros() {
                 <td>{cobro.servicioDelCliente.clienteId}</td>
                 <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
                 <td>{cobro.servicioDelCliente.descripcion}</td>
+                <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
+                
                 <td>
                   <button
                     className="btn btn-danger oblcolor"

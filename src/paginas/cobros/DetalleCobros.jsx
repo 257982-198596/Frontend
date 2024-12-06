@@ -23,6 +23,7 @@ function DetalleCobros() {
     descripcion: "",
     monto: "",
     moneda: "",
+    fechaDePago: "",
     medioDePago: ""
   });
 
@@ -34,6 +35,7 @@ function DetalleCobros() {
         descripcion: cobro.servicioDelCliente.descripcion || "",
         monto: cobro.monto || "",
         moneda: cobro.monedaDelCobro.id || "",
+        fechaDePago: cobro.fechaDePago ? new Date(cobro.fechaDePago).toISOString().split('T')[0] : "",
         medioDePago: cobro.medioPago.id || ""
       });
     }

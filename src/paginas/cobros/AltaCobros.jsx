@@ -21,6 +21,7 @@ function AltaCobros() {
     servicio: "",
     monto: "",
     moneda: "",
+    fechaDePago: "",
     medioDePago: "",
   });
 
@@ -30,6 +31,7 @@ function AltaCobros() {
       servicio: "",
       monto: "",
       moneda: "",
+      fechaDePago: "",
       medioDePago: "",
     });
   };

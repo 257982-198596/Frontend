@@ -26,17 +26,20 @@ function EditarCobros() {
     descripcion: "",
     monto: "",
     moneda: "",
+    fechaDePago: "",
     medioDePago: "",
   });
 
   useEffect(() => {
     if (cobro) {
+ 
       setFormData({
         cliente: cobro.servicioDelCliente.clienteId || "",
         servicio: cobro.servicioDelCliente.id || "",
         descripcion: cobro.servicioDelCliente.descripcion || "",
         monto: cobro.monto || "",
         moneda: cobro.monedaDelCobro.id || "",
+        fechaDePago: cobro.fechaDePago ? new Date(cobro.fechaDePago).toISOString().split('T')[0] : "",
         medioDePago: cobro.medioPago.id || "",
       });
     }
@@ -86,9 +89,11 @@ function EditarCobros() {
     }
     try {
       const objCobro = { id, ...formData };
+      
       const respuestaAPI = await putActualizarCobroAPI(objCobro);
       if (respuestaAPI.status === 200) {
         dispatch(actualizarCobros(respuestaAPI.data));
+        console.log("Cobro actualizado:", respuestaAPI.data)
         navigate("/cobros");
       }
     } catch (error) {
