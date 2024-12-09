@@ -19,6 +19,7 @@ import EditarServicioDelCliente from '../paginas/serviciosDelCliente/EditarServi
 import DetalleCobros from '../paginas/cobros/DetalleCobros';
 import AltaCobros from '../paginas/cobros/AltaCobros';
 import EditarCobros from '../paginas/cobros/EditarCobros';
+import DetalleNotificacion from '../paginas/notificaciones/DetalleNotificacion';
 
 const RutasProtegidas = () => {
   return (
@@ -36,6 +37,7 @@ const RutasProtegidas = () => {
         <Route path="/servicios/detalle/:id" element={<DetalleServicio />} />
         <Route path="/servicios/editar/:id" element={<EditarServicio />} />
         <Route path="/notificaciones" element={<Notificaciones />} />
+        <Route path="/notificaciones/detalle/:id" element={<DetalleNotificacion />} />
         <Route path="/cobros" element={<Cobros />} />
         <Route path="/cobros/alta" element={<AltaCobros />} />
         <Route path="/cobros/editar/:id" element={<EditarCobros />} />

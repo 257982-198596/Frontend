@@ -26,6 +26,8 @@ import { getCobrosApi } from "../api/servicioCobros";
 import { cargarCobros } from "../slices/sliceCobros";
 import { getMediosDePagoApi } from "../api/servicioMediosDePago";
 import { cargarMediosDePago } from "../slices/sliceMediosDePago";
+import { getNotificacionesApi } from "../api/servicioNotificaciones";
+import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 
 function Home() {
   const dispatch = useDispatch();
@@ -179,6 +181,21 @@ function Home() {
         console.log("Error API Medios de Pago", error);
       }
     };
+    const GetNotificaciones = async () => {
+      try {
+        const response = await getNotificacionesApi();
+        if (response.status == 200) {
+          const payload = {
+            notificacionesStore: response.data
+          };
+          dispatch(cargarNotificaciones(payload));
+        } else {
+          throw "Error al obtener notificaciones";
+        }
+      } catch (error) {
+        console.log("Error API Notificaciones", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
     GetServicios();
@@ -188,6 +205,7 @@ function Home() {
     GetFrecuencias();
     GetCobros();
     GetMediosDePago();
+    GetNotificaciones();
   }, []);
 
   
