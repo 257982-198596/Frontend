@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { getNotificacionesApi } from "../api/servicioNotificaciones"; 
+import { cargarNotificaciones } from "../slices/sliceNotificaciones";
+
 function Notificaciones() {
-  const notificaciones = useSelector((state) => state.sliceNotificaciones.notificaciones);
+  const notificaciones = useSelector((state) => state.sliceNotificaciones.notificaciones || []);
   const clientes = useSelector((state) => state.sliceClientes.clientes);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [clienteSeleccionado, setClienteSeleccionado] = useState("");
-  const [notificacionesFiltradas, setNotificacionesFiltradas] = useState(notificaciones);
+  const [notificacionesFiltradas, setNotificacionesFiltradas] = useState([]);
 
   const verDetallesNotificacion = (idNotificacion) => {
     navigate(`/notificaciones/detalle/${idNotificacion}`);
@@ -29,13 +33,29 @@ function Notificaciones() {
   };
 
   useEffect(() => {
-    let filtradas = notificaciones;
-    if (clienteSeleccionado !== "" && clienteSeleccionado !== "todos") {
-      filtradas = filtradas.filter(
-        (notificacion) => notificacion.clienteNotificado.id === parseInt(clienteSeleccionado)
-      );
+    const fetchNotificacionesData = async () => {
+      try {
+        const response = await getNotificacionesApi();
+        dispatch(cargarNotificaciones(response.data));
+        setNotificacionesFiltradas(response.data); // Update state after fetching
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchNotificacionesData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (notificaciones.length > 0) {
+      let filtradas = notificaciones;
+      if (clienteSeleccionado !== "" && clienteSeleccionado !== "todos") {
+        filtradas = filtradas.filter(
+          (notificacion) => notificacion.clienteNotificado.id === parseInt(clienteSeleccionado)
+        );
+      }
+      setNotificacionesFiltradas(filtradas);
     }
-    setNotificacionesFiltradas(filtradas);
   }, [clienteSeleccionado, notificaciones]);
 
   return (
