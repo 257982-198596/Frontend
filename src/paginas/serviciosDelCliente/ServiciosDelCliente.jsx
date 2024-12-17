@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import ModalEliminar from "../../componentes/ModalEliminar";
 import { useRef } from "react";
+import { enviarRecordatorioAPI } from "../../api/servicioNotificaciones";
+import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
+import { ToastContainer } from "react-toastify";
 
 function ServiciosDelCliente() {
   const { id } = useParams();
@@ -71,6 +74,19 @@ function ServiciosDelCliente() {
     const response = await obtenerServiciosClienteAPI(id);
     setServiciosContratados(response.data);
     setServiciosFiltrados(response.data); 
+  };
+
+  const enviarRecordatorio = async (idServicio) => {
+    try {
+      console.log("Enviando recordatorio para el servicio:", idServicio);
+      await enviarRecordatorioAPI(idServicio);
+      console.log("Recordatorio enviado con éxito.");
+      mostrarSuccess("Recordatorio enviado con éxito.");
+    } catch (error) {
+      console.error("Error al enviar el recordatorio:", error);
+      mostrarError("Ocurrió un error al intentar enviar el recordatorio.");
+      console.error("Error al enviar el recordatorio:", error);
+    }
   };
 
   useEffect(() => {
@@ -141,6 +157,14 @@ function ServiciosDelCliente() {
                   >
                     Eliminar
                   </button>
+                  {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => enviarRecordatorio(servicio.id)}
+                    >
+                      Enviar Recordatorio
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -156,6 +180,7 @@ function ServiciosDelCliente() {
         handleEliminar={eliminarServicio}
         objAEliminar={"servicio"}
       />
+      <ToastContainer />
     </div>
   );
 }

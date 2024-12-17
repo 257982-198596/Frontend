@@ -215,7 +215,7 @@ function Cobros() {
                 <td>{cobro.id}</td>
                 <td>{cobro.monto}</td>
                 <td>{cobro.monedaDelCobro.nombre}</td>
-                <td>{cobro.servicioDelCliente.clienteId}</td>
+                <td>{cobro.servicioDelCliente.cliente.nombre}</td>
                 <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
                 <td>{cobro.servicioDelCliente.descripcion}</td>
                 <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
