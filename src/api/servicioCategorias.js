@@ -22,5 +22,72 @@ export const getCategoriasApi = async () => {
   }
 };
 
-  
-  
+// POST - NUEVA CATEGORIA
+export const postNuevaCategoriaAPI = async (objCategoria) => {
+  try {
+    const response = await axios.post(
+      `${urlAPI}categorias`,
+      armarJsonCategoria(objCategoria),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    } 
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// PUT - ACTUALIZAR CATEGORIA
+export const putActualizarCategoriaAPI = async (objCategoria) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}categorias/${objCategoria.id}`,
+      armarJsonCategoria(objCategoria),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al actualizar categoria");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// ELIMINAR CATEGORIA
+export const borrarCategoriaEnAPI = async (idCategoria) => {
+  try {
+    console.log("id", idCategoria);
+    const response = await axios.delete(`${urlAPI}categorias/${idCategoria}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }); 
+    return idCategoria;
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+function armarJsonCategoria(obj) {
+  const json = {
+    Nombre: obj.nombre,
+  };
+  return json;
+}
+
+
