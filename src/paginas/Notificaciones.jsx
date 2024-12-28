@@ -8,10 +8,12 @@ import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 function Notificaciones() {
   const notificaciones = useSelector((state) => state.sliceNotificaciones.notificaciones || []);
   const clientes = useSelector((state) => state.sliceClientes.clientes);
+  const servicios = useSelector((state) => state.sliceServicios.servicios);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [clienteSeleccionado, setClienteSeleccionado] = useState("");
+  const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [notificacionesFiltradas, setNotificacionesFiltradas] = useState([]);
 
   const verDetallesNotificacion = (idNotificacion) => {
@@ -32,14 +34,25 @@ function Notificaciones() {
     setClienteSeleccionado(event.target.value);
   };
 
+  const handleFiltrarPorServicio = (event) => {
+    setServicioSeleccionado(event.target.value);
+  };
+
+  const limpiarFiltros = () => {
+    setClienteSeleccionado("");
+    setServicioSeleccionado("");
+    document.getElementById("slc-cliente").value = "";
+    document.getElementById("slc-servicio").value = "";
+  };
+
   useEffect(() => {
     const fetchNotificacionesData = async () => {
       try {
         const response = await getNotificacionesApi();
         dispatch(cargarNotificaciones(response.data));
-        setNotificacionesFiltradas(response.data); // Update state after fetching
+        setNotificacionesFiltradas(response.data);
       } catch (error) {
-        console.error("Error fetching notifications:", error);
+        console.error("Error en get de notificaciones:", error);
       }
     };
 
@@ -54,9 +67,14 @@ function Notificaciones() {
           (notificacion) => notificacion.clienteNotificado.id === parseInt(clienteSeleccionado)
         );
       }
+      if (servicioSeleccionado !== "" && servicioSeleccionado !== "todos") {
+        filtradas = filtradas.filter(
+          (notificacion) => notificacion.servicioNotificado.servicioContratado.id === parseInt(servicioSeleccionado)
+        );
+      }
       setNotificacionesFiltradas(filtradas);
     }
-  }, [clienteSeleccionado, notificaciones]);
+  }, [clienteSeleccionado, servicioSeleccionado, notificaciones]);
 
   return (
     <div>
@@ -80,7 +98,28 @@ function Notificaciones() {
             ))}
           </select>
         </div>
+        <div className="col-md-3">
+          <label htmlFor="slc-servicio" className="form-label">Filtrar por tipo de servicio:</label>
+          <select
+            id="slc-servicio"
+            name="slc-servicio"
+            className="form-select"
+            value={servicioSeleccionado}
+            onChange={handleFiltrarPorServicio}
+          >
+            <option value="">Seleccione Servicio</option>
+            <option value="todos">Todos</option>
+            {servicios.map((servicio) => (
+              <option key={servicio.id} value={servicio.id}>
+                {servicio.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+      <button className="btn btn-secondary mb-3" onClick={limpiarFiltros}>
+        Limpiar Filtros
+      </button>
       <table className="table table-striped table-dark">
         <thead>
           <tr>
@@ -95,6 +134,7 @@ function Notificaciones() {
         </thead>
         <tbody>
           {notificacionesFiltradas.map((notificacion) => {
+            console.log(notificacion);
             return (
               <tr key={notificacion.id}>
                 <td>{notificacion.id}</td>
