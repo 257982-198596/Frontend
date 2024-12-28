@@ -68,6 +68,7 @@ function Notificaciones() {
             id="slc-cliente"
             name="slc-cliente"
             className="form-select"
+            value={clienteSeleccionado} // Add this line
             onChange={handleFiltrarPorCliente}
           >
             <option value="">Seleccione Cliente</option>

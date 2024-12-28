@@ -10,14 +10,12 @@ function DetalleCategoria() {
 
   const [formData, setFormData] = useState({
     nombre: "",
-    descripcion: "",
   });
 
   useEffect(() => {
     if (categoria) {
       setFormData({
         nombre: categoria.nombre || "",
-        descripcion: categoria.descripcion || "",
       });
     }
   }, [categoria]);
