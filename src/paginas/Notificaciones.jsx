@@ -14,6 +14,8 @@ function Notificaciones() {
 
   const [clienteSeleccionado, setClienteSeleccionado] = useState("");
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
   const [notificacionesFiltradas, setNotificacionesFiltradas] = useState([]);
 
   const verDetallesNotificacion = (idNotificacion) => {
@@ -38,11 +40,23 @@ function Notificaciones() {
     setServicioSeleccionado(event.target.value);
   };
 
+  const handleFiltrarPorFechaInicio = (event) => {
+    setFechaInicio(event.target.value);
+  };
+
+  const handleFiltrarPorFechaFin = (event) => {
+    setFechaFin(event.target.value);
+  };
+
   const limpiarFiltros = () => {
     setClienteSeleccionado("");
     setServicioSeleccionado("");
+    setFechaInicio("");
+    setFechaFin("");
     document.getElementById("slc-cliente").value = "";
     document.getElementById("slc-servicio").value = "";
+    document.getElementById("fecha-inicio").value = "";
+    document.getElementById("fecha-fin").value = "";
   };
 
   useEffect(() => {
@@ -72,9 +86,17 @@ function Notificaciones() {
           (notificacion) => notificacion.servicioNotificado.servicioContratado.id === parseInt(servicioSeleccionado)
         );
       }
+      if (fechaInicio !== "" && fechaFin !== "") {
+        filtradas = filtradas.filter((notificacion) => {
+          const fechaEnvio = new Date(notificacion.fechaEnvio);
+          return (
+            fechaEnvio >= new Date(fechaInicio) && fechaEnvio <= new Date(fechaFin)
+          );
+        });
+      }
       setNotificacionesFiltradas(filtradas);
     }
-  }, [clienteSeleccionado, servicioSeleccionado, notificaciones]);
+  }, [clienteSeleccionado, servicioSeleccionado, fechaInicio, fechaFin, notificaciones]);
 
   return (
     <div>
@@ -86,7 +108,7 @@ function Notificaciones() {
             id="slc-cliente"
             name="slc-cliente"
             className="form-select"
-            value={clienteSeleccionado} // Add this line
+            value={clienteSeleccionado}
             onChange={handleFiltrarPorCliente}
           >
             <option value="">Seleccione Cliente</option>
@@ -115,6 +137,26 @@ function Notificaciones() {
               </option>
             ))}
           </select>
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="fecha-inicio" className="form-label">Fecha Inicio:</label>
+          <input
+            type="date"
+            id="fecha-inicio"
+            name="fecha-inicio"
+            className="form-control"
+            onChange={handleFiltrarPorFechaInicio}
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="fecha-fin" className="form-label">Fecha Fin:</label>
+          <input
+            type="date"
+            id="fecha-fin"
+            name="fecha-fin"
+            className="form-control"
+            onChange={handleFiltrarPorFechaFin}
+          />
         </div>
       </div>
       <button className="btn btn-secondary mb-3" onClick={limpiarFiltros}>
