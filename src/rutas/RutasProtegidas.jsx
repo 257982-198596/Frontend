@@ -20,6 +20,9 @@ import DetalleCobros from '../paginas/cobros/DetalleCobros';
 import AltaCobros from '../paginas/cobros/AltaCobros';
 import EditarCobros from '../paginas/cobros/EditarCobros';
 import DetalleNotificacion from '../paginas/notificaciones/DetalleNotificacion';
+import AltaCategorias from '../paginas/categorias/AltaCategorias';
+import EditarCategoria from '../paginas/categorias/EditarCategoria';
+import DetalleCategoria from '../paginas/categorias/DetalleCategoria';
 
 const RutasProtegidas = () => {
   return (
@@ -44,6 +47,9 @@ const RutasProtegidas = () => {
         <Route path="/cobros/detalle/:id" element={<DetalleCobros />} />
         <Route path="/reportes" element={<Reportes />} />
         <Route path="/categorias" element={<Categorias />} />
+        <Route path="/categorias/alta" element={<AltaCategorias />} />
+        <Route path="/categorias/editar/:id" element={<EditarCategoria />} />
+        <Route path="/categorias/detalle/:id" element={<DetalleCategoria />} />
       </Route>
     </Routes>
   );

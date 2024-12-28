@@ -4,7 +4,7 @@ import { FiList } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import EliminarCategoria from "../paginas/categorias/EliminarCategoria";
-import { borrarCategoriaEnAPI } from "../api/categoriaServicios";
+import { borrarCategoriaEnAPI } from "../api/servicioCategorias";
 import { eliminarCategoria } from "../slices/sliceCategorias";
 
 function Categorias() {
@@ -61,7 +61,6 @@ function Categorias() {
           <tr>
             <th scope="col">#ID</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
             <th scope="col">Detalles</th>
             <th scope="col">Editar</th>
             <th scope="col">Eliminar</th>
@@ -73,7 +72,6 @@ function Categorias() {
               <tr key={categoria.id}>
                 <td>{categoria.id}</td>
                 <td>{categoria.nombre}</td>
-                <td>{categoria.descripcion}</td>
 
                 <td>
                   <button

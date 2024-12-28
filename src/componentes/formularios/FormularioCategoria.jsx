@@ -20,19 +20,7 @@ function FormularioCategoria({ formData, handleChange, onSubmit, modo }) {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="descripcion">Descripción</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          id="descripcion"
-          name="descripcion"
-          value={formData.descripcion}
-          onChange={handleChange}
-          placeholder="Ingrese la descripción de la categoría"
-          readOnly={isReadOnly}
-        />
-      </Form.Group>
+  
 
       <div className="d-flex justify-content-center">
         {!isReadOnly && (
