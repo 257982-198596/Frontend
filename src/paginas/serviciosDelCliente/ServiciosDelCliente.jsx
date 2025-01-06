@@ -43,21 +43,6 @@ function ServiciosDelCliente() {
     setModalVisible(false);
   };
 
-  //filtrado del select
-  const busSelectorFiltro = useRef("");
-
-  const handleFiltrar = () => {
-    const estadoSeleccionado = busSelectorFiltro.current.value;
-    if (estadoSeleccionado === "" || estadoSeleccionado === "todos") {
-      setServiciosFiltrados(serviciosContratados);
-    } else {
-      const serviciosFiltrados = serviciosContratados.filter(
-        (servicio) => servicio.estadoDelServicioDelCliente.nombre === estadoSeleccionado
-      );
-      setServiciosFiltrados(serviciosFiltrados);
-    }
-  };
-
   const eliminarServicio = async () => {
     try {
       
@@ -108,18 +93,24 @@ function ServiciosDelCliente() {
         <button className="btn oblcolor">Asociar Servicio</button>
       </Link>
       <div className="espacio"></div>
-      <label htmlFor="slc-buscador">Filtrar por tipo:</label>
-          <select id="slc-buscador" className="form-select" name="slc-buscador" ref={busSelectorFiltro}>
-            <option value="">Seleccione Estado del Servicio</option>
-            <option value="Activo">Activo</option>
-            <option value="Pago">Pago</option>
-            <option value="Vencido">Vencido</option>
-            <option value="todos">Ver Todos</option>
-          </select>
-          <button className="btn btn-danger oblcolor" onClick={handleFiltrar}>
-            Filtrar
-          </button>
-          <br></br>
+      <div className="row mb-3">
+        <div className="col-md-4">
+          <h2>Monto Anual</h2>
+          <p>0</p> 
+        </div>
+        <div className="col-md-8">
+          <div className="row">
+            <div className="col-md-6">
+              <h5>Próximo Vencimiento</h5>
+              <p>N/A</p> 
+            </div>
+            <div className="col-md-6">
+              <h5>Notificaciones del Último Mes</h5>
+              <p>N/A</p> 
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="espacio"></div>
       <h5>Servicios Activos</h5>
       {Array.isArray(serviciosActivos) && serviciosActivos.length > 0 ? (
