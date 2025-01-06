@@ -18,6 +18,8 @@ function ServiciosDelCliente() {
 
   const [serviciosContratados, setServiciosContratados] = useState([]);
   const [serviciosFiltrados, setServiciosFiltrados] = useState([]);
+  const [serviciosActivos, setServiciosActivos] = useState([]);
+  const [serviciosHistoricos, setServiciosHistoricos] = useState([]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
@@ -47,7 +49,6 @@ function ServiciosDelCliente() {
   const handleFiltrar = () => {
     const estadoSeleccionado = busSelectorFiltro.current.value;
     if (estadoSeleccionado === "" || estadoSeleccionado === "todos") {
-      console.log('serviciosContratados', serviciosContratados)
       setServiciosFiltrados(serviciosContratados);
     } else {
       const serviciosFiltrados = serviciosContratados.filter(
@@ -72,8 +73,11 @@ function ServiciosDelCliente() {
   };
   const cargarServicios = async () => {
     const response = await obtenerServiciosClienteAPI(id);
-    setServiciosContratados(response.data);
-    setServiciosFiltrados(response.data); 
+    const servicios = response.data;
+    setServiciosContratados(servicios);
+    setServiciosFiltrados(servicios);
+    setServiciosActivos(servicios.filter(servicio => servicio.estadoDelServicioDelCliente.nombre === "Activo"));
+    setServiciosHistoricos(servicios.filter(servicio => servicio.estadoDelServicioDelCliente.nombre !== "Activo"));
   };
 
   const enviarRecordatorio = async (idServicio) => {
@@ -117,7 +121,8 @@ function ServiciosDelCliente() {
           </button>
           <br></br>
       <div className="espacio"></div>
-      {Array.isArray(serviciosFiltrados) && serviciosFiltrados.length > 0 ? (
+      <h5>Servicios Activos</h5>
+      {Array.isArray(serviciosActivos) && serviciosActivos.length > 0 ? (
         <table className="table table-striped table-dark">
           <thead>
             <tr>
@@ -133,7 +138,7 @@ function ServiciosDelCliente() {
             </tr>
           </thead>
           <tbody>
-            {serviciosFiltrados.map((servicio) => (
+            {serviciosActivos.map((servicio) => (
               <tr key={servicio.id}>
                 <td>{servicio.descripcion}</td>
                 <td>{servicio.servicioContratado.nombre}</td>
@@ -171,7 +176,66 @@ function ServiciosDelCliente() {
           </tbody>
         </table>
       ) : (
-        <p>Este cliente no tiene servicios asociados.</p>
+        <p>No hay servicios activos.</p>
+      )}
+
+      <div className="espacio"></div>
+      <h5>Histórico</h5>
+      {Array.isArray(serviciosHistoricos) && serviciosHistoricos.length > 0 ? (
+        <table className="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th>Descripcion</th>
+              <th>Servicio</th>
+              <th>Precio</th>
+              <th>Moneda</th>
+              <th>Frecuencia</th>
+              <th>Estado</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {serviciosHistoricos.map((servicio) => (
+              <tr key={servicio.id}>
+                <td>{servicio.descripcion}</td>
+                <td>{servicio.servicioContratado.nombre}</td>
+                <td>{servicio.precio}</td>
+                <td>{servicio.monedaDelServicio.nombre}</td>
+                <td>{servicio.frecuenciaDelServicio.nombre}</td>
+
+                <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                <td>
+                  <button
+                    className="btn btn-danger oblcolor btn-sm me-2"
+                    onClick={() => editarServicioDelCliente(servicio.id)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn btn-danger oblcolor btn-sm"
+                    onClick={() => handleAbrirModal(servicio.id)}
+                  >
+                    Eliminar
+                  </button>
+                  {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => enviarRecordatorio(servicio.id)}
+                    >
+                      Enviar Recordatorio
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No hay servicios históricos.</p>
       )}
       {/* Modal para Confirmar Eliminación */}
       <ModalEliminar
