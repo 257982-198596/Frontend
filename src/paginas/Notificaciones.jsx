@@ -176,7 +176,7 @@ function Notificaciones() {
         </thead>
         <tbody>
           {notificacionesFiltradas.map((notificacion) => {
-            console.log(notificacion);
+            //console.log(notificacion);
             return (
               <tr key={notificacion.id}>
                 <td>{notificacion.id}</td>

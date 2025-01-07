@@ -7,9 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import ModalEliminar from "../../componentes/ModalEliminar";
 import { useRef } from "react";
-import { enviarRecordatorioAPI } from "../../api/servicioNotificaciones";
+import { enviarRecordatorioAPI, obtenerCantidadNotificacionesAPI } from "../../api/servicioNotificaciones";
 import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
 import { ToastContainer } from "react-toastify";
+import { FiUserCheck } from "react-icons/fi";
+import { FaEnvelopeOpen } from "react-icons/fa";
+import { FaCalendarCheck } from "react-icons/fa";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 function ServiciosDelCliente() {
   const { id } = useParams();
@@ -20,10 +24,10 @@ function ServiciosDelCliente() {
   const [serviciosFiltrados, setServiciosFiltrados] = useState([]);
   const [serviciosActivos, setServiciosActivos] = useState([]);
   const [serviciosHistoricos, setServiciosHistoricos] = useState([]);
+  const [cantidadNotificaciones, setCantidadNotificaciones] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
-  
 
   const cliente = useSelector((state) =>
     state.sliceClientes.clientes.find((cliente) => cliente.id === parseInt(id))
@@ -37,7 +41,7 @@ function ServiciosDelCliente() {
     setServicioAEliminar(idServicio);
     setModalVisible(true);
   };
-  
+
   const handleCerrarModal = () => {
     setServicioAEliminar(null);
     setModalVisible(false);
@@ -45,17 +49,15 @@ function ServiciosDelCliente() {
 
   const eliminarServicio = async () => {
     try {
-      
       const idCliente = await eliminarServicioDelClienteAPI(servicioAEliminar);
-  
-      handleCerrarModal();  
+      handleCerrarModal();
       cargarServicios();
-      
     } catch (error) {
       console.error("Error al eliminar el servicio:", error);
       alert("Ocurrió un error al intentar eliminar el servicio.");
     }
   };
+
   const cargarServicios = async () => {
     const response = await obtenerServiciosClienteAPI(id);
     const servicios = response.data;
@@ -63,6 +65,16 @@ function ServiciosDelCliente() {
     setServiciosFiltrados(servicios);
     setServiciosActivos(servicios.filter(servicio => servicio.estadoDelServicioDelCliente.nombre === "Activo"));
     setServiciosHistoricos(servicios.filter(servicio => servicio.estadoDelServicioDelCliente.nombre !== "Activo"));
+  };
+
+  const cargarCantidadNotificaciones = async () => {
+    try {
+      const response = await obtenerCantidadNotificacionesAPI(id);
+      console.log("Cantidad de notificaciones:", response.data.cantidadNotificaciones);
+      setCantidadNotificaciones(response.data.cantidadNotificaciones);
+    } catch (error) {
+      console.error("Error al obtener la cantidad de notificaciones:", error);
+    }
   };
 
   const enviarRecordatorio = async (idServicio) => {
@@ -79,34 +91,37 @@ function ServiciosDelCliente() {
   };
 
   useEffect(() => {
-    
     cargarServicios();
-
+    cargarCantidadNotificaciones();
   }, [id]);
-
 
   return (
     <div className="container">
+      <FiUserCheck className="icono-seccion" />
       <h3>Servicios de {cliente?.nombre || "Cliente no encontrado"}</h3>
 
       <Link to={`/clientes/asociar-servicio/${id}`}>
         <button className="btn oblcolor">Asociar Servicio</button>
       </Link>
       <div className="espacio"></div>
-      <div className="row mb-3">
-        <div className="col-md-4">
-          <h2>Monto Anual</h2>
-          <p>0</p> 
+      <div className="row">
+        <div className="col-md-4 indicador">
+        <FaMoneyBillTransfer className="icono-indicador" />
+        
+          <h5>Monto Anual - Servicios Activos</h5>
+          <p className="valor-indicador">0</p> 
         </div>
         <div className="col-md-8">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-5 indicador mx-1">
+              <FaCalendarCheck className="icono-indicador" />
               <h5>Próximo Vencimiento</h5>
-              <p>N/A</p> 
+              <p className="valor-indicador">N/A</p> 
             </div>
-            <div className="col-md-6">
+            <div className="col-md-5 indicador mx-1">
+              <FaEnvelopeOpen className="icono-indicador" />
               <h5>Notificaciones del Último Mes</h5>
-              <p>N/A</p> 
+              <p className="valor-indicador">{cantidadNotificaciones}</p> 
             </div>
           </div>
         </div>
@@ -155,7 +170,7 @@ function ServiciosDelCliente() {
                   </button>
                   {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
                     <button
-                      className="btn btn-warning btn-sm"
+                      className="btn btn-warning oblcolor btn-sm"
                       onClick={() => enviarRecordatorio(servicio.id)}
                     >
                       Enviar Recordatorio
