@@ -8,6 +8,7 @@ import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCli
 import ModalEliminar from "../../componentes/ModalEliminar";
 import { useRef } from "react";
 import { enviarRecordatorioAPI, obtenerCantidadNotificacionesAPI } from "../../api/servicioNotificaciones";
+import { obtenerProximoVencimientoAPI } from "../../api/servicioServiciosDelCliente";
 import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
 import { ToastContainer } from "react-toastify";
 import { FiUserCheck } from "react-icons/fi";
@@ -25,6 +26,7 @@ function ServiciosDelCliente() {
   const [serviciosActivos, setServiciosActivos] = useState([]);
   const [serviciosHistoricos, setServiciosHistoricos] = useState([]);
   const [cantidadNotificaciones, setCantidadNotificaciones] = useState(0);
+  const [proximoVencimiento, setProximoVencimiento] = useState("N/A");
 
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
@@ -77,6 +79,16 @@ function ServiciosDelCliente() {
     }
   };
 
+  const cargarProximoVencimiento = async () => {
+    try {
+      const response = await obtenerProximoVencimientoAPI(id);
+      console.log("Próximo vencimiento:", response.data);
+      setProximoVencimiento(response.data.servicio.descripcion + " - " + new Date(response.data.servicio.fechaVencimiento).toLocaleDateString());
+    } catch (error) {
+      console.error("Error al obtener el próximo vencimiento:", error);
+    }
+  };
+
   const enviarRecordatorio = async (idServicio) => {
     try {
       console.log("Enviando recordatorio para el servicio:", idServicio);
@@ -93,6 +105,7 @@ function ServiciosDelCliente() {
   useEffect(() => {
     cargarServicios();
     cargarCantidadNotificaciones();
+    cargarProximoVencimiento();
   }, [id]);
 
   return (
@@ -116,7 +129,7 @@ function ServiciosDelCliente() {
             <div className="col-md-5 indicador mx-1">
               <FaCalendarCheck className="icono-indicador" />
               <h5>Próximo Vencimiento</h5>
-              <p className="valor-indicador">N/A</p> 
+              <p className="valor-indicador-pequeno">{proximoVencimiento}</p> 
             </div>
             <div className="col-md-5 indicador mx-1">
               <FaEnvelopeOpen className="icono-indicador" />

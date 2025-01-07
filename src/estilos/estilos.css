@@ -150,6 +150,12 @@ svg.icono-seccion {
   color: #713972;
 }
 
+.valor-indicador-pequeno {
+  font-size: 16px;
+  font-weight: bold;
+  color: #713972;
+}
+
 .indicador {
   background-color: #2125290f;
   padding-top: 19px;
