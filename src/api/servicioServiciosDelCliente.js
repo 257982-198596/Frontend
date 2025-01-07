@@ -201,3 +201,22 @@ export const obtenerProximoVencimientoAPI = async (clienteId) => {
     throw new Error(error.response.data.message);
   }
 };
+
+export const obtenerIngresosProximos365DiasAPI = async (clienteId) => {
+  try {
+    const response = await axios.get(`${urlAPI}serviciosdelcliente/ingresos-proximos-365-dias/${clienteId}`, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener los ingresos próximos 365 días");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};

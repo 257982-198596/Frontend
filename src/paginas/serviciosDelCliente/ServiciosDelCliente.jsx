@@ -2,13 +2,12 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { obtenerServiciosClienteAPI } from "../../api/servicioServiciosDelCliente";
+import { obtenerServiciosClienteAPI, obtenerProximoVencimientoAPI, obtenerIngresosProximos365DiasAPI } from "../../api/servicioServiciosDelCliente";
 import { useNavigate } from "react-router-dom";
 import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import ModalEliminar from "../../componentes/ModalEliminar";
 import { useRef } from "react";
 import { enviarRecordatorioAPI, obtenerCantidadNotificacionesAPI } from "../../api/servicioNotificaciones";
-import { obtenerProximoVencimientoAPI } from "../../api/servicioServiciosDelCliente";
 import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
 import { ToastContainer } from "react-toastify";
 import { FiUserCheck } from "react-icons/fi";
@@ -27,6 +26,7 @@ function ServiciosDelCliente() {
   const [serviciosHistoricos, setServiciosHistoricos] = useState([]);
   const [cantidadNotificaciones, setCantidadNotificaciones] = useState(0);
   const [proximoVencimiento, setProximoVencimiento] = useState("N/A");
+  const [montoAnual, setMontoAnual] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
@@ -89,6 +89,16 @@ function ServiciosDelCliente() {
     }
   };
 
+  const cargarMontoAnual = async () => {
+    try {
+      const response = await obtenerIngresosProximos365DiasAPI(id);
+      console.log("Monto anual:", response.data.totalIngresos);
+      setMontoAnual(response.data.totalIngresos);
+    } catch (error) {
+      console.error("Error al obtener el monto anual:", error);
+    }
+  };
+
   const enviarRecordatorio = async (idServicio) => {
     try {
       console.log("Enviando recordatorio para el servicio:", idServicio);
@@ -106,6 +116,7 @@ function ServiciosDelCliente() {
     cargarServicios();
     cargarCantidadNotificaciones();
     cargarProximoVencimiento();
+    cargarMontoAnual();
   }, [id]);
 
   return (
@@ -117,12 +128,11 @@ function ServiciosDelCliente() {
         <button className="btn oblcolor">Asociar Servicio</button>
       </Link>
       <div className="espacio"></div>
-      <div className="row">
+      <div className="row mb-3">
         <div className="col-md-4 indicador">
-        <FaMoneyBillTransfer className="icono-indicador" />
-        
+          <FaMoneyBillTransfer className="icono-indicador" />
           <h5>Monto Anual - Servicios Activos</h5>
-          <p className="valor-indicador">0</p> 
+          <p className="valor-indicador">{montoAnual}</p> 
         </div>
         <div className="col-md-8">
           <div className="row">
