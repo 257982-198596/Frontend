@@ -11,7 +11,8 @@ const VencimientosDelMes = () => {
   useEffect(() => {
     const cargarServiciosVencenEsteMes = async () => {
       try {
-        const response = await obtenerServiciosVencenEsteMesAPI();
+        const idSuscriptor = localStorage.getItem('idUsuario');
+        const response = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
         setServiciosVencenEsteMes(response.data);
       } catch (error) {
         console.error("Error al obtener los servicios que vencen este mes:", error);
@@ -82,12 +83,13 @@ const VencimientosDelMes = () => {
            
                 return (
                   <tr key={servicio.id}>
-                    <td>{servicio.id}</td>
-                    <td>{servicio.fechaEnvio}</td>
-                    <td>{servicio.clienteNotificado.nombre}</td>
-                    <td>{servicio.mensaje}</td>
-                    <td>{servicio.estadoDeNotificacion.nombre}</td>
-                    <td>{servicio.servicioNotificado.descripcion}</td>
+                    <td>{servicio.cliente.nombre}</td>
+                    <td>{servicio.servicioContratado.nombre}</td>
+                    <td>{servicio.precio}</td>
+                    <td>{servicio.monedaDelServicio.nombre}</td>
+                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
                     
                   </tr>
                 );
@@ -95,7 +97,7 @@ const VencimientosDelMes = () => {
             </tbody>
           </table>
           ) : (
-            <p>No hay servicios que venzan este mes.</p>
+            <p>No existen servicios que expiren este mes.</p>
           )}
         </div>
       </div>
