@@ -220,3 +220,27 @@ export const obtenerIngresosProximos365DiasAPI = async (clienteId) => {
     throw new Error(error.response.data.message);
   }
 };
+
+// Get - Servicios que vencen este mes
+export const obtenerServiciosVencenEsteMesAPI = async (idSuscriptor) => {
+  try {
+    const response = await axios.get(
+      `${urlAPI}serviciosdelcliente/activos-suscriptor-vencen-este-mes/${idSuscriptor}`,
+      {
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      console.log("Servicios que vencen este mes:", response.data);
+      return response;
+    } else {
+      throw new Error("Error al obtener los servicios que vencen este mes");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};

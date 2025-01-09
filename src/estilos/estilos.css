@@ -1,4 +1,3 @@
-
 body {
     font-family: Montserrat !important;
 }
@@ -66,6 +65,29 @@ body {
   
   .espacio {
     margin-bottom: 32px;
+  }
+
+  /* Header */
+  .encabezado {
+    color: white;
+    margin: 0 auto;
+  }
+
+  .ml-auto {
+    margin-left: auto !important;
+  }
+
+  .pipe-separator {
+    color: white;
+    margin: 0 5px;
+  }
+
+  .nav-link:hover {
+    color: #713972;
+  }
+
+  .nav-link {
+    color: white !important;
   }
 
   /* Sidebar */

@@ -5,7 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import Sidebar from "../componentes/Sidebar";
-import HeaderDinamico from "../componentes/HeaderDinamico";
+import Header from "../componentes/Header";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getClientesApi } from "../api/servicioClientes";
@@ -211,7 +211,7 @@ function Home() {
   
   return (
     <>
-      <HeaderDinamico></HeaderDinamico>
+      <Header></Header>
 
       <div style={{ display: "flex" }}>
         <Sidebar style={{ minWidth: "200px" }} />

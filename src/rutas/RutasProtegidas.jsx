@@ -23,6 +23,8 @@ import DetalleNotificacion from '../paginas/notificaciones/DetalleNotificacion';
 import AltaCategorias from '../paginas/categorias/AltaCategorias';
 import EditarCategoria from '../paginas/categorias/EditarCategoria';
 import DetalleCategoria from '../paginas/categorias/DetalleCategoria';
+import VencimientosDelMes from '../paginas/reportes/VencimientosDelMes';
+import CobrosMensuales from '../paginas/reportes/CobrosMensuales';
 
 const RutasProtegidas = () => {
   return (
@@ -46,6 +48,8 @@ const RutasProtegidas = () => {
         <Route path="/cobros/editar/:id" element={<EditarCobros />} />
         <Route path="/cobros/detalle/:id" element={<DetalleCobros />} />
         <Route path="/reportes" element={<Reportes />} />
+        <Route path="/reportes/vencimientos-del-mes" element={<VencimientosDelMes />} />
+        <Route path="/reportes/cobros-mensuales" element={<CobrosMensuales />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categorias/alta" element={<AltaCategorias />} />
         <Route path="/categorias/editar/:id" element={<EditarCategoria />} />
