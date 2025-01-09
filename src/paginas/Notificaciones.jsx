@@ -16,7 +16,7 @@ function Notificaciones() {
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
-  const [notificacionesFiltradas, setNotificacionesFiltradas] = useState([]);
+  const [notificacionesFiltradas, setNotificacionesFiltradas] = useState(notificaciones);
 
   const verDetallesNotificacion = (idNotificacion) => {
     navigate(`/notificaciones/detalle/${idNotificacion}`);
