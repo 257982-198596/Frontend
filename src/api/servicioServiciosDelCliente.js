@@ -234,6 +234,7 @@ export const obtenerServiciosVencenEsteMesAPI = async (idSuscriptor) => {
     );
 
     if (response.status === 200) {
+      console.log("Servicios que vencen este mes:", response.data);
       return response;
     } else {
       throw new Error("Error al obtener los servicios que vencen este mes");

@@ -32,13 +32,17 @@ const VencimientosDelMes = () => {
         const response = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
         console.log("Servicios que vencen este mes:", response.data);   
         setServiciosVencenEsteMes(response.data);
+        //cantidad vencimientos del mes
         setCantidadVencimientos(response.data.length);
+        //monto total renovaciones
         const totalRenovaciones = response.data.reduce((total, servicio) => total + servicio.precio, 0);
         setMontoTotalRenovaciones(totalRenovaciones);
+        //total ya cobrado
         const totalCobrado = response.data
           .filter(servicio => servicio.estadoDelServicioDelCliente.nombre === "Pago")
           .reduce((total, servicio) => total + servicio.precio, 0);
         setMontoYaCobrado(totalCobrado);
+        //resta monto pendiente de cobro
         setMontoPendienteCobro(totalRenovaciones - totalCobrado);
       } catch (error) {
         console.error("Error al obtener los servicios que vencen este mes:", error);
@@ -57,7 +61,7 @@ const VencimientosDelMes = () => {
       acc[nombreServicio] += servicio.precio;
       return acc;
     }, {});
-
+    console.log("Datos por servicio:", datosPorServicio);
     return {
       labels: Object.keys(datosPorServicio),
       datasets: [
