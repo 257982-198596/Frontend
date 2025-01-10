@@ -22,6 +22,16 @@ export const postNuevoSuscriptorAPI = async (objSuscriptor) => {
   }
 };
 
+export const obtenerSuscriptorApi = async (id) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.get(`${urlAPI}suscriptores/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 function armarJsonSuscriptor(obj) {
     console.log(obj);
   const json = {
