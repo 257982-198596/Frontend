@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../paginas/Home';
+import { Home, HomeContent } from '../paginas/Home';
 import Clientes from '../paginas/Clientes';
 import Notificaciones from '../paginas/Notificaciones';
 import Cobros from '../paginas/Cobros';
@@ -30,30 +30,31 @@ const RutasProtegidas = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />}>
-        <Route path="/clientes" element={<Clientes />} />
-        <Route path="/clientes/alta" element={<AltaClientes />} />
-        <Route path="/clientes/detalle/:id" element={<DetalleCliente />} />
-        <Route path="/clientes/editar/:id" element={<EditarCliente />} />
-        <Route path="/clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
-        <Route path="/clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
-        <Route path="/clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
-        <Route path="/servicios" element={<Servicios />} />
-        <Route path="/servicios/alta" element={<AltaServicios />} />
-        <Route path="/servicios/detalle/:id" element={<DetalleServicio />} />
-        <Route path="/servicios/editar/:id" element={<EditarServicio />} />
-        <Route path="/notificaciones" element={<Notificaciones />} />
-        <Route path="/notificaciones/detalle/:id" element={<DetalleNotificacion />} />
-        <Route path="/cobros" element={<Cobros />} />
-        <Route path="/cobros/alta" element={<AltaCobros />} />
-        <Route path="/cobros/editar/:id" element={<EditarCobros />} />
-        <Route path="/cobros/detalle/:id" element={<DetalleCobros />} />
-        <Route path="/reportes" element={<Reportes />} />
-        <Route path="/reportes/vencimientos-del-mes" element={<VencimientosDelMes />} />
-        <Route path="/reportes/cobros-mensuales" element={<CobrosMensuales />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/categorias/alta" element={<AltaCategorias />} />
-        <Route path="/categorias/editar/:id" element={<EditarCategoria />} />
-        <Route path="/categorias/detalle/:id" element={<DetalleCategoria />} />
+        <Route index element={<HomeContent />} />
+        <Route path="clientes" element={<Clientes />} />
+        <Route path="clientes/alta" element={<AltaClientes />} />
+        <Route path="clientes/detalle/:id" element={<DetalleCliente />} />
+        <Route path="clientes/editar/:id" element={<EditarCliente />} />
+        <Route path="clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
+        <Route path="clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
+        <Route path="clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
+        <Route path="servicios" element={<Servicios />} />
+        <Route path="servicios/alta" element={<AltaServicios />} />
+        <Route path="servicios/detalle/:id" element={<DetalleServicio />} />
+        <Route path="servicios/editar/:id" element={<EditarServicio />} />
+        <Route path="notificaciones" element={<Notificaciones />} />
+        <Route path="notificaciones/detalle/:id" element={<DetalleNotificacion />} />
+        <Route path="cobros" element={<Cobros />} />
+        <Route path="cobros/alta" element={<AltaCobros />} />
+        <Route path="cobros/editar/:id" element={<EditarCobros />} />
+        <Route path="cobros/detalle/:id" element={<DetalleCobros />} />
+        <Route path="reportes" element={<Reportes />} />
+        <Route path="reportes/vencimientos-del-mes" element={<VencimientosDelMes />} />
+        <Route path="reportes/cobros-mensuales" element={<CobrosMensuales />} />
+        <Route path="categorias" element={<Categorias />} />
+        <Route path="categorias/alta" element={<AltaCategorias />} />
+        <Route path="categorias/editar/:id" element={<EditarCategoria />} />
+        <Route path="categorias/detalle/:id" element={<DetalleCategoria />} />
       </Route>
     </Routes>
   );

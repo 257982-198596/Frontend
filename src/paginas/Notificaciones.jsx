@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import { getNotificacionesApi } from "../api/servicioNotificaciones"; 
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
+import { FiCalendar } from "react-icons/fi";
 
 function Notificaciones() {
   const notificaciones = useSelector((state) => state.sliceNotificaciones.notificaciones || []);
@@ -100,6 +100,7 @@ function Notificaciones() {
 
   return (
     <div>
+      <FiCalendar className="icono-seccion" />
       <h2>Notificaciones</h2>
       <div className="row mb-3">
         <div className="col-md-3">
