@@ -31,12 +31,14 @@ import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 import { FaClock } from "react-icons/fa";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { urlAPI } from "../api/api";
 
 function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const GetClientes = async () => {
+      console.log(urlAPI);
       try {
         const response = await getClientesApi();
         if (response.status == 200) {
