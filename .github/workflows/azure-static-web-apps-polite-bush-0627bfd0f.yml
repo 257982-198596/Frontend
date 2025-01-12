@@ -3,15 +3,19 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - feature/rf003-vistas
+      - main
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - feature/rf003-vistas
+      - main
+  workflow_run:
+    workflows: ["Feature Branch CI"]
+    types:
+      - completed
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
