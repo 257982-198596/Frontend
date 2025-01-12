@@ -1,18 +1,31 @@
 import { FiUserCheck } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { borrarClienteEnAPI } from "../api/servicioClientes";
-import { eliminarCliente } from "../slices/sliceClientes";
+import { borrarClienteEnAPI, habilitarClienteEnAPI, deshabilitarClienteEnAPI, getClientesApi } from "../api/servicioClientes";
+import { eliminarCliente, cargarClientes } from "../slices/sliceClientes";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import  ModalEliminar from "../componentes/ModalEliminar";
+import { useState, useEffect } from "react";
+import ModalEliminar from "../componentes/ModalEliminar";
 
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchClientes = async () => {
+      try {
+        const response = await getClientesApi();
+        dispatch(cargarClientes({ clientesStore: response.data }));
+      } catch (error) {
+        console.log("Error al obtener clientes:", error);
+      }
+    };
+
+    fetchClientes();
+  }, [dispatch]);
 
   //Modal Eliminar Cliente
   const [showModal, setShowModal] = useState(false);
@@ -51,6 +64,24 @@ function Clientes() {
       console.log("error", error);
     }
   };
+
+  const toggleHabilitacionCliente = async (idCliente, habilitado) => {
+    try {
+      if (habilitado) {
+        await deshabilitarClienteEnAPI(idCliente);
+        console.log(`Cliente con ID: ${idCliente} deshabilitado`);
+      } else {
+        await habilitarClienteEnAPI(idCliente);
+        console.log(`Cliente con ID: ${idCliente} habilitado`);
+      }
+      
+      const response = await getClientesApi();
+      dispatch(cargarClientes({ clientesStore: response.data }));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <div>
       <FiUserCheck className="icono-seccion" />
@@ -74,10 +105,13 @@ function Clientes() {
             <th scope="col">Editar</th>
             <th scope="col">Eliminar</th>
             <th scope="col">Servicios Contratados</th>
+            <th scope="col">Habilitar/Deshabilitar</th>
           </tr>
         </thead>
         <tbody>
           {clientes.map((cliente) => {
+            const habilitado = cliente.estado && cliente.estado.nombre === "Activo"; 
+            console.log(cliente);
             return (
               <tr key={cliente.id}>
                 <td>{cliente.id}</td>
@@ -118,6 +152,16 @@ function Clientes() {
                   >
                     Ver Servicios
                   </button>
+                </td>
+                <td>
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      checked={habilitado}
+                      onChange={() => toggleHabilitacionCliente(cliente.id, habilitado)}
+                    />
+                    <span className="slider round"></span>
+                  </label>
                 </td>
               </tr>
             );

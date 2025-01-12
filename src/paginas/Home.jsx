@@ -28,14 +28,14 @@ import { getMediosDePagoApi } from "../api/servicioMediosDePago";
 import { cargarMediosDePago } from "../slices/sliceMediosDePago";
 import { getNotificacionesApi } from "../api/servicioNotificaciones";
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
+import { FaClock } from "react-icons/fa";
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
 
 function Home() {
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    
-
     const GetClientes = async () => {
       try {
         const response = await getClientesApi();
@@ -208,11 +208,9 @@ function Home() {
     GetNotificaciones();
   }, []);
 
-  
   return (
     <>
       <Header></Header>
-
       <div style={{ display: "flex" }}>
         <Sidebar style={{ minWidth: "200px" }} />
         <div style={{ flex: 1, padding: "1rem" }}>
@@ -224,4 +222,45 @@ function Home() {
   );
 }
 
-export default Home;
+const HomeContent = () => {
+  const obtenerDatosGrafico = () => {
+    return {
+      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      datasets: [
+        {
+          label: 'Horas Ahorradas',
+          data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+          backgroundColor: '#71397299',
+          borderColor: '#713972',
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+
+  return (
+    <div className="container">
+      <h3 className="mb-5">Indicadores de Ahorro de Tiempo</h3>
+      <div className="row mb-3">
+        <div className="col-md-4">
+          <div className="indicador my-1">
+            <FaClock className="icono-indicador" />
+            <h5>Horas ahorradas este año en envío de correos</h5>
+            <p className="valor-indicador">1200</p> 
+          </div>
+          <div className="indicador my-1">
+            <FaClock className="icono-indicador" />
+            <h5>Horas ahorradas este mes en envíos de correos</h5>
+            <p className="valor-indicador">100</p> 
+          </div>
+        </div>
+        <div className="col-md-8">
+          <h5>Horas Ahorradas por Mes</h5>
+          <Bar data={obtenerDatosGrafico()} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { Home, HomeContent };

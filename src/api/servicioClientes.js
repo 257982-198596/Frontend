@@ -82,6 +82,46 @@ export const borrarClienteEnAPI = async (idCliente) => {
   }
 };
 
+// PUT - HABILITAR CLIENTE
+export const habilitarClienteEnAPI = async (idCliente) => {
+  try {
+    const response = await axios.put(`${urlAPI}clientes/habilitar/${idCliente}`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al habilitar cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// PUT - DESHABILITAR CLIENTE
+export const deshabilitarClienteEnAPI = async (idCliente) => {
+  try {
+    const response = await axios.put(`${urlAPI}clientes/deshabilitar/${idCliente}`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al deshabilitar cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
 function armarJsonCliente(obj) {
   const json = {
     SuscriptorId: obj.idUsuarioSuscriptor,

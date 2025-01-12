@@ -5,6 +5,7 @@ import { useState } from 'react'
 function Header() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const nombreSuscriptor = localStorage.getItem("nombreSuscriptor");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,7 +24,7 @@ function Header() {
           
           </Nav>
           <div className="ml-auto d-flex align-items-center">
-            <p className='encabezado mb-0'>Bienvenido</p>
+            <p className='encabezado mb-0'>Bienvenido, {nombreSuscriptor}</p>
             <span className="pipe-separator">|</span>
             <NavLink to="#" onClick={handleShow} className="nav-link encabezado">Cerrar Sesión</NavLink>
           </div>

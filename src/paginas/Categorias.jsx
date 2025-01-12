@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FiList } from "react-icons/fi";
+import { FiSliders } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import EliminarCategoria from "../paginas/categorias/EliminarCategoria";
@@ -48,7 +48,7 @@ function Categorias() {
 
   return (
     <div>
-      <FiList className="icono-seccion" />
+      <FiSliders className="icono-seccion" />   
       <h2>Categorías</h2>
       <Link to="/categorias/alta">
         <button className="btn oblcolor">Nueva Categoría</button>
