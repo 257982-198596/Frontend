@@ -38,7 +38,7 @@ function Home() {
 
   useEffect(() => {
     const GetClientes = async () => {
-      console.log(urlAPI);
+      console.log("URL DE LA APIIIIIIIIIIIIII" ,urlAPI);
       try {
         const response = await getClientesApi();
         if (response.status == 200) {
