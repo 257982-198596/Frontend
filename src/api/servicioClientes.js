@@ -4,12 +4,13 @@ import { urlAPI } from "../api/api";
 //Get - Clientes (Find All)
 export const getClientesApi = async () => {
   try {
+    console.log("URL DE LA APIIIIIIIIIIIIII servicioClientes" ,urlAPI);
     const response = await axios.get(`${urlAPI}clientes`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-
+    console.log("response.dataaaaaaaaaaaaaaaaa", response.data);
     if (response.status === 200) {
       return response;
     } else {
