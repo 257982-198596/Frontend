@@ -1,1 +1,1 @@
-export const urlAPI = process.env.REACT_APP_API_URL;
+export const urlAPI = process.env.REACT_APP_API_URL || "default_api_url";
