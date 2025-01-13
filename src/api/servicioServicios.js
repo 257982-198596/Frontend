@@ -1,10 +1,10 @@
 import axios from "axios";
 import { urlAPI } from "../api/api";
 
-//Get - Servicios (Find All)
-export const getServiciosApi = async () => {
+// Get - Servicios by SuscriptorId
+export const getServiciosApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}servicios`, {
+    const response = await axios.get(`${urlAPI}servicios/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -83,8 +83,9 @@ export const borrarServicioEnAPI = async (idServicio) => {
 };
 
 function armarJsonServicio(obj) {
+  const suscriptorId = localStorage.getItem("idSuscriptor");
   const json = {
-    SuscriptorId: obj.idUsuarioSuscriptor,
+    SuscriptorId: suscriptorId,
     Nombre: obj.nombre,
     Descripcion: obj.descripcion,
     CategoriaId: obj.categoriaId

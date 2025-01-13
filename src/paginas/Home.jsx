@@ -35,16 +35,17 @@ import { urlAPI } from "../api/api";
 
 function Home() {
   const dispatch = useDispatch();
+  const suscriptorId = localStorage.getItem("idSuscriptor");
 
   useEffect(() => {
     const GetClientes = async () => {
-      console.log("URL DE LA APIIIIIIIIIIIIII", urlAPI);
+      console.log("URL DE LA API", urlAPI);
       const variables = import.meta.env.VITE_REACT_APP_API_URL; 
       const variables2 = import.meta.env.APPSETTING_REACT_APP_API_URL; 
       console.log("variables",variables);
       console.log("variables2",variables2);
       try {
-        const response = await getClientesApi();
+        const response = await getClientesApi(suscriptorId); 
         if (response.status == 200) {
           const payload = {
             clientesStore: response.data
@@ -60,7 +61,7 @@ function Home() {
     };
     const GetServicios = async () => {
       try {
-        const response = await getServiciosApi();
+        const response = await getServiciosApi(suscriptorId); 
         if (response.status == 200) {
           const payload = {
             serviciosStore: response.data

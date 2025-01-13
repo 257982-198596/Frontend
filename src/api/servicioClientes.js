@@ -1,16 +1,16 @@
 import axios from "axios";
 import { urlAPI } from "../api/api";
 
-//Get - Clientes (Find All)
-export const getClientesApi = async () => {
+// Get - Clientes by SuscriptorId
+export const getClientesApi = async (suscriptorId) => {
   try {
-    console.log("URL DE LA APIIIIIIIIIIIIII servicioClientes" ,urlAPI);
-    const response = await axios.get(`${urlAPI}clientes`, {
+    console.log("URL DE LA API servicioClientes", urlAPI);
+    const response = await axios.get(`${urlAPI}clientes/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    console.log("response.dataaaaaaaaaaaaaaaaa", response.data);
+    console.log("response.data", response.data);
     if (response.status === 200) {
       return response;
     } else {
