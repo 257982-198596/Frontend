@@ -38,7 +38,9 @@ function Home() {
 
   useEffect(() => {
     const GetClientes = async () => {
-      console.log("URL DE LA APIIIIIIIIIIIIII" ,urlAPI);
+      console.log("URL DE LA APIIIIIIIIIIIIII", urlAPI);
+      const variables = import.meta.env; 
+      console.log("variables",variables);
       try {
         const response = await getClientesApi();
         if (response.status == 200) {
