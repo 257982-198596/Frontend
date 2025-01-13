@@ -4,13 +4,13 @@ import { urlAPI } from "../api/api";
 // Get - Clientes by SuscriptorId
 export const getClientesApi = async (suscriptorId) => {
   try {
-    console.log("URL DE LA API servicioClientes", urlAPI);
+    
     const response = await axios.get(`${urlAPI}clientes/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    console.log("response.data", response.data);
+  
     if (response.status === 200) {
       return response;
     } else {
@@ -124,8 +124,9 @@ export const deshabilitarClienteEnAPI = async (idCliente) => {
 };
 
 function armarJsonCliente(obj) {
+  const suscriptorId = localStorage.getItem("idSuscriptor");
   const json = {
-    SuscriptorId: obj.idUsuarioSuscriptor,
+    SuscriptorId: suscriptorId,
     nombre: obj.nombre,
     DocumentoId: obj.idDocumento,
     numDocumento: obj.numDocumento,

@@ -110,7 +110,7 @@ function Home() {
     };
     const GetCategorias = async () => {
       try {
-        const response = await getCategoriasApi();
+        const response = await getCategoriasApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             categoriasStore: response.data
