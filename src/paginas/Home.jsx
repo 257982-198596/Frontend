@@ -39,8 +39,10 @@ function Home() {
   useEffect(() => {
     const GetClientes = async () => {
       console.log("URL DE LA APIIIIIIIIIIIIII", urlAPI);
-      const variables = import.meta.env; 
+      const variables = import.meta.env.REACT_APP_API_URL; 
+      const variables2 = import.meta.env.APPSETTING_REACT_APP_API_URL; 
       console.log("variables",variables);
+      console.log("variables2",variables2);
       try {
         const response = await getClientesApi();
         if (response.status == 200) {
