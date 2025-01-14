@@ -1,10 +1,10 @@
 import axios from "axios";
 import { urlAPI } from "../api/api";
 
-//Get - Servicios (Find All)
-export const getNotificacionesApi = async () => {
+//Get - Notificaciones (Find All)
+export const getNotificacionesApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}notificaciones`, {
+    const response = await axios.get(`${urlAPI}notificaciones/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },

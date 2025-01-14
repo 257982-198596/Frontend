@@ -2,9 +2,9 @@ import axios from "axios";
 import { urlAPI } from "../api/api";
 
 //Get - Cobros (Find All)
-export const getCobrosApi = async () => {
+export const getCobrosApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}cobrosrecibidos`, {
+    const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },

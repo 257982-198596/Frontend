@@ -62,7 +62,8 @@ function Notificaciones() {
   useEffect(() => {
     const fetchNotificacionesData = async () => {
       try {
-        const response = await getNotificacionesApi();
+        const suscriptorId = localStorage.getItem("idSuscriptor");
+        const response = await getNotificacionesApi(suscriptorId);
         dispatch(cargarNotificaciones(response.data));
         setNotificacionesFiltradas(response.data);
       } catch (error) {

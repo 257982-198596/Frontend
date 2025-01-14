@@ -158,7 +158,7 @@ function Home() {
     };
     const GetCobros = async () => {
       try {
-        const response = await getCobrosApi();
+        const response = await getCobrosApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             cobrosStore: response.data
@@ -190,7 +190,7 @@ function Home() {
     };
     const GetNotificaciones = async () => {
       try {
-        const response = await getNotificacionesApi();
+        const response = await getNotificacionesApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             notificacionesStore: response.data
