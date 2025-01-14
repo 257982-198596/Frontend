@@ -2,12 +2,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import Sidebar from "../componentes/Sidebar";
 import Header from "../componentes/Header";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { getClientesApi } from "../api/servicioClientes";
 import { cargarClientes } from "../slices/sliceClientes";
 import { getTiposDocumentosApi } from "../api/servicioTiposDocumentos";
@@ -26,7 +26,7 @@ import { getCobrosApi } from "../api/servicioCobros";
 import { cargarCobros } from "../slices/sliceCobros";
 import { getMediosDePagoApi } from "../api/servicioMediosDePago";
 import { cargarMediosDePago } from "../slices/sliceMediosDePago";
-import { getNotificacionesApi } from "../api/servicioNotificaciones";
+import { getNotificacionesApi, getNotificacionesPorMesApi } from "../api/servicioNotificaciones";
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 import { FaClock } from "react-icons/fa";
 import { Bar } from 'react-chartjs-2';
@@ -35,7 +35,9 @@ import { urlAPI } from "../api/api";
 
 function Home() {
   const dispatch = useDispatch();
+  const [notificacionesPorMes, setNotificacionesPorMes] = useState([]);
   const suscriptorId = localStorage.getItem("idSuscriptor");
+  const year = new Date().getFullYear();
 
   useEffect(() => {
     const GetClientes = async () => {
@@ -203,6 +205,18 @@ function Home() {
         console.log("Error API Notificaciones", error);
       }
     };
+    const GetNotificacionesPorMes = async () => {
+      try {
+        const response = await getNotificacionesPorMesApi(suscriptorId, year);
+        if (response) {
+          setNotificacionesPorMes(response);
+        } else {
+          throw "Error al obtener notificaciones por mes";
+        }
+      } catch (error) {
+        console.log("Error API Notificaciones por Mes", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
     GetServicios();
@@ -213,6 +227,7 @@ function Home() {
     GetCobros();
     GetMediosDePago();
     GetNotificaciones();
+    GetNotificacionesPorMes();
   }, []);
 
   return (
@@ -221,7 +236,7 @@ function Home() {
       <div style={{ display: "flex" }}>
         <Sidebar style={{ minWidth: "200px" }} />
         <div style={{ flex: 1, padding: "1rem" }}>
-          <Outlet />
+          <HomeContent notificacionesPorMes={notificacionesPorMes} />
         </div>
       </div>
       <Footer></Footer>
@@ -229,14 +244,26 @@ function Home() {
   );
 }
 
-const HomeContent = () => {
+const HomeContent = ({ notificacionesPorMes }) => {
   const obtenerDatosGrafico = () => {
+    // Inicializa un array de 12 elementos, todos con valor 0, para representar los 12 meses del año
+    const data = Array(12).fill(0);
+
+    // Verifica si hay datos de notificaciones por mes
+    if (notificacionesPorMes) {
+      // Recorre las claves del objeto notificacionesPorMes
+      Object.keys(notificacionesPorMes).forEach(key => {
+        // Convierte la clave (mes) a un índice de array (restando 1) y asigna el valor correspondiente de notificaciones
+        data[parseInt(key) - 1] = notificacionesPorMes[key];
+      });
+    }
+
     return {
       labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       datasets: [
         {
           label: 'Horas Ahorradas',
-          data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+          data: data,
           backgroundColor: '#71397299',
           borderColor: '#713972',
           borderWidth: 1,
@@ -244,6 +271,15 @@ const HomeContent = () => {
       ],
     };
   };
+
+  // Calcula las horas ahorradas del año
+  const horasAhorradasAnio = Object.values(notificacionesPorMes).reduce((acc, val) => acc + val, 0);
+
+  // Obtiene el mes corriente 
+  const mesCorriente = new Date().getMonth();
+
+  // Calcula las horas ahorradas en el mes corriente
+  const horasAhorradasMes = notificacionesPorMes[mesCorriente + 1] || 0;
 
   return (
     <div className="container">
@@ -253,12 +289,12 @@ const HomeContent = () => {
           <div className="indicador my-1">
             <FaClock className="icono-indicador" />
             <h5>Horas ahorradas este año en envío de correos</h5>
-            <p className="valor-indicador">1200</p> 
+            <p className="valor-indicador">{horasAhorradasAnio}</p> 
           </div>
           <div className="indicador my-1">
             <FaClock className="icono-indicador" />
             <h5>Horas ahorradas este mes en envíos de correos</h5>
-            <p className="valor-indicador">100</p> 
+            <p className="valor-indicador">{horasAhorradasMes}</p> 
           </div>
         </div>
         <div className="col-md-8">
