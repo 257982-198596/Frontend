@@ -4,6 +4,7 @@ import Login from "../paginas/Login";
 import Registro from "../paginas/Registro";
 import ControlAutenticacion from "../componentes/ControlAutenticacion";
 import RutasProtegidas from "./RutasProtegidas";
+
 function Rutas() {
   return (
     <BrowserRouter>
