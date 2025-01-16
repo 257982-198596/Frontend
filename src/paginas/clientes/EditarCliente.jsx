@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { putActualizarClienteAPI } from "../../api/servicioClientes";
+import { putActualizarClienteAPI, resetContrasenaAPI } from "../../api/servicioClientes";
 import { actualizarClientes } from "../../slices/sliceClientes";
 import FormularioCliente from "../../componentes/formularios/FormularioCliente";
-import { mostrarError } from "../../componentes/Toasts";
-
+import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
 
 function EditarCliente() {
   const dispatch = useDispatch();
@@ -27,7 +26,6 @@ function EditarCliente() {
     persona: "",
     idPais: "",
     email: "",
-    password: "",
   });
 
   useEffect(() => {
@@ -41,7 +39,6 @@ function EditarCliente() {
         persona: cliente.personaContacto || "",
         idPais: cliente.paisId || "",
         email: cliente.usuarioLogin?.email || "",
-        password: cliente.usuarioLogin?.password || "",
       });
     }
   }, [cliente]);
@@ -55,7 +52,6 @@ function EditarCliente() {
     console.log(formData.nombre)
     if (!formData.nombre) {
       mostrarError("El nombre es obligatorio");
- 
       return false;
     }
     if (formData.nombre.length <= 3) {
@@ -114,13 +110,8 @@ function EditarCliente() {
       mostrarError("El correo electrónico no es válido");
       return false;
     }
-    if (!formData.password) {
-      mostrarError("La contraseña es obligatoria");
-      return false;
-    }
     return true;
   };
-
 
   const submitEditarCliente = async (event) => {
     event.preventDefault();
@@ -128,19 +119,30 @@ function EditarCliente() {
     if (!validarFormulario(formData)) {
       return;
     }
-    try{
+    try {
       const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
       const objCliente = { id, idUsuarioSuscriptor, ...formData };
-  
+
       const respuestaAPI = await putActualizarClienteAPI(objCliente);
       if (respuestaAPI.status === 200) {
         dispatch(actualizarClientes(respuestaAPI.data));
         navigate("/clientes"); // Navegar de vuelta a la lista de clientes
       }
-    }catch(error){
+    } catch (error) {
       mostrarError(error.message);
     }
-    
+  };
+
+  const resetContrasena = async () => {
+    try {
+      const usuario = { id: cliente.usuarioLogin.id };
+      const respuestaAPI = await resetContrasenaAPI(usuario);
+      if (respuestaAPI.status === 200) {
+        mostrarSuccess("Contraseña temporal generada y enviada por correo.");
+      }
+    } catch (error) {
+      mostrarError(error.message);
+    }
   };
 
   if (!cliente) {
@@ -157,8 +159,8 @@ function EditarCliente() {
         modo="editar"
         losDocumentos={losDocumentos}
         losPaises={losPaises}
+        resetContrasena={resetContrasena}
       />
-
     </div>
   );
 }

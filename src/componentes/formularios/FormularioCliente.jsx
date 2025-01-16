@@ -10,6 +10,7 @@ function FormularioCliente({
   modo,
   losDocumentos,
   losPaises,
+  resetContrasena,
 }) {
   const isReadOnly = modo === "detalle";
   return (
@@ -117,18 +118,28 @@ function FormularioCliente({
           readOnly={isReadOnly}
         />
       </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="password">Contraseña *</Form.Label>
-        <Form.Control
-          type="text"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          readOnly={isReadOnly}
-        />
-      </Form.Group>
-
+      {modo !== "editar" && (
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password">Contraseña *</Form.Label>
+          <Form.Control
+            type="text"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            readOnly={isReadOnly}
+          />
+        </Form.Group>
+      )}
+      {modo === "editar" && (
+        <Button
+          variant="danger"
+          className="btn-sm mt-2"
+          onClick={resetContrasena}
+        >
+          Restablecer Contraseña
+        </Button>
+      )}
       <div className="d-flex justify-content-center">
       {!isReadOnly && (
           <Button variant="dark" type="submit" className="botones-formularios">

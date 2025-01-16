@@ -123,6 +123,29 @@ export const deshabilitarClienteEnAPI = async (idCliente) => {
   }
 };
 
+// POST - RESET CONTRASEÑA
+export const resetContrasenaAPI = async (usuario) => {
+  try {
+    const response = await axios.post(
+      `${urlAPI}usuarios/reset`,
+      usuario,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al restablecer la contraseña");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
 function armarJsonCliente(obj) {
   const suscriptorId = localStorage.getItem("idSuscriptor");
   const json = {

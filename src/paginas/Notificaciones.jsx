@@ -18,9 +18,6 @@ function Notificaciones() {
   const [fechaFin, setFechaFin] = useState("");
   const [notificacionesFiltradas, setNotificacionesFiltradas] = useState(notificaciones);
 
-  const verDetallesNotificacion = (idNotificacion) => {
-    navigate(`/notificaciones/detalle/${idNotificacion}`);
-  };
 
   const formatFechaEnvio = (fechaEnvio) => {
     const date = new Date(fechaEnvio);
@@ -173,7 +170,7 @@ function Notificaciones() {
             <th scope="col">Mensaje</th>
             <th scope="col">Estado</th>
             <th scope="col">Servicio Notificado</th>
-            <th scope="col">Detalles</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -187,14 +184,7 @@ function Notificaciones() {
                 <td>{notificacion.mensaje}</td>
                 <td>{notificacion.estadoDeNotificacion.nombre}</td>
                 <td>{notificacion.servicioNotificado.descripcion}</td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor"
-                    onClick={() => verDetallesNotificacion(notificacion.id)}
-                  >
-                    Ver Más
-                  </button>
-                </td>
+                
               </tr>
             );
           })}
