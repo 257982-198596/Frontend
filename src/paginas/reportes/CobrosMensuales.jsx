@@ -5,7 +5,7 @@ import 'chart.js/auto';
 import { obtenerCobrosPorMesYServicioAPI, obtenerCobrosPorMesYClienteAPI } from '../../api/servicioCobros';
 
 const CobrosMensuales = () => {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+  const [servicioTipoSeleccionado, setTipoServicioSeleccionada] = useState('');
   const [clienteSeleccionado, setClienteSeleccionado] = useState('');
   const [datosPorCategoria, setDatosPorCategoria] = useState({});
   const [datosPorCliente, setDatosPorCliente] = useState({});
@@ -14,21 +14,21 @@ const CobrosMensuales = () => {
   const servicios = useSelector((state) => state.sliceServicios.servicios);
 
   useEffect(() => {
-    const cargarDatosPorCategoria = async () => {
+    const cargarDatosPorTipoServicio = async () => {
       try {
         const suscriptorId = localStorage.getItem('idSuscriptor');
         const year = new Date().getFullYear();
-        const response = await obtenerCobrosPorMesYServicioAPI(suscriptorId, year, categoriaSeleccionada);
+        const response = await obtenerCobrosPorMesYServicioAPI(suscriptorId, year, servicioTipoSeleccionado);
         setDatosPorCategoria(response.data);
       } catch (error) {
         console.error("Error al obtener los cobros por categoría:", error);
       }
     };
 
-    if (categoriaSeleccionada) {
-      cargarDatosPorCategoria();
+    if (servicioTipoSeleccionado) {
+      cargarDatosPorTipoServicio();
     }
-  }, [categoriaSeleccionada]);
+  }, [servicioTipoSeleccionado]);
 
   useEffect(() => {
     const cargarDatosPorCliente = async () => {
@@ -76,8 +76,8 @@ const CobrosMensuales = () => {
           <h5>Seleccione Tipo de Servicio</h5>
           <select
             className="form-select"
-            value={categoriaSeleccionada}
-            onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+            value={servicioTipoSeleccionado}
+            onChange={(e) => setTipoServicioSeleccionada(e.target.value)}
           >
             <option value="">Seleccione un tipo de servicio</option>
             {servicios.map((servicio) => (
@@ -86,7 +86,7 @@ const CobrosMensuales = () => {
               </option>
             ))}
           </select>
-          {categoriaSeleccionada && (
+          {servicioTipoSeleccionado && (
             <Bar data={obtenerDatosGrafico(datosPorCategoria)} />
           )}
         </div>
