@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import { mostrarError,mostrarSuccess } from "../componentes/Toasts";
 import { ToastContainer } from 'react-toastify';
-import { obtenerSuscriptorApi } from "../api/servicioSuscriptores";
+import { obtenerSuscriptorPorIdUsuarioApi } from "../api/servicioSuscriptores";
 
 function Login() {
   const usuarioRef = useRef();
@@ -27,11 +27,14 @@ function Login() {
       console.log("Usuario logueado", usuarioLogueado);
       localStorage.setItem("idUsuario", usuarioLogueado.id);
       localStorage.setItem("idRol", usuarioLogueado.rolId);
+      const idUsuario = localStorage.getItem("idUsuario");
+      console.log("idUsuario", idUsuario);
 
-      const suscriptorResponse = await obtenerSuscriptorApi(usuarioLogueado.id);
+      const suscriptorResponse = await obtenerSuscriptorPorIdUsuarioApi(idUsuario);
       if (suscriptorResponse.status === 200) {
         const suscriptor = suscriptorResponse.data;
         localStorage.setItem("nombreSuscriptor", suscriptor.nombre);
+        localStorage.setItem("idSuscriptor", suscriptor.id);
       }
 
       mostrarSuccess("Usuario logueado con éxito");

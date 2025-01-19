@@ -2,9 +2,9 @@ import axios from "axios";
 import { urlAPI } from "../api/api";
 
 //Get - Categorias (Find All)
-export const getCategoriasApi = async () => {
+export const getCategoriasApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}categorias`, {
+    const response = await axios.get(`${urlAPI}categorias/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -84,8 +84,10 @@ export const borrarCategoriaEnAPI = async (idCategoria) => {
 };
 
 function armarJsonCategoria(obj) {
+  const suscriptorId = localStorage.getItem("idSuscriptor");
   const json = {
     Nombre: obj.nombre,
+    SuscriptorId: suscriptorId
   };
   return json;
 }

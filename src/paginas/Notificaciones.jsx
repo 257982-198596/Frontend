@@ -18,9 +18,6 @@ function Notificaciones() {
   const [fechaFin, setFechaFin] = useState("");
   const [notificacionesFiltradas, setNotificacionesFiltradas] = useState(notificaciones);
 
-  const verDetallesNotificacion = (idNotificacion) => {
-    navigate(`/notificaciones/detalle/${idNotificacion}`);
-  };
 
   const formatFechaEnvio = (fechaEnvio) => {
     const date = new Date(fechaEnvio);
@@ -62,7 +59,8 @@ function Notificaciones() {
   useEffect(() => {
     const fetchNotificacionesData = async () => {
       try {
-        const response = await getNotificacionesApi();
+        const suscriptorId = localStorage.getItem("idSuscriptor");
+        const response = await getNotificacionesApi(suscriptorId);
         dispatch(cargarNotificaciones(response.data));
         setNotificacionesFiltradas(response.data);
       } catch (error) {
@@ -172,7 +170,7 @@ function Notificaciones() {
             <th scope="col">Mensaje</th>
             <th scope="col">Estado</th>
             <th scope="col">Servicio Notificado</th>
-            <th scope="col">Detalles</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -186,14 +184,7 @@ function Notificaciones() {
                 <td>{notificacion.mensaje}</td>
                 <td>{notificacion.estadoDeNotificacion.nombre}</td>
                 <td>{notificacion.servicioNotificado.descripcion}</td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor"
-                    onClick={() => verDetallesNotificacion(notificacion.id)}
-                  >
-                    Ver Más
-                  </button>
-                </td>
+                
               </tr>
             );
           })}

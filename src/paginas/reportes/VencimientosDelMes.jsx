@@ -28,7 +28,7 @@ const VencimientosDelMes = () => {
   useEffect(() => {
     const cargarServiciosVencenEsteMes = async () => {
       try {
-        const idSuscriptor = localStorage.getItem('idUsuario');
+        const idSuscriptor = localStorage.getItem('idSuscriptor');
         const response = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
         console.log("Servicios que vencen este mes:", response.data);   
         setServiciosVencenEsteMes(response.data);

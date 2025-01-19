@@ -2,9 +2,9 @@ import axios from "axios";
 import { urlAPI } from "../api/api";
 
 //Get - Cobros (Find All)
-export const getCobrosApi = async () => {
+export const getCobrosApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}cobrosrecibidos`, {
+    const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -80,6 +80,46 @@ export const putActualizarCobroAPI = async (objcobro) => {
       return response;
     } else {
       throw new Error("Error al actualizar cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// FUNCION QUE FILTRA POR SERVICIO
+export const obtenerCobrosPorMesYServicioAPI = async (suscriptorId, year, servicioId) => {
+  try {
+    const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}/anio/${year}/servicio/${servicioId}/cobros-por-mes`, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener cobros por mes y servicio");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// FUNCION QUE FILTRA POR CLIENTE
+export const obtenerCobrosPorMesYClienteAPI = async (suscriptorId, year, clienteId) => {
+  try {
+    const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}/anio/${year}/cliente/${clienteId}/cobros-por-mes`, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener cobros por mes y cliente");
     }
   } catch (error) {
     console.log(error.response.data.message);

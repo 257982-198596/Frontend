@@ -1,13 +1,10 @@
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+
+import { Outlet, useOutletContext } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import Sidebar from "../componentes/Sidebar";
 import Header from "../componentes/Header";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getClientesApi } from "../api/servicioClientes";
 import { cargarClientes } from "../slices/sliceClientes";
 import { getTiposDocumentosApi } from "../api/servicioTiposDocumentos";
@@ -26,25 +23,26 @@ import { getCobrosApi } from "../api/servicioCobros";
 import { cargarCobros } from "../slices/sliceCobros";
 import { getMediosDePagoApi } from "../api/servicioMediosDePago";
 import { cargarMediosDePago } from "../slices/sliceMediosDePago";
-import { getNotificacionesApi } from "../api/servicioNotificaciones";
+import { getNotificacionesApi, getNotificacionesPorMesApi } from "../api/servicioNotificaciones";
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
-import { FaClock } from "react-icons/fa";
-import { Bar } from 'react-chartjs-2';
-import 'chart.js/auto';
 import { urlAPI } from "../api/api";
+import IndicadoresAhorro from "../componentes/IndicadoresAhorro";
 
 function Home() {
   const dispatch = useDispatch();
+  const [notificacionesPorMes, setNotificacionesPorMes] = useState([]);
+  const suscriptorId = localStorage.getItem("idSuscriptor");
+  const year = new Date().getFullYear();
 
   useEffect(() => {
     const GetClientes = async () => {
-      console.log("URL DE LA APIIIIIIIIIIIIII", urlAPI);
+      console.log("URL DE LA API", urlAPI);
       const variables = import.meta.env.VITE_REACT_APP_API_URL; 
       const variables2 = import.meta.env.APPSETTING_REACT_APP_API_URL; 
       console.log("variables",variables);
       console.log("variables2",variables2);
       try {
-        const response = await getClientesApi();
+        const response = await getClientesApi(suscriptorId); 
         if (response.status == 200) {
           const payload = {
             clientesStore: response.data
@@ -60,7 +58,7 @@ function Home() {
     };
     const GetServicios = async () => {
       try {
-        const response = await getServiciosApi();
+        const response = await getServiciosApi(suscriptorId); 
         if (response.status == 200) {
           const payload = {
             serviciosStore: response.data
@@ -97,7 +95,6 @@ function Home() {
         if (response.status == 200) {
           const payload = {
             paisesStore: response.data
-            
           };
           dispatch(cargarPaises(payload));
         }else {
@@ -109,11 +106,10 @@ function Home() {
     };
     const GetCategorias = async () => {
       try {
-        const response = await getCategoriasApi();
+        const response = await getCategoriasApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             categoriasStore: response.data
-            
           };
           dispatch(cargarCategorias(payload));
         }else {
@@ -129,7 +125,6 @@ function Home() {
         if (response.status == 200) {
           const payload = {
             monedasStore: response.data
-            
           };
           dispatch(cargarMonedas(payload));
         }else {
@@ -145,7 +140,6 @@ function Home() {
         if (response.status == 200) {
           const payload = {
             frecuenciasStore: response.data
-            
           };
           dispatch(cargarFrecuencias(payload));
         }else {
@@ -157,11 +151,10 @@ function Home() {
     };
     const GetCobros = async () => {
       try {
-        const response = await getCobrosApi();
+        const response = await getCobrosApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             cobrosStore: response.data
-            
           };
           dispatch(cargarCobros(payload));
         }else {
@@ -177,7 +170,6 @@ function Home() {
         if (response.status == 200) {
           const payload = {
             mediosDePagoStore: response.data
-            
           };
           dispatch(cargarMediosDePago(payload));
         }else {
@@ -189,7 +181,7 @@ function Home() {
     };
     const GetNotificaciones = async () => {
       try {
-        const response = await getNotificacionesApi();
+        const response = await getNotificacionesApi(suscriptorId);
         if (response.status == 200) {
           const payload = {
             notificacionesStore: response.data
@@ -202,6 +194,20 @@ function Home() {
         console.log("Error API Notificaciones", error);
       }
     };
+    const GetNotificacionesPorMes = async () => {
+      try {
+        const response = await getNotificacionesPorMesApi(suscriptorId, year);
+        if (response) {
+          setNotificacionesPorMes(response);
+          console.log(response)
+          console.log("notificacionesPorMes", notificacionesPorMes);
+        } else {
+          throw "Error al obtener notificaciones por mes";
+        }
+      } catch (error) {
+        console.log("Error API Notificaciones por Mes", error);
+      }
+    };
     GetTiposDocumentos();
     GetClientes();
     GetServicios();
@@ -212,6 +218,7 @@ function Home() {
     GetCobros();
     GetMediosDePago();
     GetNotificaciones();
+    GetNotificacionesPorMes();
   }, []);
 
   return (
@@ -220,7 +227,7 @@ function Home() {
       <div style={{ display: "flex" }}>
         <Sidebar style={{ minWidth: "200px" }} />
         <div style={{ flex: 1, padding: "1rem" }}>
-          <Outlet />
+          <Outlet context={{ notificacionesPorMes }} />
         </div>
       </div>
       <Footer></Footer>
@@ -229,44 +236,9 @@ function Home() {
 }
 
 const HomeContent = () => {
-  const obtenerDatosGrafico = () => {
-    return {
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      datasets: [
-        {
-          label: 'Horas Ahorradas',
-          data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-          backgroundColor: '#71397299',
-          borderColor: '#713972',
-          borderWidth: 1,
-        },
-      ],
-    };
-  };
-
-  return (
-    <div className="container">
-      <h3 className="mb-5">Indicadores de Ahorro de Tiempo</h3>
-      <div className="row mb-3">
-        <div className="col-md-4">
-          <div className="indicador my-1">
-            <FaClock className="icono-indicador" />
-            <h5>Horas ahorradas este año en envío de correos</h5>
-            <p className="valor-indicador">1200</p> 
-          </div>
-          <div className="indicador my-1">
-            <FaClock className="icono-indicador" />
-            <h5>Horas ahorradas este mes en envíos de correos</h5>
-            <p className="valor-indicador">100</p> 
-          </div>
-        </div>
-        <div className="col-md-8">
-          <h5>Horas Ahorradas por Mes</h5>
-          <Bar data={obtenerDatosGrafico()} />
-        </div>
-      </div>
-    </div>
-  );
+  const { notificacionesPorMes } = useOutletContext();
+  
+  return <IndicadoresAhorro notificacionesPorMes={notificacionesPorMes} />;
 };
 
 export { Home, HomeContent };

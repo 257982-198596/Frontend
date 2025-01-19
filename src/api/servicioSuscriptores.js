@@ -22,10 +22,15 @@ export const postNuevoSuscriptorAPI = async (objSuscriptor) => {
   }
 };
 
-export const obtenerSuscriptorApi = async (id) => {
+export const obtenerSuscriptorPorIdUsuarioApi = async (id) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axios.get(`${urlAPI}suscriptores/${id}`);
+    console.log("id", id);
+    const response = await axios.get(`${urlAPI}suscriptores/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response;
   } catch (error) {
     throw error;

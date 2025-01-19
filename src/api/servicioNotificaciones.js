@@ -1,10 +1,10 @@
 import axios from "axios";
 import { urlAPI } from "../api/api";
 
-//Get - Servicios (Find All)
-export const getNotificacionesApi = async () => {
+//Get - Notificaciones (Find All)
+export const getNotificacionesApi = async (suscriptorId) => {
   try {
-    const response = await axios.get(`${urlAPI}notificaciones`, {
+    const response = await axios.get(`${urlAPI}notificaciones/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -62,7 +62,24 @@ export const enviarRecordatorioAPI = async (idServicio) => {
       }
     }
 
+export const getNotificacionesPorMesApi = async (suscriptorId, year) => {
+  try {
+    const response = await axios.get(`${urlAPI}notificaciones/suscriptor/${suscriptorId}/anio/${year}/notificaciones-por-mes`, {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
 
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Error al obtener notificaciones por mes");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
 
   function armarJsonNotificacion(idServicio) {
     console.log("idServicio", idServicio);

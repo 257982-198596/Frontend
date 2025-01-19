@@ -17,7 +17,8 @@ function Clientes() {
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await getClientesApi();
+        const suscriptorId = localStorage.getItem("idSuscriptor");
+        const response = await getClientesApi(suscriptorId);
         dispatch(cargarClientes({ clientesStore: response.data }));
       } catch (error) {
         console.log("Error al obtener clientes:", error);
@@ -111,7 +112,7 @@ function Clientes() {
         <tbody>
           {clientes.map((cliente) => {
             const habilitado = cliente.estado && cliente.estado.nombre === "Activo"; 
-            console.log(cliente);
+            
             return (
               <tr key={cliente.id}>
                 <td>{cliente.id}</td>
