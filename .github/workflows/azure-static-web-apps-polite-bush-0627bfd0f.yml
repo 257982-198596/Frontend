@@ -36,8 +36,8 @@ jobs:
           app_location: "/" # App source code path
           api_location: "${{ secrets.VITE_REACT_APP_API_URL }}" 
           output_location: "/dist" # Built app content directory - optional
-          env:
-            VITE_REACT_APP_API_URL: ${{ secrets.VITE_REACT_APP_API_URL }}
+        env:
+          VITE_REACT_APP_API_URL: ${{ secrets.VITE_REACT_APP_API_URL }}
           
 
   close_pull_request_job:
