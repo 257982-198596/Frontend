@@ -1,1 +1,1 @@
-export const urlAPI = import.meta.env.VITE_REACT_APP_API_URL || "https://backend-proyecto-integrador-257982-198596-edhucddfd5axfwhe.eastus-01.azurewebsites.net/api/";
+export const urlAPI = import.meta.env.VITE_REACT_APP_API_URL || "";

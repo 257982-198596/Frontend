@@ -34,9 +34,11 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
-          api_location: "https://backend-proyecto-integrador-257982-198596-edhucddfd5axfwhe.eastus-01.azurewebsites.net/api/" # Api source code path - optional
+          api_location: "${{ secrets.VITE_REACT_APP_API_URL }}" 
           output_location: "/dist" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          env:
+            VITE_REACT_APP_API_URL: ${{ secrets.VITE_REACT_APP_API_URL }}
+          
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
