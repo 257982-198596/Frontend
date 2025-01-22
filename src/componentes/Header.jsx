@@ -1,11 +1,21 @@
-import { Container, Nav, Navbar, Modal, Button } from 'react-bootstrap'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { Container, Nav, Navbar, Modal, Button } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
-function Header() {
+function Header({ nombreCliente }) {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const nombreSuscriptor = localStorage.getItem("nombreSuscriptor");
+  const [nombre, setNombre] = useState('');
+  const idRol = localStorage.getItem("idRol");
+
+  useEffect(() => {
+    const nombreSuscriptor = localStorage.getItem("nombreSuscriptor");
+    if (idRol === '2') {
+      setNombre(nombreSuscriptor);
+    } else if (idRol === '3') {
+      setNombre(nombreCliente);
+    }
+  }, [idRol, nombreCliente]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -24,7 +34,7 @@ function Header() {
           
           </Nav>
           <div className="ml-auto d-flex align-items-center">
-            <p className='encabezado mb-0'>Bienvenido, {nombreSuscriptor}</p>
+            <p className='encabezado mb-0'>Bienvenido, {nombre}</p>
             <span className="pipe-separator">|</span>
             <NavLink to="#" onClick={handleShow} className="nav-link encabezado">Cerrar Sesión</NavLink>
           </div>
@@ -46,7 +56,7 @@ function Header() {
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;
