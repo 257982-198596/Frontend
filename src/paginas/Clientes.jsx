@@ -83,6 +83,24 @@ function Clientes() {
     }
   };
 
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const clientesPaginados = Array.isArray(clientes)
+    ? clientes.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(clientes)
+    ? Math.ceil(clientes.length / elementosPorPagina)
+    : 0;
+
   return (
     <div>
       <FiUserCheck className="icono-seccion" />
@@ -110,7 +128,7 @@ function Clientes() {
           </tr>
         </thead>
         <tbody>
-          {clientes.map((cliente) => {
+          {clientesPaginados.map((cliente) => {
             const habilitado = cliente.estado && cliente.estado.nombre === "Activo"; 
             
             return (
@@ -169,6 +187,18 @@ function Clientes() {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <p className="pagina-paginacion">Página:</p>
+        {Array.from({ length: totalPaginas }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
       {/* Modal para Confirmar Eliminación */}
       <ModalEliminar

@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
@@ -46,6 +45,25 @@ function Servicios() {
       console.log("error", error);
     }
   };
+
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const serviciosPaginados = Array.isArray(servicios)
+    ? servicios.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(servicios)
+    ? Math.ceil(servicios.length / elementosPorPagina)
+    : 0;
+
   return (
     <div>
       <FiShoppingCart className="icono-seccion" />
@@ -69,7 +87,7 @@ function Servicios() {
           </tr>
         </thead>
         <tbody>
-          {servicios.map((servicio) => {
+          {serviciosPaginados.map((servicio) => {
             return (
               <tr key={servicio.id}>
                 <td>{servicio.id}</td>
@@ -106,6 +124,18 @@ function Servicios() {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <p className="pagina-paginacion">Página:</p>
+        {Array.from({ length: totalPaginas }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
       {/* Modal para Confirmar Eliminación */}
       <EliminarServicio

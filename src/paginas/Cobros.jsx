@@ -36,6 +36,23 @@ function Cobros() {
   //para filtrado de fechas
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const cobrosPaginados = Array.isArray(cobrosFiltrados)
+    ? cobrosFiltrados.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(cobrosFiltrados)
+    ? Math.ceil(cobrosFiltrados.length / elementosPorPagina)
+    : 0;
 
   //para filtrado de clientes
   const handleFiltrarPorCliente = (event) => {
@@ -193,67 +210,81 @@ function Cobros() {
       <div className="espacio"></div>
       
       {cobrosFiltrados.length > 0 ? (
-      <table className="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#ID</th>
-            <th scope="col">Monto</th>
-            <th scope="col">Moneda</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Servicio</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Fecha de Pago</th>
-            <th scope="col">Detalles</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cobrosFiltrados.map((cobro) => {
-            return (
-              <tr key={cobro.id}>
-                <td>{cobro.id}</td>
-                <td>{cobro.monto}</td>
-                <td>{cobro.monedaDelCobro.nombre}</td>
-                <td>{cobro.servicioDelCliente.cliente.nombre}</td>
-                <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
-                <td>{cobro.servicioDelCliente.descripcion}</td>
-                <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
-                
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor"
-                    onClick={() =>
-                      verDetallesCobro(
-                        cobro.id,
-                        cobro.servicioDelCliente.clienteId
-                      )
-                    }
-                  >
-                    Ver Más
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor"
-                    onClick={() => editarCobro(cobro.id)}
-                  >
-                    Editar
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor"
-                    onClick={() => handleAbrirModal(cobro.id)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <>
+        <table className="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Moneda</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Servicio</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Fecha de Pago</th>
+              <th scope="col">Detalles</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cobrosPaginados.map((cobro) => {
+              return (
+                <tr key={cobro.id}>
+                  <td>{cobro.id}</td>
+                  <td>{cobro.monto}</td>
+                  <td>{cobro.monedaDelCobro.nombre}</td>
+                  <td>{cobro.servicioDelCliente.cliente.nombre}</td>
+                  <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
+                  <td>{cobro.servicioDelCliente.descripcion}</td>
+                  <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
+                  
+                  <td>
+                    <button
+                      className="btn btn-danger oblcolor"
+                      onClick={() =>
+                        verDetallesCobro(
+                          cobro.id,
+                          cobro.servicioDelCliente.clienteId
+                        )
+                      }
+                    >
+                      Ver Más
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger oblcolor"
+                      onClick={() => editarCobro(cobro.id)}
+                    >
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger oblcolor"
+                      onClick={() => handleAbrirModal(cobro.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className="pagination">
+          <p className="pagina-paginacion">Página:</p>
+          {Array.from({ length: totalPaginas }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      </>
       ) : (
         <p>No hay cobros según el criterio de filtro seleccionado.</p>
       )}
