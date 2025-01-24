@@ -23,6 +23,7 @@ export default function PerfilCliente() {
     persona: '',
     idPais: '',
     email: '',
+    password: '', 
   });
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function PerfilCliente() {
       try {
         const response = await getClienteById(clienteId);
         setCliente(response.data);
+        console.log('Cliente:', response.data);
         setFormData({
           nombre: response.data.nombre || '',
           idDocumento: response.data.documentoId || '',
@@ -39,14 +41,18 @@ export default function PerfilCliente() {
           persona: response.data.personaContacto || '',
           idPais: response.data.paisId || '',
           email: response.data.usuarioLogin?.email || '',
+          password: response.data.usuarioLogin?.password || '' ,
+          suscriptorId: response.data.suscriptorId || '',
         });
+        //guardado del suscriptor para reutilizar funcion de actualizacion clientes
+        localStorage.setItem('idSuscriptor', response.data.suscriptorId);
       } catch (error) {
         console.error('Error al obtener cliente:', error);
       }
     }
 
     fetchCliente();
-    console.log('Cliente:', cliente);
+
   }, [clienteId]);
 
   const handleChange = (event) => {
@@ -124,9 +130,8 @@ export default function PerfilCliente() {
       return;
     }
     try {
-      const idUsuarioSuscriptor = localStorage.getItem('idUsuario');
-      const objCliente = { id: clienteId, idUsuarioSuscriptor, ...formData };
-
+      console.log('Editando cliente', formData);
+      const objCliente = { id: clienteId, ...formData };
       const respuestaAPI = await putActualizarClienteAPI(objCliente);
       if (respuestaAPI.status === 200) {
         dispatch(cargarClientes(respuestaAPI.data));
@@ -235,6 +240,16 @@ export default function PerfilCliente() {
             id="email"
             name="email"
             value={formData.email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password">Contraseña *</Form.Label>
+          <Form.Control
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
             onChange={handleChange}
           />
         </Form.Group>

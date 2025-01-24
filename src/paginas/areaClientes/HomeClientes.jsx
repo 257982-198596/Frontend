@@ -11,6 +11,8 @@ import { getTiposDocumentosApi } from '../../api/servicioTiposDocumentos';
 import { cargarTiposDocumentos } from '../../slices/sliceTiposDocumentos';
 import { getPaisesApi } from '../../api/servicioPaises';
 import { cargarPaises } from '../../slices/slicePaises';
+import { getClienteById } from '../../api/servicioClientes';
+import { cargarClientes } from '../../slices/sliceClientes';
 
 export default function HomeClientes() {
   const nombreCliente = localStorage.getItem('nombreCliente');
@@ -54,9 +56,21 @@ export default function HomeClientes() {
       }
     }
 
+    async function fetchCliente() {
+      try {
+        const response = await getClienteById(clienteId);
+        dispatch(cargarClientes(response.data));
+        console.log('Cliente:', response.data);
+      } catch (error) {
+        console.error('Error al obtener cliente:', error);
+      }
+    }
+
     fetchServiciosActivos();
     fetchTiposDocumentos();
     fetchPaises();
+    fetchCliente();
+    
   }, [clienteId, dispatch]);
 
   return (

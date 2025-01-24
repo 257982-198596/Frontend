@@ -49,11 +49,8 @@ function Login() {
         }
 
         mostrarSuccess("Usuario logueado con éxito");
-        if (idRol === 3) {
-          navigate(`/home-clientes`);
-        } else {
-          navigate(`/`);
-        }
+        navigate(`/`);
+       
 
       }
     } catch (error) {

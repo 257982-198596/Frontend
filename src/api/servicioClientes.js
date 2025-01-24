@@ -182,5 +182,6 @@ function armarJsonCliente(obj) {
       Password: obj.password,
     },
   };
+  console.log("Json Cliente", json);
   return json;
 }
