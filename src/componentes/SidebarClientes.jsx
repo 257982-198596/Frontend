@@ -9,10 +9,10 @@ function SidebarClientes() {
     <div className="sidebar">
       <ul className="menu">
         <li
-          className={location.pathname === "/servicios-contratados-cliente" ? "active" : ""}
+          className={location.pathname === "/" ? "active" : ""}
           id="menuprincipal"
         >
-          <Link to="/servicios-contratados-cliente">
+          <Link to="/">
             <FiShoppingCart className="icono-sidebar" />
             <span className="link-text">Servicios Contratados</span>
           </Link>

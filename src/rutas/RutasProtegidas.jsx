@@ -26,6 +26,7 @@ import DetalleCategoria from '../paginas/categorias/DetalleCategoria';
 import VencimientosDelMes from '../paginas/reportes/VencimientosDelMes';
 import CobrosMensuales from '../paginas/reportes/CobrosMensuales';
 import { HomeClientes, HomeClientesContent } from '../paginas/areaClientes/HomeClientes';
+import PerfilCliente from '../paginas/areaClientes/PerfilCliente';
 
 const RutasProtegidas = () => {
   const idRol = localStorage.getItem('idRol');
@@ -33,8 +34,9 @@ const RutasProtegidas = () => {
   return (
     <Routes>
       {idRol === '3' ? (
-        <Route path="/home-clientes" element={<HomeClientes />}>
+        <Route path="/" element={<HomeClientes />}>
           <Route index element={<HomeClientesContent />} />
+          <Route path="perfil-cliente" element={<PerfilCliente />} />
         </Route>
       ) : (
         <>

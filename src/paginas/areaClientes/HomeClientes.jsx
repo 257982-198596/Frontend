@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getServiciosActivosEnApi } from '../../api/servicioServiciosDelCliente';
 import { cargarServiciosActivos } from '../../slices/sliceAreaClientes';
 import ServiciosContratadosClientes from './ServiciosContratadosClientes';
+import { getTiposDocumentosApi } from '../../api/servicioTiposDocumentos';
+import { cargarTiposDocumentos } from '../../slices/sliceTiposDocumentos';
+import { getPaisesApi } from '../../api/servicioPaises';
+import { cargarPaises } from '../../slices/slicePaises';
 
 export default function HomeClientes() {
   const nombreCliente = localStorage.getItem('nombreCliente');
@@ -24,7 +28,35 @@ export default function HomeClientes() {
       }
     }
 
+    async function fetchTiposDocumentos() {
+      try {
+        const response = await getTiposDocumentosApi();
+        if (response.status === 200) {
+          dispatch(cargarTiposDocumentos({ tiposDocumentosStore: response.data }));
+        } else {
+          throw new Error('Error al obtener tipos de documentos');
+        }
+      } catch (error) {
+        console.error('Error API Tipos Documentos:', error);
+      }
+    }
+
+    async function fetchPaises() {
+      try {
+        const response = await getPaisesApi();
+        if (response.status === 200) {
+          dispatch(cargarPaises({ paisesStore: response.data }));
+        } else {
+          throw new Error('Error al obtener paises');
+        }
+      } catch (error) {
+        console.error('Error API Paises:', error);
+      }
+    }
+
     fetchServiciosActivos();
+    fetchTiposDocumentos();
+    fetchPaises();
   }, [clienteId, dispatch]);
 
   return (
