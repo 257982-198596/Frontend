@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { iniciarSesionApi } from "../api/servicioUsuarios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import { mostrarError, mostrarSuccess } from "../componentes/Toasts";
 import { ToastContainer } from 'react-toastify';
@@ -101,16 +101,23 @@ function Login() {
                 />
               </div>
 
-              <button
-                type="button"
-                className="btn btn-dark btn-block mb-4"
-                onClick={iniciarSesion}
-                disabled={deshabilitado}
-              >
-                Iniciar Sesion
-              </button>
-              <br />
-              <Link to="/registro">Registrar Usuario</Link>
+              <div className="d-flex justify-content-between align-items-center">
+                <button
+                  type="button"
+                  className="btn btn-dark btn-block mb-4"
+                  onClick={iniciarSesion}
+                  disabled={deshabilitado}
+                >
+                  Iniciar Sesion
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-light oblcolor mb-4"
+                  onClick={() => navigate('/registro')}
+                >
+                  Registrar Usuario
+                </button>
+              </div>
             </form>
             <ToastContainer />
           </div>
