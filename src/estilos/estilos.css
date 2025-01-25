@@ -231,3 +231,10 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(14px);
 }
+
+/* paginacion */
+
+p.pagina-paginacion {
+  margin-bottom: 0px !important;
+  margin-right: 10px;
+}

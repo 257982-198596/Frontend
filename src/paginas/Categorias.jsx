@@ -46,6 +46,24 @@ function Categorias() {
     }
   };
 
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const categoriasPaginadas = Array.isArray(categorias)
+    ? categorias.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(categorias)
+    ? Math.ceil(categorias.length / elementosPorPagina)
+    : 0;
+
   return (
     <div>
       <FiSliders className="icono-seccion" />   
@@ -67,7 +85,7 @@ function Categorias() {
           </tr>
         </thead>
         <tbody>
-          {categorias.map((categoria) => {
+          {categoriasPaginadas.map((categoria) => {
             return (
               <tr key={categoria.id}>
                 <td>{categoria.id}</td>
@@ -102,6 +120,18 @@ function Categorias() {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <p className="pagina-paginacion">Página:</p>
+        {Array.from({ length: totalPaginas }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
       {/* Modal para Confirmar Eliminación */}
       <EliminarCategoria

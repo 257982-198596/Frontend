@@ -13,6 +13,7 @@ import { sliceFrecuencias } from './slices/sliceFrecuencias'
 import { sliceCobros } from './slices/sliceCobros'
 import { sliceMediosDePago } from './slices/sliceMediosDePago'
 import { sliceNotificaciones } from './slices/sliceNotificaciones'
+import { sliceAreaClientes } from './slices/sliceAreaClientes'
 import 'react-toastify/dist/ReactToastify.css';
 
 export const store = configureStore({
@@ -27,6 +28,7 @@ export const store = configureStore({
     sliceCobros: sliceCobros.reducer,
     sliceMediosDePago: sliceMediosDePago.reducer,
     sliceNotificaciones: sliceNotificaciones.reducer,
+    sliceAreaClientes: sliceAreaClientes.reducer,
   },
 });
 function App() {

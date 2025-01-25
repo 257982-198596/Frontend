@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Home, HomeContent } from '../paginas/Home';
 import Clientes from '../paginas/Clientes';
 import Notificaciones from '../paginas/Notificaciones';
@@ -25,37 +25,51 @@ import EditarCategoria from '../paginas/categorias/EditarCategoria';
 import DetalleCategoria from '../paginas/categorias/DetalleCategoria';
 import VencimientosDelMes from '../paginas/reportes/VencimientosDelMes';
 import CobrosMensuales from '../paginas/reportes/CobrosMensuales';
+import { HomeClientes, HomeClientesContent } from '../paginas/areaClientes/HomeClientes';
+import PerfilCliente from '../paginas/areaClientes/PerfilCliente';
 
 const RutasProtegidas = () => {
+  const idRol = localStorage.getItem('idRol');
+
   return (
     <Routes>
-      <Route path="/" element={<Home />}>
-        <Route index element={<HomeContent />} />
-        <Route path="clientes" element={<Clientes />} />
-        <Route path="clientes/alta" element={<AltaClientes />} />
-        <Route path="clientes/detalle/:id" element={<DetalleCliente />} />
-        <Route path="clientes/editar/:id" element={<EditarCliente />} />
-        <Route path="clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
-        <Route path="clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
-        <Route path="clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
-        <Route path="servicios" element={<Servicios />} />
-        <Route path="servicios/alta" element={<AltaServicios />} />
-        <Route path="servicios/detalle/:id" element={<DetalleServicio />} />
-        <Route path="servicios/editar/:id" element={<EditarServicio />} />
-        <Route path="notificaciones" element={<Notificaciones />} />
-        <Route path="notificaciones/detalle/:id" element={<DetalleNotificacion />} />
-        <Route path="cobros" element={<Cobros />} />
-        <Route path="cobros/alta" element={<AltaCobros />} />
-        <Route path="cobros/editar/:id" element={<EditarCobros />} />
-        <Route path="cobros/detalle/:id" element={<DetalleCobros />} />
-        <Route path="reportes" element={<Reportes />} />
-        <Route path="reportes/vencimientos-del-mes" element={<VencimientosDelMes />} />
-        <Route path="reportes/cobros-mensuales" element={<CobrosMensuales />} />
-        <Route path="categorias" element={<Categorias />} />
-        <Route path="categorias/alta" element={<AltaCategorias />} />
-        <Route path="categorias/editar/:id" element={<EditarCategoria />} />
-        <Route path="categorias/detalle/:id" element={<DetalleCategoria />} />
-      </Route>
+      {idRol === '3' ? (
+        <Route path="/" element={<HomeClientes />}>
+          <Route index element={<HomeClientesContent />} />
+          <Route path="perfil-cliente" element={<PerfilCliente />} />
+        </Route>
+      ) : (
+        <>
+          <Route path="/" element={<Home />}>
+            <Route index element={<HomeContent />} />
+            <Route path="clientes" element={<Clientes />} />
+            <Route path="clientes/alta" element={<AltaClientes />} />
+            <Route path="clientes/detalle/:id" element={<DetalleCliente />} />
+            <Route path="clientes/editar/:id" element={<EditarCliente />} />
+            <Route path="clientes/servicios-del-cliente/:id" element={<ServiciosDelCliente />} />
+            <Route path="clientes/editar-servicio/:idServicio" element={<EditarServicioDelCliente />} />
+            <Route path="clientes/asociar-servicio/:id" element={<AsociarServicioDelCliente />} />
+            <Route path="servicios" element={<Servicios />} />
+            <Route path="servicios/alta" element={<AltaServicios />} />
+            <Route path="servicios/detalle/:id" element={<DetalleServicio />} />
+            <Route path="servicios/editar/:id" element={<EditarServicio />} />
+            <Route path="notificaciones" element={<Notificaciones />} />
+            <Route path="notificaciones/detalle/:id" element={<DetalleNotificacion />} />
+            <Route path="cobros" element={<Cobros />} />
+            <Route path="cobros/alta" element={<AltaCobros />} />
+            <Route path="cobros/editar/:id" element={<EditarCobros />} />
+            <Route path="cobros/detalle/:id" element={<DetalleCobros />} />
+            <Route path="reportes" element={<Reportes />} />
+            <Route path="reportes/vencimientos-del-mes" element={<VencimientosDelMes />} />
+            <Route path="reportes/cobros-mensuales" element={<CobrosMensuales />} />
+            <Route path="categorias" element={<Categorias />} />
+            <Route path="categorias/alta" element={<AltaCategorias />} />
+            <Route path="categorias/editar/:id" element={<EditarCategoria />} />
+            <Route path="categorias/detalle/:id" element={<DetalleCategoria />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" />} />
+        </>
+      )}
     </Routes>
   );
 };

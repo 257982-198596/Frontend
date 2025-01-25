@@ -6,15 +6,24 @@ function Reportes() {
         <div>
             <LuBarChart3 className="icono-seccion" />
             <h2>Reportes</h2>
-            <ul>
-                <li>
-                    <Link to="/reportes/vencimientos-del-mes">Vencimientos del Mes</Link>
-                </li>
-                <li>
-                    <Link to="/reportes/cobros-mensuales">Cobros Mensuales</Link>
-                </li>
-            </ul>
-            
+            <div className="row">
+                <div className="col-md-6 indicador my-1">
+                    <Link to="/reportes/vencimientos-del-mes" className="indicador-link">
+                        <div className="d-flex align-items-center">
+                            <LuBarChart3 className="icono-indicador" />
+                            <h5 className="ms-2">Vencimientos del Mes</h5>
+                        </div>
+                    </Link>
+                </div>
+                <div className="col-md-6 indicador my-1">
+                    <Link to="/reportes/cobros-mensuales" className="indicador-link">
+                        <div className="d-flex align-items-center">
+                            <LuBarChart3 className="icono-indicador" />
+                            <h5 className="ms-2">Cobros Mensuales</h5>
+                        </div>
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }
