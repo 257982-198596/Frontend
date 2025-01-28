@@ -58,7 +58,7 @@ const CobrosMensuales = () => {
       datasets: [
         {
           label: 'Monto en USD',
-          data: meses.map((mes, index) => datos[index + 1] || 0),
+          data: meses.map((mes, index) => (datos[index + 1] || 0).toFixed(1)),
           backgroundColor: '#71397299',
           borderColor: '#713972',
           borderWidth: 1,

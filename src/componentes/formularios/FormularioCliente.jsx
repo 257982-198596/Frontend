@@ -122,7 +122,7 @@ function FormularioCliente({
         <Form.Group className="mb-3">
           <Form.Label htmlFor="password">Contraseña *</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             id="password"
             name="password"
             value={formData.password}

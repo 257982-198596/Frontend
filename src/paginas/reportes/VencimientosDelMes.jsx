@@ -3,7 +3,7 @@ import { FaCalendarPlus } from "react-icons/fa";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiReceiveMoney } from "react-icons/gi";
 import { TbPigMoney } from "react-icons/tb";
-import { obtenerServiciosVencenEsteMesAPI } from '../../api/servicioServiciosDelCliente';
+import { obtenerServiciosVencenEsteMesAPI, obtenerIndicadoresVencimientosMesAPI } from '../../api/servicioServiciosDelCliente';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
@@ -13,6 +13,23 @@ const VencimientosDelMes = () => {
   const [montoTotalRenovaciones, setMontoTotalRenovaciones] = useState(0);
   const [montoYaCobrado, setMontoYaCobrado] = useState(0);
   const [montoPendienteCobro, setMontoPendienteCobro] = useState(0);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const serviciosPaginados = Array.isArray(serviciosVencenEsteMes)
+    ? serviciosVencenEsteMes.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(serviciosVencenEsteMes)
+    ? Math.ceil(serviciosVencenEsteMes.length / elementosPorPagina)
+    : 0;
 
   const obtenerNombreMesYAño = () => {
     const meses = [
@@ -26,30 +43,26 @@ const VencimientosDelMes = () => {
   };
 
   useEffect(() => {
-    const cargarServiciosVencenEsteMes = async () => {
+    const cargarDatos = async () => {
       try {
         const idSuscriptor = localStorage.getItem('idSuscriptor');
-        const response = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
-        console.log("Servicios que vencen este mes:", response.data);   
-        setServiciosVencenEsteMes(response.data);
-        //cantidad vencimientos del mes
-        setCantidadVencimientos(response.data.length);
-        //monto total renovaciones
-        const totalRenovaciones = response.data.reduce((total, servicio) => total + servicio.precio, 0);
-        setMontoTotalRenovaciones(totalRenovaciones);
-        //total ya cobrado
-        const totalCobrado = response.data
-          .filter(servicio => servicio.estadoDelServicioDelCliente.nombre === "Pago")
-          .reduce((total, servicio) => total + servicio.precio, 0);
-        setMontoYaCobrado(totalCobrado);
-        //resta monto pendiente de cobro
-        setMontoPendienteCobro(totalRenovaciones - totalCobrado);
+        
+        // Fetch servicios vencen este mes
+        const responseServicios = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
+        setServiciosVencenEsteMes(responseServicios.data);
+
+        // Fetch indicadores
+        const indicadores = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
+        setCantidadVencimientos(indicadores.CantidadVencimientos);
+        setMontoTotalRenovaciones(indicadores.MontoTotalRenovaciones.toFixed(1));
+        setMontoYaCobrado(indicadores.MontoYaCobrado.toFixed(1));
+        setMontoPendienteCobro(indicadores.MontoPendienteCobro.toFixed(1));
       } catch (error) {
-        console.error("Error al obtener los servicios que vencen este mes:", error);
+        console.error("Error al cargar los datos:", error);
       }
     };
 
-    cargarServiciosVencenEsteMes();
+    cargarDatos();
   }, []);
 
   const obtenerDatosGrafico = () => {
@@ -90,19 +103,19 @@ const VencimientosDelMes = () => {
             <div className="col-md-6 indicador my-1">
               <FaMoneyBillTrendUp className="icono-indicador" />
               <h5>Monto total de Renovaciones</h5>
-              <p className="valor-indicador">${montoTotalRenovaciones}</p> 
+              <p className="valor-indicador">${montoTotalRenovaciones} USD</p> 
             </div>
           </div>
           <div className="row">
             <div className="col-md-6 indicador my-1">
               <GiReceiveMoney className="icono-indicador" />
               <h5>Monto ya cobrado</h5>
-              <p className="valor-indicador">${montoYaCobrado}</p> 
+              <p className="valor-indicador">${montoYaCobrado} USD</p> 
             </div>
             <div className="col-md-6 indicador my-1">
               <TbPigMoney className="icono-indicador" />
               <h5>Monto pendiente de Cobro</h5>
-              <p className="valor-indicador">${montoPendienteCobro}</p> 
+              <p className="valor-indicador">${montoPendienteCobro} USD</p> 
             </div>
           </div>
         </div>
@@ -116,34 +129,48 @@ const VencimientosDelMes = () => {
         <div className="col-md-12">
           <h5>Servicios que Vencen en el Mes Corriente</h5>
           {Array.isArray(serviciosVencenEsteMes) && serviciosVencenEsteMes.length > 0 ? (
-            <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col">Cliente</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Moneda</th>
-                <th scope="col">Frecuencia</th>
-                <th scope="col">Fecha Vencimiento</th>
-                <th scope="col">Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {serviciosVencenEsteMes.map((servicio) => {
-                return (
-                  <tr key={servicio.id}>
-                    <td>{servicio.cliente.nombre}</td>
-                    <td>{servicio.servicioContratado.nombre}</td>
-                    <td>{servicio.precio}</td>
-                    <td>{servicio.monedaDelServicio.nombre}</td>
-                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
-                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+            <>
+              <table className="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Moneda</th>
+                    <th scope="col">Frecuencia</th>
+                    <th scope="col">Fecha Vencimiento</th>
+                    <th scope="col">Estado</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {serviciosPaginados.map((servicio) => {
+                    return (
+                      <tr key={servicio.id}>
+                        <td>{servicio.cliente.nombre}</td>
+                        <td>{servicio.servicioContratado.nombre}</td>
+                        <td>{servicio.precio}</td>
+                        <td>{servicio.monedaDelServicio.nombre}</td>
+                        <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                        <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                        <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <div className="pagination">
+                <p className="pagina-paginacion">Página:</p>
+                {Array.from({ length: totalPaginas }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </>
           ) : (
             <p>No existen servicios que expiren este mes.</p>
           )}
