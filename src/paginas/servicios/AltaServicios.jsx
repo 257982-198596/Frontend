@@ -67,6 +67,8 @@ function AltaServicios() {
       }
     }catch(error){
       mostrarError(error.message);
+      console.log("Error al crear servicio", error);
+      console.log("Error mensaje", error.message);
     }
     
   };
