@@ -26,6 +26,7 @@ function EditarCliente() {
     persona: "",
     idPais: "",
     email: "",
+    password: "",
   });
 
   useEffect(() => {
@@ -39,6 +40,7 @@ function EditarCliente() {
         persona: cliente.personaContacto || "",
         idPais: cliente.paisId || "",
         email: cliente.usuarioLogin?.email || "",
+        password: cliente.usuarioLogin?.password || "",
       });
     }
   }, [cliente]);
@@ -122,13 +124,15 @@ function EditarCliente() {
     try {
       const idUsuarioSuscriptor = localStorage.getItem("idUsuario");
       const objCliente = { id, idUsuarioSuscriptor, ...formData };
-
+      console.log("Objeto cliente PRE PUT:", objCliente);
       const respuestaAPI = await putActualizarClienteAPI(objCliente);
       if (respuestaAPI.status === 200) {
         dispatch(actualizarClientes(respuestaAPI.data));
         navigate("/clientes"); // Navegar de vuelta a la lista de clientes
       }
     } catch (error) {
+
+      
       mostrarError(error.message);
     }
   };
@@ -160,6 +164,7 @@ function EditarCliente() {
         losDocumentos={losDocumentos}
         losPaises={losPaises}
         resetContrasena={resetContrasena}
+        disableFields={["idDocumento", "numDocumento", "email"]} 
       />
     </div>
   );

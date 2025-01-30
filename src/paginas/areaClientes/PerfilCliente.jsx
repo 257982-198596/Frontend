@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getClienteById, putActualizarClienteAPI } from '../../api/servicioClientes';
+import { getClienteById, putActualizarPerfilClienteAPI } from '../../api/servicioClientes';
 import { mostrarError, mostrarSuccess } from '../../componentes/Toasts';
 import { cargarClientes } from '../../slices/sliceClientes';
 import { Form, Button } from 'react-bootstrap';
@@ -132,7 +132,7 @@ export default function PerfilCliente() {
     try {
       console.log('Editando cliente', formData);
       const objCliente = { id: clienteId, ...formData };
-      const respuestaAPI = await putActualizarClienteAPI(objCliente);
+      const respuestaAPI = await putActualizarPerfilClienteAPI(objCliente);
       if (respuestaAPI.status === 200) {
         dispatch(cargarClientes(respuestaAPI.data));
         mostrarSuccess('Datos actualizados correctamente');
@@ -168,6 +168,7 @@ export default function PerfilCliente() {
             name="idDocumento"
             value={formData.idDocumento}
             onChange={handleChange}
+            disabled={true}
           >
             <option value="">Seleccione un tipo</option>
             {losDocumentos.map((tipodoc) => (
@@ -185,6 +186,7 @@ export default function PerfilCliente() {
             name="numDocumento"
             value={formData.numDocumento}
             onChange={handleChange}
+            readOnly={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -241,6 +243,7 @@ export default function PerfilCliente() {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            readOnly={true}
           />
         </Form.Group>
         <Form.Group className="mb-3">

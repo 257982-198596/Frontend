@@ -27,3 +27,23 @@ export const iniciarSesionApi = async (email, password) => {
     throw new Error(error.response?.data.message);
   }
 };
+
+// Obtener Cliente por Email
+export const obtenerClientePorIdDeUsuario = async (email) => {
+  try {
+    const response = await axios.get(`${urlAPI}usuarios/obtener-cliente-por-email`, {
+      params: { email: email },
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al obtener cliente por email");
+    }
+  } catch (error) {
+    throw new Error(error.response?.data.message);
+  }
+};

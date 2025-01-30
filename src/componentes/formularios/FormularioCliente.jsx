@@ -11,6 +11,7 @@ function FormularioCliente({
   losDocumentos,
   losPaises,
   resetContrasena,
+  disableFields = [], 
 }) {
   const isReadOnly = modo === "detalle";
   return (
@@ -36,7 +37,7 @@ function FormularioCliente({
           name="idDocumento"
           value={formData.idDocumento}
           onChange={handleChange}
-          disabled={isReadOnly}
+          disabled={isReadOnly || disableFields.includes("idDocumento")} 
         >
             <option value="">Seleccione un tipo</option>
           {losDocumentos.map((tipodoc) => (
@@ -54,7 +55,7 @@ function FormularioCliente({
           name="numDocumento"
           value={formData.numDocumento}
           onChange={handleChange}
-          readOnly={isReadOnly}
+          readOnly={isReadOnly || disableFields.includes("numDocumento")} 
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -115,7 +116,7 @@ function FormularioCliente({
           name="email"
           value={formData.email}
           onChange={handleChange}
-          readOnly={isReadOnly}
+          readOnly={isReadOnly || disableFields.includes("email")} 
         />
       </Form.Group>
       {modo !== "editar" && (
