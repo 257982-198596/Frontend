@@ -53,7 +53,8 @@ const VencimientosDelMes = () => {
         setServiciosVencenEsteMes(responseServicios.data);
 
         // Fetch indicadores
-        const indicadores = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
+        const response = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
+        const indicadores = response.data;
         setCantidadVencimientos(indicadores.CantidadVencimientos);
         setMontoTotalRenovaciones(indicadores.MontoTotalRenovaciones.toFixed(1));
         setMontoYaCobrado(indicadores.MontoYaCobrado.toFixed(1));

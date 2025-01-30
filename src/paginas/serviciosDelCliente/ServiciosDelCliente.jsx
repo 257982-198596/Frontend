@@ -166,7 +166,7 @@ function ServiciosDelCliente() {
         <div className="col-md-4 indicador">
           <FaMoneyBillTransfer className="icono-indicador" />
           <h5>Monto Anual - Servicios Activos</h5>
-          <p className="valor-indicador">{montoAnual.toFixed(1)} USD</p> 
+          <p className="valor-indicador">{montoAnual} USD</p> 
 
         </div>
         <div className="col-md-8">
