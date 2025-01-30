@@ -43,26 +43,27 @@ const VencimientosDelMes = () => {
   };
 
   useEffect(() => {
-    const cargarServiciosVencenEsteMes = async () => {
+    const cargarDatos = async () => {
       try {
         const idSuscriptor = localStorage.getItem('idSuscriptor');
-        const response = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
-        console.log("Servicios que vencen este mes:", response.data);   
-        setServiciosVencenEsteMes(response.data);
 
-        // Fetch indicators
-        const indicadoresResponse = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
-        const indicadores = indicadoresResponse.data;
-        setCantidadVencimientos(indicadores.CantidadVencimientos.toFixed(1));
+        
+        // Fetch servicios vencen este mes
+        const responseServicios = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
+        setServiciosVencenEsteMes(responseServicios.data);
+
+        // Fetch indicadores
+        const indicadores = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
+        setCantidadVencimientos(indicadores.CantidadVencimientos);
         setMontoTotalRenovaciones(indicadores.MontoTotalRenovaciones.toFixed(1));
         setMontoYaCobrado(indicadores.MontoYaCobrado.toFixed(1));
         setMontoPendienteCobro(indicadores.MontoPendienteCobro.toFixed(1));
       } catch (error) {
-        console.error("Error al obtener los servicios que vencen este mes:", error);
+        console.error("Error al cargar los datos:", error);
       }
     };
 
-    cargarServiciosVencenEsteMes();
+    cargarDatos();
   }, []);
 
   const obtenerDatosGrafico = () => {
@@ -103,19 +104,25 @@ const VencimientosDelMes = () => {
             <div className="col-md-6 indicador my-1">
               <FaMoneyBillTrendUp className="icono-indicador" />
               <h5>Monto total de Renovaciones</h5>
+
               <p className="valor-indicador">{montoTotalRenovaciones} USD</p> 
+
             </div>
           </div>
           <div className="row">
             <div className="col-md-6 indicador my-1">
               <GiReceiveMoney className="icono-indicador" />
               <h5>Monto ya cobrado</h5>
+
               <p className="valor-indicador">{montoYaCobrado} USD</p> 
+
             </div>
             <div className="col-md-6 indicador my-1">
               <TbPigMoney className="icono-indicador" />
               <h5>Monto pendiente de Cobro</h5>
+
               <p className="valor-indicador">{montoPendienteCobro} USD</p> 
+
             </div>
           </div>
         </div>
@@ -143,17 +150,21 @@ const VencimientosDelMes = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {serviciosPaginados.map((servicio) => (
-                    <tr key={servicio.id}>
-                      <td>{servicio.cliente.nombre}</td>
-                      <td>{servicio.servicioContratado.nombre}</td>
-                      <td>{servicio.precio}</td>
-                      <td>{servicio.monedaDelServicio.nombre}</td>
-                      <td>{servicio.frecuenciaDelServicio.nombre}</td>
-                      <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                      <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                    </tr>
-                  ))}
+
+                  {serviciosPaginados.map((servicio) => {
+                    return (
+                      <tr key={servicio.id}>
+                        <td>{servicio.cliente.nombre}</td>
+                        <td>{servicio.servicioContratado.nombre}</td>
+                        <td>{servicio.precio}</td>
+                        <td>{servicio.monedaDelServicio.nombre}</td>
+                        <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                        <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                        <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                      </tr>
+                    );
+                  })}
+
                 </tbody>
               </table>
               <div className="pagination">
