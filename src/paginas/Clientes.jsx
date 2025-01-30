@@ -76,7 +76,9 @@ function Clientes() {
         console.log(`Cliente con ID: ${idCliente} habilitado`);
       }
       
-      const response = await getClientesApi();
+      
+      const suscriptorId = localStorage.getItem("idSuscriptor");
+      const response = await getClientesApi(suscriptorId);
       dispatch(cargarClientes({ clientesStore: response.data }));
     } catch (error) {
       console.log("error", error);

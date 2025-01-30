@@ -245,7 +245,9 @@ export const obtenerServiciosVencenEsteMesAPI = async (idSuscriptor) => {
   }
 };
 
+
 // Get - Indicadores de Vencimientos del Mes
+
 export const obtenerIndicadoresVencimientosMesAPI = async (idSuscriptor) => {
   try {
     const response = await axios.get(
@@ -258,7 +260,9 @@ export const obtenerIndicadoresVencimientosMesAPI = async (idSuscriptor) => {
     );
 
     if (response.status === 200) {
-      return response.data;
+
+      return response;
+
     } else {
       throw new Error("Error al obtener los indicadores de vencimientos del mes");
     }

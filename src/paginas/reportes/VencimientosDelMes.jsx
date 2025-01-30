@@ -46,6 +46,7 @@ const VencimientosDelMes = () => {
     const cargarDatos = async () => {
       try {
         const idSuscriptor = localStorage.getItem('idSuscriptor');
+
         
         // Fetch servicios vencen este mes
         const responseServicios = await obtenerServiciosVencenEsteMesAPI(idSuscriptor);
@@ -103,19 +104,25 @@ const VencimientosDelMes = () => {
             <div className="col-md-6 indicador my-1">
               <FaMoneyBillTrendUp className="icono-indicador" />
               <h5>Monto total de Renovaciones</h5>
-              <p className="valor-indicador">${montoTotalRenovaciones} USD</p> 
+
+              <p className="valor-indicador">{montoTotalRenovaciones} USD</p> 
+
             </div>
           </div>
           <div className="row">
             <div className="col-md-6 indicador my-1">
               <GiReceiveMoney className="icono-indicador" />
               <h5>Monto ya cobrado</h5>
-              <p className="valor-indicador">${montoYaCobrado} USD</p> 
+
+              <p className="valor-indicador">{montoYaCobrado} USD</p> 
+
             </div>
             <div className="col-md-6 indicador my-1">
               <TbPigMoney className="icono-indicador" />
               <h5>Monto pendiente de Cobro</h5>
-              <p className="valor-indicador">${montoPendienteCobro} USD</p> 
+
+              <p className="valor-indicador">{montoPendienteCobro} USD</p> 
+
             </div>
           </div>
         </div>
@@ -143,6 +150,7 @@ const VencimientosDelMes = () => {
                   </tr>
                 </thead>
                 <tbody>
+
                   {serviciosPaginados.map((servicio) => {
                     return (
                       <tr key={servicio.id}>
@@ -156,6 +164,7 @@ const VencimientosDelMes = () => {
                       </tr>
                     );
                   })}
+
                 </tbody>
               </table>
               <div className="pagination">
