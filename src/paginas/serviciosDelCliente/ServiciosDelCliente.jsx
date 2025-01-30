@@ -31,6 +31,10 @@ function ServiciosDelCliente() {
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
 
+  const [paginaActualActivos, setPaginaActualActivos] = useState(1);
+  const [paginaActualHistoricos, setPaginaActualHistoricos] = useState(1);
+  const elementosPorPagina = 5; // solo de a 5 en 5 por ser dos tablas
+
   const cliente = useSelector((state) =>
     state.sliceClientes.clientes.find((cliente) => cliente.id === parseInt(id))
   );
@@ -93,7 +97,7 @@ function ServiciosDelCliente() {
     try {
       const response = await obtenerIngresosProximos365DiasAPI(id);
       console.log("Monto anual:", response.data.totalIngresos);
-      setMontoAnual(response.data.totalIngresos);
+      setMontoAnual(response.data.totalIngresos.toFixed(1)); 
     } catch (error) {
       console.error("Error al obtener el monto anual:", error);
     }
@@ -112,6 +116,36 @@ function ServiciosDelCliente() {
     }
   };
 
+  const handlePageChangeActivos = (numeroPagina) => {
+    setPaginaActualActivos(numeroPagina);
+  };
+
+  const handlePageChangeHistoricos = (numeroPagina) => {
+    setPaginaActualHistoricos(numeroPagina);
+  };
+
+  const serviciosActivosPaginados = Array.isArray(serviciosActivos)
+    ? serviciosActivos.slice(
+        (paginaActualActivos - 1) * elementosPorPagina,
+        paginaActualActivos * elementosPorPagina
+      )
+    : [];
+
+  const serviciosHistoricosPaginados = Array.isArray(serviciosHistoricos)
+    ? serviciosHistoricos.slice(
+        (paginaActualHistoricos - 1) * elementosPorPagina,
+        paginaActualHistoricos * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginasActivos = Array.isArray(serviciosActivos)
+    ? Math.ceil(serviciosActivos.length / elementosPorPagina)
+    : 0;
+
+  const totalPaginasHistoricos = Array.isArray(serviciosHistoricos)
+    ? Math.ceil(serviciosHistoricos.length / elementosPorPagina)
+    : 0;
+
   useEffect(() => {
     cargarServicios();
     cargarCantidadNotificaciones();
@@ -120,7 +154,7 @@ function ServiciosDelCliente() {
   }, [id]);
 
   return (
-    <div className="container">
+    <div className="container-fluid"> 
       <FiUserCheck className="icono-seccion" />
       <h3>Servicios de {cliente?.nombre || "Cliente no encontrado"}</h3>
 
@@ -132,7 +166,7 @@ function ServiciosDelCliente() {
         <div className="col-md-4 indicador">
           <FaMoneyBillTransfer className="icono-indicador" />
           <h5>Monto Anual - Servicios Activos</h5>
-          <p className="valor-indicador">{montoAnual}</p> 
+          <p className="valor-indicador">{montoAnual} USD</p> 
         </div>
         <div className="col-md-8">
           <div className="row">
@@ -152,58 +186,72 @@ function ServiciosDelCliente() {
       <div className="espacio"></div>
       <h5>Servicios Activos</h5>
       {Array.isArray(serviciosActivos) && serviciosActivos.length > 0 ? (
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th>Descripcion</th>
-              <th>Servicio</th>
-              <th>Precio</th>
-              <th>Moneda</th>
-              <th>Frecuencia</th>
-              <th>Estado</th>
-              <th>Fecha Inicio</th>
-              <th>Fecha Fin</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviciosActivos.map((servicio) => (
-              <tr key={servicio.id}>
-                <td>{servicio.descripcion}</td>
-                <td>{servicio.servicioContratado.nombre}</td>
-                <td>{servicio.precio}</td>
-                <td>{servicio.monedaDelServicio.nombre}</td>
-                <td>{servicio.frecuenciaDelServicio.nombre}</td>
-
-                <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
-                <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor btn-sm me-2"
-                    onClick={() => editarServicioDelCliente(servicio.id)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="btn btn-danger oblcolor btn-sm"
-                    onClick={() => handleAbrirModal(servicio.id)}
-                  >
-                    Eliminar
-                  </button>
-                  {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
-                    <button
-                      className="btn btn-warning oblcolor btn-sm"
-                      onClick={() => enviarRecordatorio(servicio.id)}
-                    >
-                      Enviar Recordatorio
-                    </button>
-                  )}
-                </td>
+        <>
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th>Descripcion</th>
+                <th>Servicio</th>
+                <th>Precio</th>
+                <th>Moneda</th>
+                <th>Frecuencia</th>
+                <th>Estado</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Acciones</th>
               </tr>
+            </thead>
+            <tbody>
+              {serviciosActivosPaginados.map((servicio) => (
+                <tr key={servicio.id}>
+                  <td>{servicio.descripcion}</td>
+                  <td>{servicio.servicioContratado.nombre}</td>
+                  <td>{servicio.precio}</td>
+                  <td>{servicio.monedaDelServicio.nombre}</td>
+                  <td>{servicio.frecuenciaDelServicio.nombre}</td>
+
+                  <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                  <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                  <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger oblcolor btn-sm me-2"
+                      onClick={() => editarServicioDelCliente(servicio.id)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="btn btn-danger oblcolor btn-sm"
+                      onClick={() => handleAbrirModal(servicio.id)}
+                    >
+                      Eliminar
+                    </button>
+                    {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                      <button
+                        className="btn btn-warning oblcolor btn-sm"
+                        onClick={() => enviarRecordatorio(servicio.id)}
+                      >
+                        Enviar Recordatorio
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="pagination">
+            <p className="pagina-paginacion">Página:</p>
+            {Array.from({ length: totalPaginasActivos }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChangeActivos(index + 1)}
+                className={`btn ${paginaActualActivos === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+              >
+                {index + 1}
+              </button>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       ) : (
         <p>No hay servicios activos.</p>
       )}
@@ -211,58 +259,72 @@ function ServiciosDelCliente() {
       <div className="espacio"></div>
       <h5>Histórico</h5>
       {Array.isArray(serviciosHistoricos) && serviciosHistoricos.length > 0 ? (
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th>Descripcion</th>
-              <th>Servicio</th>
-              <th>Precio</th>
-              <th>Moneda</th>
-              <th>Frecuencia</th>
-              <th>Estado</th>
-              <th>Fecha Inicio</th>
-              <th>Fecha Fin</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviciosHistoricos.map((servicio) => (
-              <tr key={servicio.id}>
-                <td>{servicio.descripcion}</td>
-                <td>{servicio.servicioContratado.nombre}</td>
-                <td>{servicio.precio}</td>
-                <td>{servicio.monedaDelServicio.nombre}</td>
-                <td>{servicio.frecuenciaDelServicio.nombre}</td>
-
-                <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
-                <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                <td>
-                  <button
-                    className="btn btn-danger oblcolor btn-sm me-2"
-                    onClick={() => editarServicioDelCliente(servicio.id)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="btn btn-danger oblcolor btn-sm"
-                    onClick={() => handleAbrirModal(servicio.id)}
-                  >
-                    Eliminar
-                  </button>
-                  {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
-                    <button
-                      className="btn btn-warning btn-sm"
-                      onClick={() => enviarRecordatorio(servicio.id)}
-                    >
-                      Enviar Recordatorio
-                    </button>
-                  )}
-                </td>
+        <>
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th>Descripcion</th>
+                <th>Servicio</th>
+                <th>Precio</th>
+                <th>Moneda</th>
+                <th>Frecuencia</th>
+                <th>Estado</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Acciones</th>
               </tr>
+            </thead>
+            <tbody>
+              {serviciosHistoricosPaginados.map((servicio) => (
+                <tr key={servicio.id}>
+                  <td>{servicio.descripcion}</td>
+                  <td>{servicio.servicioContratado.nombre}</td>
+                  <td>{servicio.precio}</td>
+                  <td>{servicio.monedaDelServicio.nombre}</td>
+                  <td>{servicio.frecuenciaDelServicio.nombre}</td>
+
+                  <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                  <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                  <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger oblcolor btn-sm me-2"
+                      onClick={() => editarServicioDelCliente(servicio.id)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="btn btn-danger oblcolor btn-sm"
+                      onClick={() => handleAbrirModal(servicio.id)}
+                    >
+                      Eliminar
+                    </button>
+                    {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                      <button
+                        className="btn btn-warning btn-sm"
+                        onClick={() => enviarRecordatorio(servicio.id)}
+                      >
+                        Enviar Recordatorio
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="pagination">
+            <p className="pagina-paginacion">Página:</p>
+            {Array.from({ length: totalPaginasHistoricos }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageChangeHistoricos(index + 1)}
+                className={`btn ${paginaActualHistoricos === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+              >
+                {index + 1}
+              </button>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       ) : (
         <p>No hay servicios históricos.</p>
       )}

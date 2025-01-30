@@ -13,6 +13,23 @@ const VencimientosDelMes = () => {
   const [montoTotalRenovaciones, setMontoTotalRenovaciones] = useState(0);
   const [montoYaCobrado, setMontoYaCobrado] = useState(0);
   const [montoPendienteCobro, setMontoPendienteCobro] = useState(0);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 10;
+
+  const handlePageChange = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
+
+  const serviciosPaginados = Array.isArray(serviciosVencenEsteMes)
+    ? serviciosVencenEsteMes.slice(
+        (paginaActual - 1) * elementosPorPagina,
+        paginaActual * elementosPorPagina
+      )
+    : [];
+
+  const totalPaginas = Array.isArray(serviciosVencenEsteMes)
+    ? Math.ceil(serviciosVencenEsteMes.length / elementosPorPagina)
+    : 0;
 
   const obtenerNombreMesYAño = () => {
     const meses = [
@@ -116,34 +133,46 @@ const VencimientosDelMes = () => {
         <div className="col-md-12">
           <h5>Servicios que Vencen en el Mes Corriente</h5>
           {Array.isArray(serviciosVencenEsteMes) && serviciosVencenEsteMes.length > 0 ? (
-            <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col">Cliente</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Moneda</th>
-                <th scope="col">Frecuencia</th>
-                <th scope="col">Fecha Vencimiento</th>
-                <th scope="col">Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {serviciosVencenEsteMes.map((servicio) => {
-                return (
-                  <tr key={servicio.id}>
-                    <td>{servicio.cliente.nombre}</td>
-                    <td>{servicio.servicioContratado.nombre}</td>
-                    <td>{servicio.precio}</td>
-                    <td>{servicio.monedaDelServicio.nombre}</td>
-                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
-                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+            <>
+              <table className="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Moneda</th>
+                    <th scope="col">Frecuencia</th>
+                    <th scope="col">Fecha Vencimiento</th>
+                    <th scope="col">Estado</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {serviciosPaginados.map((servicio) => (
+                    <tr key={servicio.id}>
+                      <td>{servicio.cliente.nombre}</td>
+                      <td>{servicio.servicioContratado.nombre}</td>
+                      <td>{servicio.precio}</td>
+                      <td>{servicio.monedaDelServicio.nombre}</td>
+                      <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                      <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                      <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="pagination">
+                <p className="pagina-paginacion">Página:</p>
+                {Array.from({ length: totalPaginas }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`btn ${paginaActual === index + 1 ? 'btn oblcolor' : 'btn-secondary'}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </>
           ) : (
             <p>No existen servicios que expiren este mes.</p>
           )}
