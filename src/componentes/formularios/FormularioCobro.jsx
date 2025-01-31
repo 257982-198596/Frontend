@@ -18,7 +18,7 @@ function FormularioCobro({
   losClientes,
   losMediosDePago,
   clienteId,
-  servicioId, // Add servicioId prop
+  servicioId
 }) {
   const isReadOnly = modo === "detalle";
   const [losServicios, setLosServicios] = useState([]);
@@ -62,6 +62,10 @@ function FormularioCobro({
             target: { name: "moneda", value: response.data.monedaDelServicio.id },
           });
           formData.moneda = response.data.monedaDelServicio.id;
+          /*
+          console.log("response.data.servicio.id", response.data);
+          formData.servicio = servicioId;
+          */
           //se dehabilitan campos para evitar edicion
           document.getElementById("monto").setAttribute("readOnly", true);
           document.getElementById("moneda").setAttribute("disabled", true);
@@ -75,14 +79,6 @@ function FormularioCobro({
 
     fetchPrecioServicio();
   }, [formData.servicio]); // Ejecutar cada vez que cambie el servicio
-
-  useEffect(() => {
-    if (servicioId) {
-      handleChange({
-        target: { name: "servicio", value: servicioId },
-      });
-    }
-  }, [servicioId]);
 
   return (
     <Form onSubmit={onSubmit}>
