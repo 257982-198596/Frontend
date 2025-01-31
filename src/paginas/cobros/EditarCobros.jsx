@@ -114,6 +114,7 @@ function EditarCobros() {
         losClientes={clientes}
         losMediosDePago={mediosDePago}
         clienteId={formData.cliente}
+        servicioId={formData.servicio} 
       />
     </div>
   );

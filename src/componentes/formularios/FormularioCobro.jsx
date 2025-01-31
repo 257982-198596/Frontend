@@ -18,6 +18,7 @@ function FormularioCobro({
   losClientes,
   losMediosDePago,
   clienteId,
+  servicioId, // Add servicioId prop
 }) {
   const isReadOnly = modo === "detalle";
   const [losServicios, setLosServicios] = useState([]);
@@ -74,6 +75,14 @@ function FormularioCobro({
 
     fetchPrecioServicio();
   }, [formData.servicio]); // Ejecutar cada vez que cambie el servicio
+
+  useEffect(() => {
+    if (servicioId) {
+      handleChange({
+        target: { name: "servicio", value: servicioId },
+      });
+    }
+  }, [servicioId]);
 
   return (
     <Form onSubmit={onSubmit}>
