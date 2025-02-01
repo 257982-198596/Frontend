@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Tipos Documentos (Find All)
 export const getTiposDocumentosApi = async () => {
@@ -7,6 +7,7 @@ export const getTiposDocumentosApi = async () => {
     const response = await axios.get(`${urlAPI}documentos`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
     if (response.status === 200) {

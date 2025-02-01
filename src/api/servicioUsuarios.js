@@ -1,4 +1,4 @@
-import { urlAPI } from "./api";
+import { urlAPI, ApiKey } from "../api/api";
 import axios from "axios";
 
 //Login - 
@@ -13,6 +13,7 @@ export const iniciarSesionApi = async (email, password) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -35,6 +36,7 @@ export const obtenerClientePorIdDeUsuario = async (email) => {
       params: { email: email },
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 

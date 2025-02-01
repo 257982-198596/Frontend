@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Cobros (Find All)
 export const getCobrosApi = async (suscriptorId) => {
@@ -7,6 +7,7 @@ export const getCobrosApi = async (suscriptorId) => {
     const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -29,6 +30,7 @@ export const borrarCobroEnAPI = async (idCobro) => {
     const response = await axios.delete(`${urlAPI}cobrosrecibidos/${idCobro}`, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     }); 
     return idCobro;
@@ -48,6 +50,7 @@ export const postNuevoCobroAPI = async (objCobro) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -72,6 +75,7 @@ export const putActualizarCobroAPI = async (objcobro) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -93,6 +97,7 @@ export const obtenerCobrosPorMesYServicioAPI = async (suscriptorId, year, servic
     const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}/anio/${year}/servicio/${servicioId}/cobros-por-mes`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -113,6 +118,7 @@ export const obtenerCobrosPorMesYClienteAPI = async (suscriptorId, year, cliente
     const response = await axios.get(`${urlAPI}cobrosrecibidos/suscriptor/${suscriptorId}/anio/${year}/cliente/${clienteId}/cobros-por-mes`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 

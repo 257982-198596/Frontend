@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 // Get - Servicios by SuscriptorId
 export const getServiciosApi = async (suscriptorId) => {
@@ -7,6 +7,7 @@ export const getServiciosApi = async (suscriptorId) => {
     const response = await axios.get(`${urlAPI}servicios/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -30,6 +31,7 @@ export const postNuevoServicioAPI = async (objServicio) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -51,6 +53,7 @@ export const putActualizarServicioAPI = async (objServicio) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -73,6 +76,7 @@ export const borrarServicioEnAPI = async (idServicio) => {
     const response = await axios.delete(`${urlAPI}servicios/${idServicio}`, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     }); 
     return idServicio;

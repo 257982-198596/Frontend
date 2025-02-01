@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Servicios de un Cliente (Find All de cliente)
 export const obtenerServiciosClienteAPI = async (idCliente) => {
@@ -9,6 +9,7 @@ export const obtenerServiciosClienteAPI = async (idCliente) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -32,6 +33,7 @@ export const getServiciosActivosEnApi = async (idCliente) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -55,6 +57,7 @@ export const getServiciosPagosEnApi = async (idCliente) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -79,6 +82,7 @@ export const obtenerServicioDelClienteAPI = async (idServicioDelCliente) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -101,6 +105,7 @@ export const getServicioDelClientePorIdAPI = async (idServicio) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -125,6 +130,7 @@ export const postServicioDelClienteAPI = async (objServicioCliente) => {
         {
           headers: {
             "Content-Type": "application/json",
+            "ApiKey" : ApiKey,
           },
         }
       );
@@ -149,6 +155,7 @@ export const putServicioDelClienteAPI = async (idServicioCliente, objServicioCli
         {
           headers: {
             "Content-Type": "application/json",
+            "ApiKey" : ApiKey,
           },
         }
       );
@@ -172,6 +179,7 @@ export const eliminarServicioDelClienteAPI = async (idServicioCliente) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -188,6 +196,7 @@ export const obtenerProximoVencimientoAPI = async (clienteId) => {
     const response = await axios.get(`${urlAPI}serviciosdelcliente/proximo-vencimiento/${clienteId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -207,6 +216,7 @@ export const obtenerIngresosProximos365DiasAPI = async (clienteId) => {
     const response = await axios.get(`${urlAPI}serviciosdelcliente/ingresos-proximos-365-dias/${clienteId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -229,6 +239,7 @@ export const obtenerServiciosVencenEsteMesAPI = async (idSuscriptor) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -255,6 +266,7 @@ export const obtenerIndicadoresVencimientosMesAPI = async (idSuscriptor) => {
       {
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          "ApiKey" : ApiKey,
         },
       }
     );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 // Get - Clientes by SuscriptorId
 export const getClientesApi = async (suscriptorId) => {
@@ -8,6 +8,7 @@ export const getClientesApi = async (suscriptorId) => {
     const response = await axios.get(`${urlAPI}clientes/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
   
@@ -28,6 +29,7 @@ export const getClienteById = async (idCliente) => {
     const response = await axios.get(`${urlAPI}clientes/${idCliente}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -51,6 +53,7 @@ export const postNuevoClienteAPI = async (objCliente) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -72,6 +75,7 @@ export const putActualizarClienteAPI = async (objCliente) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -96,6 +100,7 @@ export const putActualizarPerfilClienteAPI = async (objCliente) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -118,6 +123,7 @@ export const borrarClienteEnAPI = async (idCliente) => {
     const response = await axios.delete(`${urlAPI}clientes/${idCliente}`, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     }); 
     return idCliente;
@@ -133,6 +139,7 @@ export const habilitarClienteEnAPI = async (idCliente) => {
     const response = await axios.put(`${urlAPI}clientes/habilitar/${idCliente}`, {}, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -153,6 +160,7 @@ export const deshabilitarClienteEnAPI = async (idCliente) => {
     const response = await axios.put(`${urlAPI}clientes/deshabilitar/${idCliente}`, {}, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -176,6 +184,7 @@ export const resetContrasenaAPI = async (usuario) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
