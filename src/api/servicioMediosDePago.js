@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Medios de Pago (Find All)
 export const getMediosDePagoApi = async () => {
@@ -7,6 +7,7 @@ export const getMediosDePagoApi = async () => {
     const response = await axios.get(`${urlAPI}mediosdepago`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 

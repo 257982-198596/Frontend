@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Monedas (Find All)
 export const getMonedasApi = async () => {
@@ -7,6 +7,7 @@ export const getMonedasApi = async () => {
     const response = await axios.get(`${urlAPI}monedas`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 // POST - NUEVO SUSCRIPTOR
 export const postNuevoSuscriptorAPI = async (objSuscriptor) => {
@@ -10,6 +10,7 @@ export const postNuevoSuscriptorAPI = async (objSuscriptor) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -29,6 +30,7 @@ export const obtenerSuscriptorPorIdUsuarioApi = async (id) => {
     const response = await axios.get(`${urlAPI}suscriptores/${id}`, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     });
     return response;

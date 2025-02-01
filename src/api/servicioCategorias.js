@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Categorias (Find All)
 export const getCategoriasApi = async (suscriptorId) => {
@@ -7,6 +7,7 @@ export const getCategoriasApi = async (suscriptorId) => {
     const response = await axios.get(`${urlAPI}categorias/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -31,6 +32,7 @@ export const postNuevaCategoriaAPI = async (objCategoria) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -52,6 +54,7 @@ export const putActualizarCategoriaAPI = async (objCategoria) => {
       {
         headers: {
           "Content-Type": "application/json",
+          "ApiKey" : ApiKey,
         },
       }
     );
@@ -74,6 +77,7 @@ export const borrarCategoriaEnAPI = async (idCategoria) => {
     const response = await axios.delete(`${urlAPI}categorias/${idCategoria}`, {
       headers: {
         "Content-Type": "application/json",
+        "ApiKey" : ApiKey,
       },
     }); 
     return idCategoria;

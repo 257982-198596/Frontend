@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Notificaciones (Find All)
 export const getNotificacionesApi = async (suscriptorId) => {
@@ -7,6 +7,7 @@ export const getNotificacionesApi = async (suscriptorId) => {
     const response = await axios.get(`${urlAPI}notificaciones/suscriptor/${suscriptorId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -26,6 +27,7 @@ export const obtenerCantidadNotificacionesAPI = async (clienteId) => {
     const response = await axios.get(`${urlAPI}notificaciones/cantidad-notificaciones/${clienteId}`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
@@ -50,6 +52,7 @@ export const enviarRecordatorioAPI = async (idServicio) => {
           {
             headers: {
               "Content-Type": "application/json",
+              "ApiKey" : ApiKey,
             },
           }
         );
@@ -67,6 +70,7 @@ export const getNotificacionesPorMesApi = async (suscriptorId, year) => {
     const response = await axios.get(`${urlAPI}notificaciones/suscriptor/${suscriptorId}/anio/${year}/notificaciones-por-mes`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 

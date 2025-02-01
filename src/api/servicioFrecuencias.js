@@ -1,5 +1,5 @@
 import axios from "axios";
-import { urlAPI } from "../api/api";
+import { urlAPI, ApiKey } from "../api/api";
 
 //Get - Frecuencias (Find All)
 export const getFrecuenciasApi = async () => {
@@ -7,6 +7,7 @@ export const getFrecuenciasApi = async () => {
     const response = await axios.get(`${urlAPI}frecuencias`, {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "ApiKey" : ApiKey,
       },
     });
 
