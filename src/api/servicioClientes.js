@@ -63,11 +63,35 @@ export const postNuevoClienteAPI = async (objCliente) => {
   }
 };
 
-// PUT - ACTUALIZAR CLIENTE
+// PUT - ACTUALIZAR CLIENTE PARA SUSCRIPTOR
 export const putActualizarClienteAPI = async (objCliente) => {
   try {
     const response = await axios.put(
       `${urlAPI}clientes/${objCliente.id}`,
+      armarJsonCliente(objCliente),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al actualizar cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
+
+// PUT - ACTUALIZAR PERFIL CLIENTE - PARA CLIENTE
+export const putActualizarPerfilClienteAPI = async (objCliente) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}clientes/actualizar-perfil/${objCliente.id}`,
       armarJsonCliente(objCliente),
       {
         headers: {

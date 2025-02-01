@@ -18,6 +18,7 @@ function FormularioCobro({
   losClientes,
   losMediosDePago,
   clienteId,
+  servicioId
 }) {
   const isReadOnly = modo === "detalle";
   const [losServicios, setLosServicios] = useState([]);
@@ -61,6 +62,10 @@ function FormularioCobro({
             target: { name: "moneda", value: response.data.monedaDelServicio.id },
           });
           formData.moneda = response.data.monedaDelServicio.id;
+          /*
+          console.log("response.data.servicio.id", response.data);
+          formData.servicio = servicioId;
+          */
           //se dehabilitan campos para evitar edicion
           document.getElementById("monto").setAttribute("readOnly", true);
           document.getElementById("moneda").setAttribute("disabled", true);

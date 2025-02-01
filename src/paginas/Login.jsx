@@ -5,7 +5,7 @@ import Footer from "../componentes/Footer";
 import { mostrarError, mostrarSuccess } from "../componentes/Toasts";
 import { ToastContainer } from 'react-toastify';
 import { obtenerSuscriptorPorIdUsuarioApi } from "../api/servicioSuscriptores";
-import { getClienteById } from "../api/servicioClientes";
+import { obtenerClientePorIdDeUsuario } from "../api/servicioUsuarios";
 
 function Login() {
   const usuarioRef = useRef();
@@ -40,12 +40,14 @@ function Login() {
           }
           //ROL CLIENTE
         } else if (idRol === 3) {
-          const clienteResponse = await getClienteById(idUsuario);
-          if (clienteResponse.status === 200) {
-            const cliente = clienteResponse.data;
+          const response = await obtenerClientePorIdDeUsuario(usuarioLogueado.email);
+          if (response.status === 200) {
+            const cliente = response.data;
+            console.log("Cliente", cliente);
             localStorage.setItem("nombreCliente", cliente.nombre);
             localStorage.setItem("idCliente", cliente.id);
           }
+          
         }
 
         mostrarSuccess("Usuario logueado con éxito");
