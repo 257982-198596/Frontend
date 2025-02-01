@@ -42,14 +42,14 @@ function Registro() {
       mostrarError("El RUT es obligatorio");
       return false;
     }
-    if (!formData.numDocumento) {
+    /*if (!formData.numDocumento) {
       mostrarError("El número de documento es obligatorio");
       return false;
     }
     if (!/^\d+$/.test(formData.numDocumento)) {
       mostrarError("El número de documento debe ser numérico");
       return false;
-    }
+    }*/
     if (!formData.telefono) {
       mostrarError("El número de teléfono es obligatorio");
       return false;
@@ -137,7 +137,7 @@ function Registro() {
     <div className="container">
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-4">
-          <h3>Registro</h3>
+          <h3>Registro de Suscriptores</h3>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label htmlFor="nombre">Nombre del cliente *</Form.Label>
@@ -220,7 +220,7 @@ function Registro() {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="password">Contraseña *</Form.Label>
               <Form.Control
-                type="text"
+                type="password"
                 id="password"
                 name="password"
                 value={formData.password}
