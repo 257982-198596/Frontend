@@ -6,6 +6,8 @@ import { useState } from "react";
 import EliminarServicio from "../paginas/servicios/EliminarServicio";
 import { borrarServicioEnAPI } from "../api/servicioServicios";
 import { eliminarServicio } from "../slices/sliceServicios"
+import { mostrarError, mostrarSuccess } from "../componentes/Toasts";
+import { ToastContainer } from 'react-toastify';
 
 function Servicios() {
   const servicios = useSelector((state) => state.sliceServicios.servicios);
@@ -41,7 +43,11 @@ function Servicios() {
       const payload = { id: idServicio };
       dispatch(eliminarServicio(payload));
       handleCerrarModal();
+      mostrarSuccess("Servicio eliminado exitosamente");
+
     } catch (error) {
+      handleCerrarModal();
+      mostrarError(error.message);
       console.log("error", error);
     }
   };
@@ -151,6 +157,7 @@ function Servicios() {
         handleEliminar={borrarServicio}
         objAEliminar={"servicio"}
       />
+      <ToastContainer />
     </div>
   );
 }

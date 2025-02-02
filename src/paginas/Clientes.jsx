@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ModalEliminar from "../componentes/ModalEliminar";
+import { mostrarError, mostrarSuccess } from "../componentes/Toasts";
+import { ToastContainer } from 'react-toastify';
 
 function Clientes() {
   const clientes = useSelector((state) => state.sliceClientes.clientes);
@@ -55,14 +57,17 @@ function Clientes() {
 
   const borrarCliente = async () => {
     try {
-      console.log("Cliente seleccionado para eliminar:", clienteSeleccionado);
 
       const idCliente = await borrarClienteEnAPI(clienteSeleccionado);
       const payload = { id: idCliente };
       dispatch(eliminarCliente(payload));
       handleCerrarModal();
+      mostrarSuccess("Cliente eliminado exitosamente");
     } catch (error) {
+      handleCerrarModal();
+      mostrarError(error.message);
       console.log("error", error);
+      
     }
   };
 
@@ -216,6 +221,7 @@ function Clientes() {
         handleEliminar={borrarCliente}
         objAEliminar={"cliente"}
       />
+      <ToastContainer />
     </div>
   );
 }
