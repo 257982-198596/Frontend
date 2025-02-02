@@ -6,6 +6,8 @@ import { useState } from "react";
 import EliminarCategoria from "../paginas/categorias/EliminarCategoria";
 import { borrarCategoriaEnAPI } from "../api/servicioCategorias";
 import { eliminarCategoria } from "../slices/sliceCategorias";
+import { mostrarError, mostrarSuccess } from "../componentes/Toasts";
+import { ToastContainer } from 'react-toastify';
 
 function Categorias() {
   const categorias = useSelector((state) => state.sliceCategorias.categorias);
@@ -41,7 +43,10 @@ function Categorias() {
       const payload = { id: idCategoria };
       dispatch(eliminarCategoria(payload));
       handleCerrarModal();
+      mostrarSuccess("Categoría eliminada con éxito");
     } catch (error) {
+      handleCerrarModal();
+      mostrarError(error.message);
       console.log("error", error);
     }
   };
@@ -147,6 +152,7 @@ function Categorias() {
         handleEliminar={borrarCategoria}
         objAEliminar={"categoría"}
       />
+      <ToastContainer />
     </div>
   );
 }
