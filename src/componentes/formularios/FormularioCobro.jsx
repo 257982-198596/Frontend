@@ -21,6 +21,7 @@ function FormularioCobro({
   servicioId
 }) {
   const isReadOnly = modo === "detalle";
+  const isClienteServicioReadOnly = modo === "detalle" || modo === "editar";
   const [losServicios, setLosServicios] = useState([]);
 
   useEffect(() => {
@@ -29,14 +30,14 @@ function FormularioCobro({
 
       try {
         let response;
-        if (modo === "detalle") {
+        if (modo === "detalle" || modo === "editar") {
           // Obtener servicios pagados
-          response = await getServiciosPagosEnApi(clienteId);///PARA VER
+          response = await getServiciosPagosEnApi(clienteId);
         } else {
           // Obtener servicios activos
           response = await getServiciosActivosEnApi(clienteId);
         }
-        setLosServicios(response.data); // Actualizar la lista de servicios
+        setLosServicios(response.data); 
       } catch (error) {
         console.error("Error al obtener los servicios:", error);
         mostrarError("Error al obtener los servicios");
@@ -44,28 +45,24 @@ function FormularioCobro({
     };
 
     fetchServicios();
-  }, [clienteId, modo]); // Ejecutar cada vez que cambie el cliente o el modo
+  }, [clienteId, modo]); 
 
   useEffect(() => {
     const fetchPrecioServicio = async () => {
-      if (!formData.servicio) return;
+      if (!formData.servicio || !losServicios.find(s => s.id === formData.servicio)) return;
 
       try {
         const response = await getServicioDelClientePorIdAPI(formData.servicio);
         if (response.status === 200) {
           handleChange({
             target: { name: "monto", value: response.data.precio },
-            
           });
           formData.monto = response.data.precio;
           handleChange({
             target: { name: "moneda", value: response.data.monedaDelServicio.id },
           });
           formData.moneda = response.data.monedaDelServicio.id;
-          /*
-          console.log("response.data.servicio.id", response.data);
-          formData.servicio = servicioId;
-          */
+          
           //se dehabilitan campos para evitar edicion
           document.getElementById("monto").setAttribute("readOnly", true);
           document.getElementById("moneda").setAttribute("disabled", true);
@@ -78,7 +75,7 @@ function FormularioCobro({
     };
 
     fetchPrecioServicio();
-  }, [formData.servicio]); // Ejecutar cada vez que cambie el servicio
+  }, [formData.servicio]); 
 
   return (
     <Form onSubmit={onSubmit}>
@@ -89,7 +86,7 @@ function FormularioCobro({
           name="cliente"
           value={formData.cliente}
           onChange={handleChange}
-          disabled={isReadOnly}
+          disabled={isClienteServicioReadOnly}
         >
           <option value="">Seleccione un cliente</option>
           {losClientes.map((cliente) => (
@@ -102,7 +99,7 @@ function FormularioCobro({
 
       <Form.Group className="mb-3">
         <Form.Label htmlFor="servicio">
-          {modo === "detalle"
+          {modo === "detalle" || modo === "editar"
             ? "Servicio Pago"
             : "Servicio Activo (a pagar) *Seleccione primero el cliente"}
         </Form.Label>
@@ -111,14 +108,16 @@ function FormularioCobro({
           name="servicio"
           value={formData.servicio}
           onChange={handleChange}
-          disabled={isReadOnly}
-        >
+          disabled={isClienteServicioReadOnly}
+        >{console.log("formData.servicio", formData.servicio)}
           <option value="">Seleccione un servicio</option>
           {losServicios.map((servicio) => (
-            <option key={servicio.id} value={servicio.id}>
-              {servicio.descripcion}
-            </option>
+              <option key={servicio.id} value={servicio.id}>
+                {servicio.descripcion}
+                {console.log("servicio.id", servicio.id)}
+              </option>
           ))}
+            
         </Form.Select>
       </Form.Group>
 

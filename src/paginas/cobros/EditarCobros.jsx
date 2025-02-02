@@ -42,7 +42,8 @@ function EditarCobros() {
         medioDePago: cobro.medioPago.id || "",
       });
     }
-  }, [cobro]);
+    console.log("Cobro:", cobro);
+  }, [cobro]); 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -113,6 +114,7 @@ function EditarCobros() {
         lasMonedas={monedas}
         losClientes={clientes}
         losMediosDePago={mediosDePago}
+
         clienteId={formData.cliente}
         servicioId={formData.servicio} 
       />

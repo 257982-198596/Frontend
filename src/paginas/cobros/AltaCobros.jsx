@@ -72,6 +72,10 @@ function AltaCobros() {
       mostrarError("Debe seleccionar una moneda");
       return false;
     }
+    if (!formData.fechaDePago) {
+      mostrarError("Debe ingresar una fecha de pago");
+      return false;
+    }
     if (!formData.medioDePago) {
       mostrarError("Debe seleccionar un medio de pago");
       return false;
@@ -94,6 +98,7 @@ function AltaCobros() {
         //navigate("/cobros");
       }
     } catch (error) {
+      mostrarError(error.message);
       console.error("Error al crear el cobro:", error);
     }
   };
