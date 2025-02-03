@@ -76,7 +76,7 @@ function FormularioCobro({
     };
 
     fetchPrecioServicio();
-  }, [formData.servicio, handleChange, clienteId]); 
+  }, [formData.servicio, clienteId]); 
 
   console.log("FormularioCobro:", formData);
   return (
