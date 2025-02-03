@@ -91,13 +91,7 @@ function EditarServicioDelCliente() {
       mostrarError("La fecha de inicio es obligatoria");
       return false;
     }
-    const fechaInicio = new Date(formData.fechaInicio);
-    const fechaLimite = new Date();
-    fechaLimite.setFullYear(fechaLimite.getFullYear() - 1);
-    if (fechaInicio < fechaLimite) {
-      mostrarError("La fecha de inicio no puede ser de más de un año atrás");
-      return false;
-    }
+    
     if (!formData.frecuenciaDelServicioId) {
       mostrarError("Debe seleccionar una frecuencia");
       return false;
