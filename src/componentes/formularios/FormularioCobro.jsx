@@ -21,7 +21,6 @@ function FormularioCobro({
   servicioId
 }) {
   const isReadOnly = modo === "detalle";
-  const isClienteServicioReadOnly = modo === "detalle" || modo === "editar";
   const [losServicios, setLosServicios] = useState([]);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ function FormularioCobro({
           // Obtener servicios pagados
           response = await getServiciosPagosEnApi(clienteId);
         } else {
-          // Obtener servicios activos
+          // Obtener servicios activos MODO ALTA
           response = await getServiciosActivosEnApi(clienteId);
         }
         setLosServicios(response.data); 
@@ -49,8 +48,8 @@ function FormularioCobro({
 
   useEffect(() => {
     const fetchPrecioServicio = async () => {
-      if (!formData.servicio || !losServicios.find(s => s.id === formData.servicio)) return;
-
+      //if (!formData.servicio || !losServicios.find(s => s.id === formData.servicio)) return;
+      if (!formData.servicio) return; 
       try {
         const response = await getServicioDelClientePorIdAPI(formData.servicio);
         if (response.status === 200) {
@@ -58,6 +57,7 @@ function FormularioCobro({
             target: { name: "monto", value: response.data.precio },
           });
           formData.monto = response.data.precio;
+          
           handleChange({
             target: { name: "moneda", value: response.data.monedaDelServicio.id },
           });
@@ -68,6 +68,7 @@ function FormularioCobro({
           document.getElementById("moneda").setAttribute("disabled", true);
           console.log(formData);
         }
+        
       } catch (error) {
         console.error("Error al obtener el precio del servicio:", error);
         mostrarError("Error al obtener el precio del servicio");
@@ -75,8 +76,9 @@ function FormularioCobro({
     };
 
     fetchPrecioServicio();
-  }, [formData.servicio]); 
+  }, [formData.servicio, handleChange, clienteId]); 
 
+  console.log("FormularioCobro:", formData);
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3">
@@ -86,7 +88,7 @@ function FormularioCobro({
           name="cliente"
           value={formData.cliente}
           onChange={handleChange}
-          disabled={isClienteServicioReadOnly}
+          disabled={isReadOnly}
         >
           <option value="">Seleccione un cliente</option>
           {losClientes.map((cliente) => (
@@ -99,7 +101,7 @@ function FormularioCobro({
 
       <Form.Group className="mb-3">
         <Form.Label htmlFor="servicio">
-          {modo === "detalle" || modo === "editar"
+          {modo === "detalle"
             ? "Servicio Pago"
             : "Servicio Activo (a pagar) *Seleccione primero el cliente"}
         </Form.Label>
@@ -108,13 +110,13 @@ function FormularioCobro({
           name="servicio"
           value={formData.servicio}
           onChange={handleChange}
-          disabled={isClienteServicioReadOnly}
-        >{console.log("formData.servicio", formData.servicio)}
+          disabled={isReadOnly}
+        >
           <option value="">Seleccione un servicio</option>
           {losServicios.map((servicio) => (
               <option key={servicio.id} value={servicio.id}>
                 {servicio.descripcion}
-                {console.log("servicio.id", servicio.id)}
+                
               </option>
           ))}
             
