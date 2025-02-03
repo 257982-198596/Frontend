@@ -40,9 +40,16 @@ const IndicadoresAhorro = ({ notificacionesPorMes = {} }) => {
   // Calcula las horas ahorradas en el mes corriente
   const horasAhorradasMes = notificacionesPorMes[mesCorriente + 1] || 0;
 
+  // Verifica si todos los valores son cero
+  const todosCeros = horasAhorradasAnio === 0;
+
+ 
   return (
     <div className="container">
       <h3 className="mb-5">Indicadores de Ahorro de Tiempo</h3>
+      {todosCeros && (
+        <p className="text-center aviso">Aún no se han procesado envíos de Notificaciones. Envía Notificaciones a tus clientes para actualizar tus indicadores.</p>
+      )}
       <div className="row mb-3">
         <div className="col-md-4">
           <div className="indicador my-1">

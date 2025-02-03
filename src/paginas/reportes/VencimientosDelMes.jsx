@@ -14,6 +14,7 @@ const VencimientosDelMes = () => {
   const [montoYaCobrado, setMontoYaCobrado] = useState(0);
   const [montoPendienteCobro, setMontoPendienteCobro] = useState(0);
   const [paginaActual, setPaginaActual] = useState(1);
+  const [cotizacionDolar, setCotizacionDolar] = useState(0);
   const elementosPorPagina = 10;
 
   const handlePageChange = (numeroPagina) => {
@@ -54,26 +55,35 @@ const VencimientosDelMes = () => {
 
         // Fetch indicadores
         const response = await obtenerIndicadoresVencimientosMesAPI(idSuscriptor);
+        //console.log("response.data:", response.data);
         const indicadores = response.data;
         setCantidadVencimientos(indicadores.CantidadVencimientos);
         setMontoTotalRenovaciones(indicadores.MontoTotalRenovaciones.toFixed(1));
         setMontoYaCobrado(indicadores.MontoYaCobrado.toFixed(1));
         setMontoPendienteCobro(indicadores.MontoPendienteCobro.toFixed(1));
+        setCotizacionDolar(indicadores.CotizacionDolar.toFixed(1));
+        
       } catch (error) {
         console.error("Error al cargar los datos:", error);
       }
     };
 
     cargarDatos();
+    
   }, []);
 
+ 
   const obtenerDatosGrafico = () => {
+    console.log("serviciosVencenEsteMes", serviciosVencenEsteMes)
     const datosPorServicio = serviciosVencenEsteMes.reduce((acc, servicio) => {
       const nombreServicio = servicio.servicioContratado.nombre;
+      const precioEnUSD = servicio.monedaDelServicio.nombre === 'Pesos'
+        ? servicio.precio / cotizacionDolar
+        : servicio.precio;
       if (!acc[nombreServicio]) {
         acc[nombreServicio] = 0;
       }
-      acc[nombreServicio] += servicio.precio;
+      acc[nombreServicio] += precioEnUSD;
       return acc;
     }, {});
     console.log("Datos por servicio:", datosPorServicio);
@@ -81,7 +91,7 @@ const VencimientosDelMes = () => {
       labels: Object.keys(datosPorServicio),
       datasets: [
         {
-          label: 'Monto por Tipo de Servicio',
+          label: 'Monto por Tipo de Servicio (USD)',
           data: Object.values(datosPorServicio),
           backgroundColor: '#71397299',
           borderColor: '#713972',
