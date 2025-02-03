@@ -58,9 +58,11 @@ function ServiciosDelCliente() {
       const idCliente = await eliminarServicioDelClienteAPI(servicioAEliminar);
       handleCerrarModal();
       cargarServicios();
+      mostrarSuccess("Servicio eliminado exitosamente");
     } catch (error) {
+      handleCerrarModal();
+      mostrarError(error.message);
       console.error("Error al eliminar el servicio:", error);
-      alert("Ocurrió un error al intentar eliminar el servicio.");
     }
   };
 

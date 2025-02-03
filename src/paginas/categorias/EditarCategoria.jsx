@@ -36,6 +36,10 @@ function EditarCategoria() {
       mostrarError("El nombre es obligatorio");
       return false;
     }
+    if (formData.nombre.length <= 3) {
+      mostrarError("El nombre debe tener más de tres caracteres");
+      return false;
+    }
     return true;
   };
 

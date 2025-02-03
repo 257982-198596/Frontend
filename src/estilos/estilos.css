@@ -1,108 +1,115 @@
 body {
-    font-family: Montserrat !important;
+  font-family: Montserrat !important;
 }
 
 .footer-proyecto {
-    color: white;
-    font-family: Montserrat;
+  color: white;
+  font-family: Montserrat;
 }
-  
-  .footerobl{
-    margin-top: 100px;
-  }
-  
-  .menuprincipal {
-    color: white !important;
-    text-decoration: none !important;
-    padding: 0px 15px !important;
-  }
-  
-  .active {
-    background-color: #713972;
-  }
-  
-  .oblcolor {
-    background-color: #713972 !important;
-    border-color: #713972 !important;
-    color: white !important;
-  }
-  
-  .oblerror {
-    background-color: #713972;
-    color: white;
-  }
 
-  .btn.btn-warning.oblcolor.btn-sm {
-    margin-left: 7px;
-  }
-  
-  .fondo {
-    min-height: 150px;
-  }
-  
-  .oblIconos {
-    font-size: 35px;
-    color: #713972;
-  }
-  
-  .montoOBL {
-    margin-left: 20px;
-    font-weight: 400;
-    font-size: 23px;
-    
-  }
-  
-  .oblIconosBIG{
-    font-size: 50px;
-    color: #713972;
-    margin-bottom: 14px;
-  }
-  
-  .iconofooter{
-    font-size: 25px;
-    
-  }
-  
-  .espacio {
-    margin-bottom: 32px;
-  }
 
-  /* Header */
-  .encabezado {
-    color: white;
-    margin: 0 auto;
-  }
 
-  .ml-auto {
-    margin-left: auto !important;
-  }
+.footerobl {
+  margin-top: 100px;
+}
 
-  .pipe-separator {
-    color: white;
-    margin: 0 5px;
-  }
+.menuprincipal {
+  color: white !important;
+  text-decoration: none !important;
+  padding: 0px 15px !important;
+}
 
-  .nav-link:hover {
-    color: #713972;
-  }
+.active {
+  background-color: #713972;
+}
 
-  .nav-link {
-    color: white !important;
-  }
+.oblcolor {
+  background-color: #713972 !important;
+  border-color: #713972 !important;
+  color: white !important;
+}
 
-  /* Sidebar */
-  .sidebar {
-    width: 16em;
-    background-color: #191c1f;
-    padding: 30px;
-    border-right: 1px solid #ddd;
-    height: 100vh;
+.oblerror {
+  background-color: #713972;
+  color: white;
+}
+
+.btn.btn-warning.oblcolor.btn-sm {
+  margin-left: 7px;
+}
+
+.fondo {
+  min-height: 150px;
+}
+
+.oblIconos {
+  font-size: 35px;
+  color: #713972;
+}
+
+.montoOBL {
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: 23px;
+
+}
+
+.oblIconosBIG {
+  font-size: 50px;
+  color: #713972;
+  margin-bottom: 14px;
+}
+
+.iconofooter {
+  font-size: 25px;
+
+}
+
+.espacio {
+  margin-bottom: 32px;
+}
+
+/* Header */
+.encabezado {
+  color: white;
+  margin: 0 auto;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
+.pipe-separator {
+  color: white;
+  margin: 0 5px;
+}
+
+.nav-link:hover {
+  color: #713972;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+/* LOGO ENCABEZADO */
+.navbar-brand {
+  font-size: 1rem;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 13em;
+  background-color: #191c1f;
+  padding: 19px;
+  border-right: 1px solid #ddd;
+  height: 100vh;
 }
 
 /* Estilo para el menú */
 ul.menu li {
-    padding-top: 15px;
-    padding-bottom: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 ::marker {
@@ -111,40 +118,59 @@ ul.menu li {
 }
 
 li#menuprincipal {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #menuprincipal a {
-    color: white;
-    text-decoration: none;
-    padding-left: 15px;
-    font-family: Montserrat;
-    font-weight: 100;
+  color: white;
+  text-decoration: none;
+  padding-left: 15px;
+  font-family: Montserrat;
+  font-weight: 100;
 }
 
 svg.icono-sidebar {
-    margin-right: 12px;
-    position: absolute;
-    color: #ffffff17;
-    font-size: 40px;
-    margin-top: -6px;
-    margin-left: -7px;
+  margin-right: 12px;
+  position: absolute;
+  color: #ffffff17;
+  font-size: 40px;
+  margin-top: -6px;
+  margin-left: -7px;
 }
 
 span.link-text {
-    padding-left: 19px;
-    font-weight: 400;
+  padding-left: 19px;
+  font-weight: 400;
+  font-size: 13px;
 }
 
 .active {
-    background-color: #713972;
-    border-radius: 9px;
+  background-color: #713972;
+  border-radius: 9px;
 }
 
 .menu {
-    padding-left: 0rem;
+  padding-left: 0rem;
 }
 
+/* TITULOS */
+.h5, h5 {
+  font-size: 1rem !important;
+}
+
+.h2, h2 {
+      font-size: 1.3rem !important;
+  }
+
+/* BOTONES */
+button.btn.oblcolor {
+  font-size: 12px;
+}
+
+/* TABLAS */
+td {
+  font-size: 13px;
+}
 
 /* SECCION CLIENTES */
 svg.icono-seccion {
@@ -153,9 +179,13 @@ svg.icono-seccion {
 }
 
 /* FORMULARIOS*/
-.botones-formularios{
+.botones-formularios {
   margin-top: 20px;
   margin-right: 10px !important;
+}
+
+.form-label {
+  margin-bottom: 0rem;
 }
 
 /* INDICADORES DASHBOARDS */
@@ -224,11 +254,11 @@ svg.icono-seccion {
   border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #713972;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(14px);
 }
 

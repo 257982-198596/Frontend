@@ -42,7 +42,8 @@ function EditarCobros() {
         medioDePago: cobro.medioPago.id || "",
       });
     }
-  }, [cobro]);
+    console.log("Cobro:", cobro);
+  }, [cobro]); 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -76,6 +77,10 @@ function EditarCobros() {
     }
     if (!formData.medioDePago) {
       mostrarError("Debe seleccionar un medio de pago");
+      return false;
+    }
+    if (!formData.fechaDePago) {
+      mostrarError("Debe seleccionar una fecha de pago");
       return false;
     }
     return true;
@@ -113,6 +118,7 @@ function EditarCobros() {
         lasMonedas={monedas}
         losClientes={clientes}
         losMediosDePago={mediosDePago}
+
         clienteId={formData.cliente}
         servicioId={formData.servicio} 
       />

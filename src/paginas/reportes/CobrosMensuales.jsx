@@ -67,9 +67,13 @@ const CobrosMensuales = () => {
     };
   };
 
+  const todosValoresSonCero = (datos) => {
+    return Object.values(datos).every(valor => valor === 0);
+  };
+
   return (
     <div className="container">
-      <h3>Reporte de Cobros Mensuales en el Año Corriente</h3>
+      <h2>Reporte de Cobros Mensuales en el Año Corriente</h2>
       <div className="espacio"></div>
       <div className="row mb-3">
         <div className="col-md-6">
@@ -87,7 +91,11 @@ const CobrosMensuales = () => {
             ))}
           </select>
           {servicioTipoSeleccionado && (
-            <Bar data={obtenerDatosGrafico(datosPorCategoria)} />
+            todosValoresSonCero(datosPorCategoria) ? (
+              <p>No hay datos disponibles para este Tipo de Servicio</p>
+            ) : (
+              <Bar data={obtenerDatosGrafico(datosPorCategoria)} />
+            )
           )}
         </div>
         <div className="col-md-6">
@@ -105,7 +113,11 @@ const CobrosMensuales = () => {
             ))}
           </select>
           {clienteSeleccionado && (
-            <Bar data={obtenerDatosGrafico(datosPorCliente)} />
+            todosValoresSonCero(datosPorCliente) ? (
+              <p>No hay datos disponibles para este Cliente</p>
+            ) : (
+              <Bar data={obtenerDatosGrafico(datosPorCliente)} />
+            )
           )}
         </div>
       </div>

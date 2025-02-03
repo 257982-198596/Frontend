@@ -42,20 +42,20 @@ function Registro() {
       mostrarError("El RUT es obligatorio");
       return false;
     }
-    /*if (!formData.numDocumento) {
-      mostrarError("El número de documento es obligatorio");
+    if (!/^\d{12}$/.test(formData.rut)) {
+      mostrarError("El RUT debe tener exactamente 12 caracteres numéricos");
       return false;
     }
-    if (!/^\d+$/.test(formData.numDocumento)) {
-      mostrarError("El número de documento debe ser numérico");
-      return false;
-    }*/
     if (!formData.telefono) {
       mostrarError("El número de teléfono es obligatorio");
       return false;
     }
     if (formData.telefono.length <= 7) {
       mostrarError("El teléfono debe tener más de 7 caracteres");
+      return false;
+    }
+    if (formData.telefono.length >= 15) {
+      mostrarError("El teléfono debe tener menos de 15 caracteres");
       return false;
     }
     if (!/^\d+$/.test(formData.telefono)) {
