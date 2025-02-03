@@ -69,7 +69,7 @@ const CobrosMensuales = () => {
 
   return (
     <div className="container">
-      <h3>Reporte de Cobros Mensuales en el Año Corriente</h3>
+      <h2>Reporte de Cobros Mensuales en el Año Corriente</h2>
       <div className="espacio"></div>
       <div className="row mb-3">
         <div className="col-md-6">

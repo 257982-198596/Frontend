@@ -134,7 +134,7 @@ function Clientes() {
               <th scope="col">Editar</th>
               <th scope="col">Eliminar</th>
               <th scope="col">Servicios Contratados</th>
-              <th scope="col">Habilitar/Deshabilitar</th>
+              <th scope="col">Hab. / Deshab.</th>
             </tr>
           </thead>
           <tbody>
