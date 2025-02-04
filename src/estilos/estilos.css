@@ -153,6 +153,15 @@ span.link-text {
   padding-left: 0rem;
 }
 
+
+/* Estilo para el Bienvenido del header que no aparezca en cel */
+@media (max-width: 768px) {
+  .encabezado {
+    display: none; 
+  }
+}
+
+
 /* TITULOS */
 .h5, h5 {
   font-size: 1rem !important;
@@ -268,3 +277,25 @@ p.pagina-paginacion {
   margin-bottom: 0px !important;
   margin-right: 10px;
 }
+
+/* Menu Hamburguesa */
+.menu-hamburguesa {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+
+}
+
+.container-fluid {
+  margin-bottom: 70px; 
+}
+
+/*
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block; 
+  }
+}
+  */
+

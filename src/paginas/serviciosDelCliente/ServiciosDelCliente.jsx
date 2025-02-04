@@ -295,7 +295,7 @@ function ServiciosDelCliente() {
         <p>No hay servicios activos.</p>
       )}
 
-      <div className="espacio"></div>
+
       <h5>Histórico</h5>
       {Array.isArray(serviciosHistoricos) && serviciosHistoricos.length > 0 ? (
         <>
@@ -363,6 +363,11 @@ function ServiciosDelCliente() {
               </button>
             ))}
           </div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div> 
         </>
       ) : (
         <p>No hay servicios históricos.</p>
