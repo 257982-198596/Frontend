@@ -283,3 +283,28 @@ export const obtenerIndicadoresVencimientosMesAPI = async (idSuscriptor) => {
     throw new Error(error.response.data.message);
   }
 };
+
+// PUT - Cancelar Servicio de un Cliente
+export const cancelarServicioDelClienteAPI = async (idServicioCliente) => {
+  try {
+    const response = await axios.put(
+      `${urlAPI}serviciosdelcliente/cancelar/${idServicioCliente}`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "ApiKey": ApiKey,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error("Error al cancelar el servicio del cliente");
+    }
+  } catch (error) {
+    console.log(error.response.data.message);
+    throw new Error(error.response.data.message);
+  }
+};
