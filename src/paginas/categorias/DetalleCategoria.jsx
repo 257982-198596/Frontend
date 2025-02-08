@@ -25,7 +25,7 @@ function DetalleCategoria() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Detalles de la Categoría</h3>
       <FormularioCategoria
         formData={formData}

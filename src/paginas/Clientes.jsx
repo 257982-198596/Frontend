@@ -109,7 +109,7 @@ function Clientes() {
     : 0;
 
   return (
-    <div>
+    <div className="container-fluid">
       <FiUserCheck className="icono-seccion" />
       <h2>Clientes</h2>
       <Link to="/clientes/alta">
@@ -121,82 +121,82 @@ function Clientes() {
       
       {clientes.length > 0 ? (
       <>
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Documento</th>
-              <th scope="col">Email</th>
-              <th scope="col">País</th>
-              <th scope="col">Telefono</th>
-              <th scope="col">Detalles</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-              <th scope="col">Servicios Contratados</th>
-              <th scope="col">Hab. / Deshab.</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientesPaginados.map((cliente) => {
-              const habilitado = cliente.estado && cliente.estado.nombre === "Activo"; 
-              
-              return (
-                <tr key={cliente.id}>
-                  <td>{cliente.id}</td>
-                  <td>{cliente.nombre}</td>
-                  <td>{cliente.numDocumento}</td>
-                  <td>{cliente.usuarioLogin.email}</td>
-                  <td>{cliente.pais.nombre}</td>
-                  <td>{cliente.telefono}</td>
+        <div className="table-responsive">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Email</th>
+                <th scope="col">País</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+                <th scope="col">Servicios Contratados</th>
+                <th scope="col">Hab. / Deshab.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clientesPaginados.map((cliente) => {
+                const habilitado = cliente.estado && cliente.estado.nombre === "Activo"; 
+                
+                return (
+                  <tr key={cliente.id}>
+                    <td>{cliente.id}</td>
+                    <td>{cliente.nombre}</td>
+                    <td>{cliente.numDocumento}</td>
+                    <td>{cliente.usuarioLogin.email}</td>
+                    <td>{cliente.pais.nombre}</td>
 
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => verDetallesCliente(cliente.id)}
-                    >
-                      Ver Más
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => editarCliente(cliente.id)}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => handleAbrirModal(cliente.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => serviciosDelCliente(cliente.id)}
-                    >
-                      Ver Servicios
-                    </button>
-                  </td>
-                  <td>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={habilitado}
-                        onChange={() => toggleHabilitacionCliente(cliente.id, habilitado)}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => verDetallesCliente(cliente.id)}
+                      >
+                        Ver Más
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => editarCliente(cliente.id)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => handleAbrirModal(cliente.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => serviciosDelCliente(cliente.id)}
+                      >
+                        Ver Servicios
+                      </button>
+                    </td>
+                    <td>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={habilitado}
+                          onChange={() => toggleHabilitacionCliente(cliente.id, habilitado)}
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <div className="pagination">
           <p className="pagina-paginacion">Página:</p>
           {Array.from({ length: totalPaginas }, (_, index) => (

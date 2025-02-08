@@ -102,7 +102,7 @@ const VencimientosDelMes = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Vencimientos de {obtenerNombreMesYAño()}</h3>
       <div className="row mb-3">
         <div className="col-md-7">
@@ -148,36 +148,38 @@ const VencimientosDelMes = () => {
           <h5>Servicios que Vencen en el Mes Corriente</h5>
           {Array.isArray(serviciosVencenEsteMes) && serviciosVencenEsteMes.length > 0 ? (
             <>
-              <table className="table table-striped table-dark">
-                <thead>
-                  <tr>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Servicio</th>
-                    <th scope="col">Monto</th>
-                    <th scope="col">Moneda</th>
-                    <th scope="col">Frecuencia</th>
-                    <th scope="col">Fecha Vencimiento</th>
-                    <th scope="col">Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <div className="table-responsive">
+                <table className="table table-striped table-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cliente</th>
+                      <th scope="col">Servicio</th>
+                      <th scope="col">Monto</th>
+                      <th scope="col">Moneda</th>
+                      <th scope="col">Frecuencia</th>
+                      <th scope="col">Fecha Vencimiento</th>
+                      <th scope="col">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                  {serviciosPaginados.map((servicio) => {
-                    return (
-                      <tr key={servicio.id}>
-                        <td>{servicio.cliente.nombre}</td>
-                        <td>{servicio.servicioContratado.nombre}</td>
-                        <td>{servicio.precio}</td>
-                        <td>{servicio.monedaDelServicio.nombre}</td>
-                        <td>{servicio.frecuenciaDelServicio.nombre}</td>
-                        <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                        <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                      </tr>
-                    );
-                  })}
+                    {serviciosPaginados.map((servicio) => {
+                      return (
+                        <tr key={servicio.id}>
+                          <td>{servicio.cliente.nombre}</td>
+                          <td>{servicio.servicioContratado.nombre}</td>
+                          <td>{servicio.precio}</td>
+                          <td>{servicio.monedaDelServicio.nombre}</td>
+                          <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                          <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                          <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                        </tr>
+                      );
+                    })}
 
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="pagination">
                 <p className="pagina-paginacion">Página:</p>
                 {Array.from({ length: totalPaginas }, (_, index) => (

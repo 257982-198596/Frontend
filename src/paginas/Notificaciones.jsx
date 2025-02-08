@@ -116,7 +116,7 @@ function Notificaciones() {
   }, [dispatch, clienteSeleccionado, servicioSeleccionado, fechaInicio, fechaFin]);
 
   return (
-    <div>
+    <div className="container-fluid">
       <FiCalendar className="icono-seccion" />
       <h2>Notificaciones</h2>
       <div className="row mb-3">
@@ -182,32 +182,34 @@ function Notificaciones() {
       </button>
       {Array.isArray(notificacionesFiltradas) && notificacionesFiltradas.length > 0 ? (
         <>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col">#ID</th>
-                <th scope="col">Fecha Envío</th>
-                <th scope="col">Cliente Notificado</th>
-                <th scope="col">Mensaje</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Servicio Notificado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notificacionesPaginadas.map((notificacion) => {
-                return (
-                  <tr key={notificacion.id}>
-                    <td>{notificacion.id}</td>
-                    <td>{formatFechaEnvio(notificacion.fechaEnvio)}</td>
-                    <td>{notificacion.clienteNotificado.nombre}</td>
-                    <td>{notificacion.mensaje}</td>
-                    <td>{notificacion.estadoDeNotificacion.nombre}</td>
-                    <td>{notificacion.servicioNotificado.descripcion}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">#ID</th>
+                  <th scope="col">Fecha Envío</th>
+                  <th scope="col">Cliente Notificado</th>
+                  <th scope="col">Mensaje</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Servicio Notificado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {notificacionesPaginadas.map((notificacion) => {
+                  return (
+                    <tr key={notificacion.id}>
+                      <td>{notificacion.id}</td>
+                      <td>{formatFechaEnvio(notificacion.fechaEnvio)}</td>
+                      <td>{notificacion.clienteNotificado.nombre}</td>
+                      <td>{notificacion.mensaje}</td>
+                      <td>{notificacion.estadoDeNotificacion.nombre}</td>
+                      <td>{notificacion.servicioNotificado.descripcion}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
           <div className="pagination">
             <p className="pagina-paginacion">Página:</p>
             {Array.from({ length: totalPaginas }, (_, index) => (

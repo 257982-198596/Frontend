@@ -31,7 +31,7 @@ function DetalleServicio() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Detalles del Servicio</h3>
       <FormularioServicio
         formData={formData}

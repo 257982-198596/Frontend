@@ -79,7 +79,7 @@ function EditarServicio() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Editar Servicio</h3>
       <FormularioServicio
         formData={formData}

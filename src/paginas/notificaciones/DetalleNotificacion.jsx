@@ -34,7 +34,7 @@ function DetalleNotificacion() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Detalles de la Notificación</h3>
       <FormularioNotificacion
         formData={formData}

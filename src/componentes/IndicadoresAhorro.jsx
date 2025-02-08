@@ -45,7 +45,7 @@ const IndicadoresAhorro = ({ notificacionesPorMes = {} }) => {
 
  
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3 className="mb-5">Indicadores de Ahorro de Tiempo</h3>
       {todosCeros && (
         <p className="text-center aviso">Aún no se han procesado envíos de Notificaciones. Envía Notificaciones a tus clientes para actualizar tus indicadores.</p>

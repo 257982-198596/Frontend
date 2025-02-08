@@ -139,7 +139,7 @@ export default function AltaClientes() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Agregar Cliente</h3>
       <FormularioCliente
         formData={formData}

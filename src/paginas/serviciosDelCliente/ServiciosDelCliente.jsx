@@ -218,66 +218,68 @@ function ServiciosDelCliente() {
       <h5>Servicios Activos</h5>
       {Array.isArray(serviciosActivos) && serviciosActivos.length > 0 ? (
         <>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th>Descripcion</th>
-                <th>Servicio</th>
-                <th>Precio</th>
-                <th>Moneda</th>
-                <th>Frecuencia</th>
-                <th>Estado</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {serviciosActivosPaginados.map((servicio) => (
-                <tr key={servicio.id}>
-                  <td>{servicio.descripcion}</td>
-                  <td>{servicio.servicioContratado.nombre}</td>
-                  <td>{servicio.precio}</td>
-                  <td>{servicio.monedaDelServicio.nombre}</td>
-                  <td>{servicio.frecuenciaDelServicio.nombre}</td>
-
-                  <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                  <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
-                  <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => editarServicioDelCliente(servicio.id)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm"
-                      onClick={() => handleAbrirModal(servicio.id)}
-                    >
-                      Eliminar
-                    </button>
-                    {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
-                      <>
-                        <button
-                          className="btn btn-warning oblcolor btn-sm"
-                          onClick={() => enviarRecordatorio(servicio.id)}
-                        >
-                          Enviar Recordatorio
-                        </button>
-                        <button
-                          className="btn btn-secondary oblcolor btn-sm"
-                          onClick={() => handleAbrirModalCancelar(servicio.id)}
-                        >
-                          Cancelar
-                        </button>
-                      </>
-                    )}
-                  </td>
+          <div className="table-responsive">
+            <table className="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>Descripcion</th>
+                  <th>Servicio</th>
+                  <th>Precio</th>
+                  <th>Moneda</th>
+                  <th>Frecuencia</th>
+                  <th>Estado</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Fin</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {serviciosActivosPaginados.map((servicio) => (
+                  <tr key={servicio.id}>
+                    <td>{servicio.descripcion}</td>
+                    <td>{servicio.servicioContratado.nombre}</td>
+                    <td>{servicio.precio}</td>
+                    <td>{servicio.monedaDelServicio.nombre}</td>
+                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
+
+                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                    <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => editarServicioDelCliente(servicio.id)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm"
+                        onClick={() => handleAbrirModal(servicio.id)}
+                      >
+                        Eliminar
+                      </button>
+                      {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                        <>
+                          <button
+                            className="btn btn-warning oblcolor btn-sm"
+                            onClick={() => enviarRecordatorio(servicio.id)}
+                          >
+                            Enviar Recordatorio
+                          </button>
+                          <button
+                            className="btn btn-secondary oblcolor btn-sm"
+                            onClick={() => handleAbrirModalCancelar(servicio.id)}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="pagination">
             <p className="pagina-paginacion">Página:</p>
             {Array.from({ length: totalPaginasActivos }, (_, index) => (
@@ -299,58 +301,60 @@ function ServiciosDelCliente() {
       <h5>Histórico</h5>
       {Array.isArray(serviciosHistoricos) && serviciosHistoricos.length > 0 ? (
         <>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th>Descripcion</th>
-                <th>Servicio</th>
-                <th>Precio</th>
-                <th>Moneda</th>
-                <th>Frecuencia</th>
-                <th>Estado</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {serviciosHistoricosPaginados.map((servicio) => (
-                <tr key={servicio.id}>
-                  <td>{servicio.descripcion}</td>
-                  <td>{servicio.servicioContratado.nombre}</td>
-                  <td>{servicio.precio}</td>
-                  <td>{servicio.monedaDelServicio.nombre}</td>
-                  <td>{servicio.frecuenciaDelServicio.nombre}</td>
-
-                  <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                  <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
-                  <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm me-2"
-                      onClick={() => editarServicioDelCliente(servicio.id)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn btn-danger oblcolor btn-sm"
-                      onClick={() => handleAbrirModal(servicio.id)}
-                    >
-                      Eliminar
-                    </button>
-                    {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
-                      <button
-                        className="btn btn-warning btn-sm"
-                        onClick={() => enviarRecordatorio(servicio.id)}
-                      >
-                        Enviar Recordatorio
-                      </button>
-                    )}
-                  </td>
+          <div className="table-responsive">
+            <table className="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>Descripcion</th>
+                  <th>Servicio</th>
+                  <th>Precio</th>
+                  <th>Moneda</th>
+                  <th>Frecuencia</th>
+                  <th>Estado</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Fin</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {serviciosHistoricosPaginados.map((servicio) => (
+                  <tr key={servicio.id}>
+                    <td>{servicio.descripcion}</td>
+                    <td>{servicio.servicioContratado.nombre}</td>
+                    <td>{servicio.precio}</td>
+                    <td>{servicio.monedaDelServicio.nombre}</td>
+                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
+
+                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                    <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm me-2"
+                        onClick={() => editarServicioDelCliente(servicio.id)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger oblcolor btn-sm"
+                        onClick={() => handleAbrirModal(servicio.id)}
+                      >
+                        Eliminar
+                      </button>
+                      {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => enviarRecordatorio(servicio.id)}
+                        >
+                          Enviar Recordatorio
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="pagination">
             <p className="pagina-paginacion">Página:</p>
             {Array.from({ length: totalPaginasHistoricos }, (_, index) => (

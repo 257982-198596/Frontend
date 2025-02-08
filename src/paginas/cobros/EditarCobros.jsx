@@ -108,7 +108,7 @@ function EditarCobros() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Editar Cobro</h3>
       <FormularioCobro
         formData={formData}

@@ -138,7 +138,7 @@ function Cobros() {
   }, [clienteSeleccionado, servicioSeleccionado, fechaInicio, fechaFin, cobros]);
 
   return (
-    <div>
+    <div className="container-fluid">
       <FaRegMoneyBillAlt className="icono-seccion" />
       <h2>Cobros</h2>
       <Link to="/cobros/alta">
@@ -149,7 +149,7 @@ function Cobros() {
 
       <div className="espacio"></div>
       <div className="row mb-3">
-        <div className="col-md-3">
+        <div className="col-md-3 col-12">
           <label htmlFor="slc-cliente" className="form-label">Filtrar por cliente:</label>
           <select 
             id="slc-cliente"
@@ -166,7 +166,7 @@ function Cobros() {
             ))}
           </select>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 col-12">
           <label htmlFor="slc-servicio" className="form-label">Filtrar por servicio:</label>
           <select
             id="slc-servicio"
@@ -183,7 +183,7 @@ function Cobros() {
             ))}
           </select>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 col-12">
           <label htmlFor="fecha-inicio" className="form-label">Fecha Inicio:</label>
           <input
             type="date"
@@ -193,7 +193,7 @@ function Cobros() {
             onChange={handleFiltrarPorFechaInicio}
           />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-3 col-12">
           <label htmlFor="fecha-fin" className="form-label">Fecha Fin:</label>
           <input
             type="date"
@@ -211,67 +211,69 @@ function Cobros() {
       
       {cobrosFiltrados.length > 0 ? (
       <>
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">Monto</th>
-              <th scope="col">Moneda</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Servicio</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Fecha de Pago</th>
-              <th scope="col">Detalles</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cobrosPaginados.map((cobro) => {
-              return (
-                <tr key={cobro.id}>
-                  <td>{cobro.id}</td>
-                  <td>{cobro.monto}</td>
-                  <td>{cobro.monedaDelCobro.nombre}</td>
-                  <td>{cobro.servicioDelCliente.cliente.nombre}</td>
-                  <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
-                  <td>{cobro.servicioDelCliente.descripcion}</td>
-                  <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
-                  
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() =>
-                        verDetallesCobro(
-                          cobro.id,
-                          cobro.servicioDelCliente.clienteId
-                        )
-                      }
-                    >
-                      Ver Más
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => editarCobro(cobro.id)}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => handleAbrirModal(cobro.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Moneda</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Servicio</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Fecha de Pago</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cobrosPaginados.map((cobro) => {
+                return (
+                  <tr key={cobro.id}>
+                    <td>{cobro.id}</td>
+                    <td>{cobro.monto}</td>
+                    <td>{cobro.monedaDelCobro.nombre}</td>
+                    <td>{cobro.servicioDelCliente.cliente.nombre}</td>
+                    <td>{cobro.servicioDelCliente.servicioContratado.nombre}</td>
+                    <td>{cobro.servicioDelCliente.descripcion}</td>
+                    <td>{new Date(cobro.fechaDePago).toLocaleDateString()}</td>
+                    
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() =>
+                          verDetallesCobro(
+                            cobro.id,
+                            cobro.servicioDelCliente.clienteId
+                          )
+                        }
+                      >
+                        Ver Más
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => editarCobro(cobro.id)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => handleAbrirModal(cobro.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <div className="pagination">
           <p className="pagina-paginacion">Página:</p>
           {Array.from({ length: totalPaginas }, (_, index) => (
