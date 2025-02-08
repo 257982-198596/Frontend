@@ -1,8 +1,9 @@
 import { Container, Nav, Navbar, Modal, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { FaBars } from "react-icons/fa"; // Import the hamburger icon
 
-function Header({ nombreCliente }) {
+function Header({ nombreCliente, toggleSidebar }) {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const [nombre, setNombre] = useState('');
@@ -31,7 +32,9 @@ function Header({ nombreCliente }) {
         <Container>
           <Navbar.Brand to="/">Sistema de Cobros </Navbar.Brand>
           <Nav className="me-auto">
-          
+            <button onClick={toggleSidebar} className="menu-hamburguesa">
+              <FaBars style={{ color: 'white' }} />
+            </button>
           </Nav>
           <div className="ml-auto d-flex align-items-center">
             <p className='encabezado mb-0'>Bienvenido, {nombre}</p>

@@ -1,4 +1,3 @@
-
 import { Outlet, useOutletContext } from "react-router-dom";
 import Footer from "../componentes/Footer";
 import Sidebar from "../componentes/Sidebar";
@@ -27,12 +26,19 @@ import { getNotificacionesApi, getNotificacionesPorMesApi } from "../api/servici
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 import { urlAPI } from "../api/api";
 import IndicadoresAhorro from "../componentes/IndicadoresAhorro";
+import { FaBars } from "react-icons/fa"; // Import the hamburger icon
 
 function Home() {
   const dispatch = useDispatch();
   const [notificacionesPorMes, setNotificacionesPorMes] = useState([]);
+  const [sidebarVisible, setSidebarVisible] = useState(false); // State for sidebar visibility
   const suscriptorId = localStorage.getItem("idSuscriptor");
   const year = new Date().getFullYear();
+
+  // Function to toggle sidebar visibility
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
 
   useEffect(() => {
     const GetClientes = async () => {
@@ -223,9 +229,11 @@ function Home() {
 
   return (
     <>
-      <Header></Header>
+      <Header toggleSidebar={toggleSidebar}></Header>
       <div style={{ display: "flex" }}>
-        <Sidebar style={{ minWidth: "200px" }} />
+        {sidebarVisible && (
+          <Sidebar style={{ minWidth: "200px" }} />
+        )}
         <div style={{ flex: 1, padding: "1rem" }}>
           <Outlet context={{ notificacionesPorMes }} />
         </div>

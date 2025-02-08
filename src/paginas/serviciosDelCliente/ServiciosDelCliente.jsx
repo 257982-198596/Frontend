@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { obtenerServiciosClienteAPI, obtenerProximoVencimientoAPI, obtenerIngresosProximos365DiasAPI } from "../../api/servicioServiciosDelCliente";
 import { useNavigate } from "react-router-dom";
-import { eliminarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
+import { eliminarServicioDelClienteAPI, cancelarServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import ModalEliminar from "../../componentes/ModalEliminar";
 import { useRef } from "react";
 import { enviarRecordatorioAPI, obtenerCantidadNotificacionesAPI } from "../../api/servicioNotificaciones";
@@ -14,6 +14,7 @@ import { FiUserCheck } from "react-icons/fi";
 import { FaEnvelopeOpen } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import CancelarServicioDelCliente from "./CancelarServicioDelCliente";
 
 function ServiciosDelCliente() {
   const { id } = useParams();
@@ -30,6 +31,9 @@ function ServiciosDelCliente() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [servicioAEliminar, setServicioAEliminar] = useState(null);
+
+  const [modalCancelarVisible, setModalCancelarVisible] = useState(false);
+  const [servicioACancelar, setServicioACancelar] = useState(null);
 
   const [paginaActualActivos, setPaginaActualActivos] = useState(1);
   const [paginaActualHistoricos, setPaginaActualHistoricos] = useState(1);
@@ -53,6 +57,16 @@ function ServiciosDelCliente() {
     setModalVisible(false);
   };
 
+  const handleAbrirModalCancelar = (idServicio) => {
+    setServicioACancelar(idServicio);
+    setModalCancelarVisible(true);
+  };
+
+  const handleCerrarModalCancelar = () => {
+    setServicioACancelar(null);
+    setModalCancelarVisible(false);
+  };
+
   const eliminarServicio = async () => {
     try {
       const idCliente = await eliminarServicioDelClienteAPI(servicioAEliminar);
@@ -63,6 +77,20 @@ function ServiciosDelCliente() {
       handleCerrarModal();
       mostrarError(error.message);
       console.error("Error al eliminar el servicio:", error);
+    }
+  };
+
+  const cancelarServicio = async () => {
+    try {
+      const response = await cancelarServicioDelClienteAPI(servicioACancelar);
+      console.log(response.data.mensaje);
+      handleCerrarModalCancelar();
+      cargarServicios();
+      mostrarSuccess("Servicio cancelado exitosamente");
+    } catch (error) {
+      handleCerrarModalCancelar();
+      console.error("Error al cancelar el servicio:", error);
+      mostrarError(error.message);
     }
   };
 
@@ -230,12 +258,20 @@ function ServiciosDelCliente() {
                       Eliminar
                     </button>
                     {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
-                      <button
-                        className="btn btn-warning oblcolor btn-sm"
-                        onClick={() => enviarRecordatorio(servicio.id)}
-                      >
-                        Enviar Recordatorio
-                      </button>
+                      <>
+                        <button
+                          className="btn btn-warning oblcolor btn-sm"
+                          onClick={() => enviarRecordatorio(servicio.id)}
+                        >
+                          Enviar Recordatorio
+                        </button>
+                        <button
+                          className="btn btn-secondary oblcolor btn-sm"
+                          onClick={() => handleAbrirModalCancelar(servicio.id)}
+                        >
+                          Cancelar
+                        </button>
+                      </>
                     )}
                   </td>
                 </tr>
@@ -259,7 +295,7 @@ function ServiciosDelCliente() {
         <p>No hay servicios activos.</p>
       )}
 
-      <div className="espacio"></div>
+
       <h5>Histórico</h5>
       {Array.isArray(serviciosHistoricos) && serviciosHistoricos.length > 0 ? (
         <>
@@ -327,6 +363,11 @@ function ServiciosDelCliente() {
               </button>
             ))}
           </div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div>
+          <div className="espacio"></div> 
         </>
       ) : (
         <p>No hay servicios históricos.</p>
@@ -337,6 +378,12 @@ function ServiciosDelCliente() {
         handleClose={handleCerrarModal}
         handleEliminar={eliminarServicio}
         objAEliminar={"servicio"}
+      />
+      {/* Modal para Confirmar Cancelación */}
+      <CancelarServicioDelCliente
+        show={modalCancelarVisible}
+        handleClose={handleCerrarModalCancelar}
+        handleCancelar={cancelarServicio}
       />
       <ToastContainer />
     </div>

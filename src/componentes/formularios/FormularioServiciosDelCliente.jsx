@@ -15,7 +15,7 @@ function FormularioServiciosDelCliente({
   return (
     <Form onSubmit={onSubmit}>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="descripcion">Descripcion</Form.Label>
+        <Form.Label htmlFor="descripcion">Descripción *</Form.Label>
         <Form.Control
           type="text"
           id="descripcion"
@@ -23,17 +23,15 @@ function FormularioServiciosDelCliente({
           value={formData.descripcion}
           onChange={handleChange}
           placeholder="Ingrese la descripcion"
-          required
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="servicioContratadoId">Servicio</Form.Label>
+        <Form.Label htmlFor="servicioContratadoId">Servicio *</Form.Label>
         <Form.Select
           id="servicioContratadoId"
           name="servicioContratadoId"
           value={formData.servicioContratadoId}
           onChange={handleChange}
-          required
         >
           <option value="">Seleccione un servicio</option>
           {serviciosDisponibles.map((servicio) => (
@@ -45,7 +43,7 @@ function FormularioServiciosDelCliente({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="precio">Precio</Form.Label>
+        <Form.Label htmlFor="precio">Precio *</Form.Label>
         <Form.Control
           type="number"
           id="precio"
@@ -53,18 +51,16 @@ function FormularioServiciosDelCliente({
           value={formData.precio}
           onChange={handleChange}
           placeholder="Ingrese el precio"
-          required
         />
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="monedaDelServicioId">Moneda</Form.Label>
+        <Form.Label htmlFor="monedaDelServicioId">Moneda *</Form.Label>
         <Form.Select
           id="monedaDelServicioId"
           name="monedaDelServicioId"
           value={formData.monedaDelServicioId}
           onChange={handleChange}
-          required
         >
           <option value="">Seleccione una moneda</option>
           {monedasDisponibles.map((moneda) => (
@@ -76,25 +72,24 @@ function FormularioServiciosDelCliente({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="fechaInicio">Fecha de Inicio</Form.Label>
+        <Form.Label htmlFor="fechaInicio">Fecha de Inicio *</Form.Label>
         <Form.Control
           type="date"
           id="fechaInicio"
           name="fechaInicio"
           value={formData.fechaInicio}
           onChange={handleChange}
-          required
         />
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="frecuenciaDelServicioId">Frecuencia</Form.Label>
+        <Form.Label htmlFor="frecuenciaDelServicioId">Frecuencia *</Form.Label>
         <Form.Select
           id="frecuenciaDelServicioId"
           name="frecuenciaDelServicioId"
           value={formData.frecuenciaDelServicioId}
           onChange={handleChange}
-          required
+
         >
           <option value="">Seleccione una frecuencia</option>
           {frecuenciasDisponibles.map((frecuencia) => (

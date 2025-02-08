@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import FormularioServiciosDelCliente from "../../componentes/formularios/FormularioServiciosDelCliente";
 import { postServicioDelClienteAPI } from "../../api/servicioServiciosDelCliente";
 import { useNavigate } from "react-router-dom";
+
 import { mostrarError, mostrarSuccess } from "../../componentes/Toasts";
+import { ToastContainer } from "react-toastify";
 
 function AsociarServicioDelCliente() {
   const { id } = useParams();
@@ -116,6 +118,7 @@ function AsociarServicioDelCliente() {
         monedasDisponibles={lasMonedas}
         frecuenciasDisponibles={lasFrecuencias}
       />
+      <ToastContainer />
     </div>
   );
 }
