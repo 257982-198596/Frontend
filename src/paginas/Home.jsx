@@ -26,16 +26,16 @@ import { getNotificacionesApi, getNotificacionesPorMesApi } from "../api/servici
 import { cargarNotificaciones } from "../slices/sliceNotificaciones";
 import { urlAPI } from "../api/api";
 import IndicadoresAhorro from "../componentes/IndicadoresAhorro";
-import { FaBars } from "react-icons/fa"; // Import the hamburger icon
+import { FaBars } from "react-icons/fa"; 
 
 function Home() {
   const dispatch = useDispatch();
   const [notificacionesPorMes, setNotificacionesPorMes] = useState([]);
-  const [sidebarVisible, setSidebarVisible] = useState(false); // State for sidebar visibility
+  const [sidebarVisible, setSidebarVisible] = useState(true); 
   const suscriptorId = localStorage.getItem("idSuscriptor");
   const year = new Date().getFullYear();
 
-  // Function to toggle sidebar visibility
+
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
