@@ -278,6 +278,10 @@ p.pagina-paginacion {
   margin-right: 10px;
 }
 
+.pagination {
+  padding-top: 8px;
+}
+
 /* Menu Hamburguesa */
 .menu-hamburguesa {
   background: none;
@@ -288,14 +292,34 @@ p.pagina-paginacion {
 }
 
 .container-fluid {
-  margin-bottom: 70px; 
+  margin-bottom: 90px; 
 }
 
-/*
+/* TABLAS RESPONSIVE */
+
+.table-responsive {
+  overflow-x: auto !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+table {
+  min-width: 600px !important; 
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
-  .hamburger-menu {
-    display: block; 
+  .form-select {
+    width: 100%;
   }
 }
-  */
-

@@ -107,7 +107,7 @@ function AsociarServicioDelCliente() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Asociar Servicio a {cliente?.nombre || "Cliente no encontrado"}</h3>
       <FormularioServiciosDelCliente
         formData={formData}

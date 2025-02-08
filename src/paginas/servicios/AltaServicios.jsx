@@ -74,7 +74,7 @@ function AltaServicios() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Agregar Servicio</h3>
       <FormularioServicio
         formData={formData}

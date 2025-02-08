@@ -154,7 +154,7 @@ function EditarCliente() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Editar Cliente</h3>
       <FormularioCliente
         formData={formData}

@@ -70,7 +70,7 @@ function Categorias() {
     : 0;
 
   return (
-    <div>
+    <div className="container-fluid">
       <FiSliders className="icono-seccion" />   
       <h2>Categorías</h2>
       <Link to="/categorias/alta">
@@ -82,52 +82,54 @@ function Categorias() {
       
       {categorias.length > 0 ? (
       <>
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Detalles</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categoriasPaginadas.map((categoria) => {
-              return (
-                <tr key={categoria.id}>
-                  <td>{categoria.id}</td>
-                  <td>{categoria.nombre}</td>
+        <div className="table-responsive">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categoriasPaginadas.map((categoria) => {
+                return (
+                  <tr key={categoria.id}>
+                    <td>{categoria.id}</td>
+                    <td>{categoria.nombre}</td>
 
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => verDetallesCategoria(categoria.id)}
-                    >
-                      Ver Más
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => editarCategoria(categoria.id)}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => handleAbrirModal(categoria.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => verDetallesCategoria(categoria.id)}
+                      >
+                        Ver Más
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => editarCategoria(categoria.id)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => handleAbrirModal(categoria.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <div className="pagination">
           <p className="pagina-paginacion">Página:</p>
           {Array.from({ length: totalPaginas }, (_, index) => (

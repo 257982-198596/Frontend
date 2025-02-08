@@ -104,7 +104,7 @@ function AltaCobros() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Alta de Cobro</h3>
       <FormularioCobro
         formData={formData}

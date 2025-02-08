@@ -134,7 +134,7 @@ function Registro() {
   }, [dispatch]);
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-4">
           <h3>Registro de Suscriptores</h3>

@@ -31,7 +31,7 @@ import { FaBars } from "react-icons/fa";
 function Home() {
   const dispatch = useDispatch();
   const [notificacionesPorMes, setNotificacionesPorMes] = useState([]);
-  const [sidebarVisible, setSidebarVisible] = useState(true); 
+  const [sidebarVisible, setSidebarVisible] = useState(false); 
   const suscriptorId = localStorage.getItem("idSuscriptor");
   const year = new Date().getFullYear();
 
@@ -227,6 +227,7 @@ function Home() {
     GetNotificacionesPorMes();
   }, []);
 
+  //overflow para que las tablas se vena bien en celular
   return (
     <>
       <Header toggleSidebar={toggleSidebar}></Header>
@@ -234,7 +235,8 @@ function Home() {
         {sidebarVisible && (
           <Sidebar style={{ minWidth: "200px" }} />
         )}
-        <div style={{ flex: 1, padding: "1rem" }}>
+        
+        <div style={{ flex: 1, padding: "1rem", overflowX: "auto" }}>
           <Outlet context={{ notificacionesPorMes }} />
         </div>
       </div>

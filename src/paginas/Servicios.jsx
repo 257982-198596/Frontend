@@ -71,7 +71,7 @@ function Servicios() {
     : 0;
 
   return (
-    <div>
+    <div className="container-fluid">
       <FiShoppingCart className="icono-seccion" />
       <h2>Servicios</h2>
       <Link to="/servicios/alta">
@@ -83,56 +83,58 @@ function Servicios() {
       
       {servicios.length > 0 ? (
       <>
-        <table className="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Categoría</th>
-              <th scope="col">Detalles</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviciosPaginados.map((servicio) => {
-              return (
-                <tr key={servicio.id}>
-                  <td>{servicio.id}</td>
-                  <td>{servicio.nombre}</td>
-                  <td>{servicio.descripcion}</td>
-                  <td>{servicio.categoriaDelServicio.nombre}</td>
+        <div className="table-responsive">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {serviciosPaginados.map((servicio) => {
+                return (
+                  <tr key={servicio.id}>
+                    <td>{servicio.id}</td>
+                    <td>{servicio.nombre}</td>
+                    <td>{servicio.descripcion}</td>
+                    <td>{servicio.categoriaDelServicio.nombre}</td>
 
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => verDetallesServicio(servicio.id)}
-                    >
-                      Ver Más
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => editarServicio(servicio.id)}
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-danger oblcolor"
-                      onClick={() => handleAbrirModal(servicio.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => verDetallesServicio(servicio.id)}
+                      >
+                        Ver Más
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => editarServicio(servicio.id)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger oblcolor"
+                        onClick={() => handleAbrirModal(servicio.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <div className="pagination">
           <p className="pagina-paginacion">Página:</p>
           {Array.from({ length: totalPaginas }, (_, index) => (

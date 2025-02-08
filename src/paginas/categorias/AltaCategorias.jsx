@@ -56,7 +56,7 @@ function AltaCategorias() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Agregar Categoría</h3>
       <FormularioCategoria
         formData={formData}
