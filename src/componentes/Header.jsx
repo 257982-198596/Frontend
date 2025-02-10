@@ -1,7 +1,7 @@
 import { Container, Nav, Navbar, Modal, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { FaBars } from "react-icons/fa"; // Import the hamburger icon
+import { FaBars } from "react-icons/fa"; 
 
 function Header({ nombreCliente, toggleSidebar }) {
   const [show, setShow] = useState(false);

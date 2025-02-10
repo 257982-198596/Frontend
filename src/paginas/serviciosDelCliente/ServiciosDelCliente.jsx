@@ -261,7 +261,7 @@ function ServiciosDelCliente() {
                       {servicio.estadoDelServicioDelCliente.nombre === "Activo" && (
                         <>
                           <button
-                            className="btn btn-warning oblcolor btn-sm"
+                            className="btn btn-warning oblcolor btn-sm me-2"
                             onClick={() => enviarRecordatorio(servicio.id)}
                           >
                             Enviar Recordatorio

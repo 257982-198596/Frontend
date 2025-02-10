@@ -15,7 +15,7 @@ function Login() {
   const [deshabilitado, setDeshabilitado] = useState(true);
 
   const iniciarSesion = async () => {
-    //falta validar
+ 
     try {
       const response = await iniciarSesionApi(
         usuarioRef.current.value,

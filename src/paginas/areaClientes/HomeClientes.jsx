@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../componentes/Header';
 import SidebarClientes from '../../componentes/SidebarClientes';
 import Footer from '../../componentes/Footer';
@@ -19,6 +19,11 @@ export default function HomeClientes() {
   const clienteId = localStorage.getItem('idCliente');
   const dispatch = useDispatch();
   const serviciosActivosCliente = useSelector((state) => state.sliceAreaClientes.serviciosActivosCliente);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
 
   useEffect(() => {
     async function fetchServiciosActivos() {
@@ -75,10 +80,12 @@ export default function HomeClientes() {
 
   return (
     <>
-      <Header nombreCliente={nombreCliente} />
+      <Header nombreCliente={nombreCliente} toggleSidebar={toggleSidebar} />
       <div style={{ display: 'flex' }}>
-        <SidebarClientes />
-        <div style={{ flex: 1, padding: '1rem' }}>
+        {sidebarVisible && (
+          <SidebarClientes />
+        )}
+        <div style={{ flex: 1, padding: '1rem', overflowX: "auto" }}>
           <Outlet context={{ serviciosActivosCliente }} />
         </div>
       </div>

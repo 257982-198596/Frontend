@@ -20,38 +20,40 @@ export default function ServiciosContratadosClientes({ serviciosActivosCliente }
     : 0;
 
   return (
-    <div>
+    <div className='container-fluid'>
       <h5>Servicios Activos</h5>
       {Array.isArray(serviciosActivosCliente) && serviciosActivosCliente.length > 0 ? (
         <>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th>Descripcion</th>
-                <th>Servicio</th>
-                <th>Precio</th>
-                <th>Moneda</th>
-                <th>Frecuencia</th>
-                <th>Estado</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-              </tr>
-            </thead>
-            <tbody>
-              {serviciosPaginados.map((servicio) => (
-                <tr key={servicio.id}>
-                  <td>{servicio.descripcion}</td>
-                  <td>{servicio.servicioContratado.nombre}</td>
-                  <td>{servicio.precio}</td>
-                  <td>{servicio.monedaDelServicio.nombre}</td>
-                  <td>{servicio.frecuenciaDelServicio.nombre}</td>
-                  <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
-                  <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
-                  <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+          <div className="table-responsive">
+            <table className="table table-responsive table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>Descripcion</th>
+                  <th>Servicio</th>
+                  <th>Precio</th>
+                  <th>Moneda</th>
+                  <th>Frecuencia</th>
+                  <th>Estado</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Fin</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {serviciosPaginados.map((servicio) => (
+                  <tr key={servicio.id}>
+                    <td>{servicio.descripcion}</td>
+                    <td>{servicio.servicioContratado.nombre}</td>
+                    <td>{servicio.precio}</td>
+                    <td>{servicio.monedaDelServicio.nombre}</td>
+                    <td>{servicio.frecuenciaDelServicio.nombre}</td>
+                    <td>{servicio.estadoDelServicioDelCliente.nombre}</td>
+                    <td>{new Date(servicio.fechaInicio).toLocaleDateString()}</td>
+                    <td>{new Date(servicio.fechaVencimiento).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="pagination">
             <p className="pagina-paginacion">Página:</p>
             {Array.from({ length: totalPaginas }, (_, index) => (

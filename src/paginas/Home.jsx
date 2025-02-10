@@ -227,7 +227,7 @@ function Home() {
     GetNotificacionesPorMes();
   }, []);
 
-  //overflow para que las tablas se vena bien en celular
+  //overflow para que las tablas se vean bien en celular
   return (
     <>
       <Header toggleSidebar={toggleSidebar}></Header>
