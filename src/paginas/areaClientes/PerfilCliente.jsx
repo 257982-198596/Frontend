@@ -147,7 +147,7 @@ export default function PerfilCliente() {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Perfil del Cliente</h3>
       <Form onSubmit={submitEditarCliente}>
         <Form.Group className="mb-3">

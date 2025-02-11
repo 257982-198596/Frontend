@@ -5,14 +5,14 @@ import 'chart.js/auto';
 
 const IndicadoresAhorro = ({ notificacionesPorMes = {} }) => {
   const obtenerDatosGrafico = () => {
-    // Inicializa un array de 12 elementos, todos con valor 0, para representar los 12 meses del año
+    // Inicializa un array de 12 elementos, para representar los 12 meses del año
     const data = Array(12).fill(0);
 
     // Verifica si hay datos de notificaciones por mes
     if (notificacionesPorMes) {
       // Recorre las claves del objeto notificacionesPorMes
       Object.keys(notificacionesPorMes).forEach(key => {
-        // Convierte la clave (mes) a un índice de array (restando 1) y asigna el valor correspondiente de notificaciones
+        // Convierte la clave (mes) a un índice de array (restando 1) y asigna el valor correspondiente
         data[parseInt(key) - 1] = notificacionesPorMes[key];
       });
     }
